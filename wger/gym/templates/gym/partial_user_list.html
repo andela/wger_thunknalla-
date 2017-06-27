@@ -20,6 +20,7 @@ $(document).ready( function () {
     {% for key in user_table.keys %}
         <th>{{ key }}</th>
     {% endfor %}
+    <th> Status </th>
 </tr>
 </thead>
 <tbody>
@@ -45,6 +46,15 @@ $(document).ready( function () {
             </a>
         {% else %}
             -/-
+        {% endif %}
+    </td>
+     <td>
+        {% if current_user.obj.is_active %}
+            <a href="{{ current_user.obj.userprofile.gym.get_absolute_url }}">
+            active
+            </a>
+        {% else %}
+            inactive
         {% endif %}
     </td>
     {% endif %}
