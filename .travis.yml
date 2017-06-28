@@ -1,4 +1,10 @@
 language: python
+# Python versions to test
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+
 
 # Cache the pip files
 cache:
@@ -11,12 +17,6 @@ cache:
 # Use container infrastructure
 # http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
 sudo: false
-
-# Python versions to test
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
 
 # Manually define here the combinations environment variables to test
 # https://github.com/travis-ci/travis-ci/issues/1519
@@ -34,7 +34,7 @@ install:
   # repository and the directory is not empty.
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | METHOD=script bash
   - . $HOME/.nvm/nvm.sh
-  - nvm install $TRAVIS_NODE_VERSION
+  - nvm install $TRAVIS_NODE_VERSIONi
   - nvm use $TRAVIS_NODE_VERSION
 
   # Install requirements
@@ -65,5 +65,5 @@ script:
 
   # Code coverage
   - coverage report
- notifications:
+notifications:
     slack: andela:tNN9TfbH9k5VnXi7uyrSenux
