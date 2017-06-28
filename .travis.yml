@@ -34,9 +34,6 @@ install:
   # repository and the directory is not empty.
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | METHOD=script bash
   - . $HOME/.nvm/nvm.sh
-  - nvm install $TRAVIS_NODE_VERSIONi
-  - nvm use $TRAVIS_NODE_VERSION
-
   # Install requirements
   - pip install -r requirements_devel.txt
   - npm install
