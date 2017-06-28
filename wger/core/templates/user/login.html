@@ -14,6 +14,18 @@
     {% trans 'Login' as submit_text %}
     {% render_form_fields form submit_text %}
 </form>
+  <br>
+  <p><strong>-- OR YOU CAN LOGIN WITH --</strong></p>
+  <a href="{% url 'social:begin' 'github' %}">GitHub</a> |
+
+  <a href="{% url 'social:begin' 'twitter' %}">Twitter</a> |
+
+  <a href="{% url 'social:begin' 'google-oauth2' %}">Google</a>
+
+  <!--<a href="{% url 'social:begin' 'facebook' %}">Facebook</a>-->
+  
+
+  
 {% endblock %}
 
 
