@@ -25,6 +25,7 @@ $(document).ready( function () {
 </thead>
 <tbody>
 {% for current_user in user_table.users %}
+{% if current_user.obj.is_active %}
 <tr>
     <td>
         {{current_user.obj.pk}}
@@ -49,12 +50,10 @@ $(document).ready( function () {
         {% endif %}
     </td>
      <td>
-        {% if current_user.obj.is_active %}
             <a href="{{ current_user.obj.userprofile.gym.get_absolute_url }}">
             Active
             </a>
-        {% else %}
-            Inactive
+
         {% endif %}
     </td>
     {% endif %}
