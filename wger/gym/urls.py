@@ -33,7 +33,6 @@ from wger.gym.views import (
     export
 )
 
-
 # 'sub patterns' for gyms
 patterns_gym = [
     url(r'^list$',
