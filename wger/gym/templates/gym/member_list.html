@@ -8,15 +8,19 @@
 
     {% if perms.gym.manage_gyms %}
         {% breadcrumb "Gyms" "gym:gym:list" %}
-        {% breadcrumb_raw gym "gym:gym:user-list" gym.pk %}
+        {% breadcrumb_raw name "gym:gym:user-list" gym.pk %}
     {% endif %}
 {% endblock %}
 
 
 {% block content %}
 {% if perms.gym.manage_gym or perms.gym.gym_trainer %}
-    {% include 'gym/partial_user_list.html' %}
+<h4>Click<a href =  "{% url 'gym:gym:inactive-user-list' gym.pk %}" > here </a>to view inactive users</h4>
+
+    {% include 'gym/active_gym_users_list.html' %}
+
 {% endif %}
+
 
 
 <h4>{% trans "Administrators and trainers" %}</h4>
@@ -311,8 +315,6 @@
 </table>
 {% endif %}
 {% endblock %}
-
-
 
 {#         #}
 {# Options #}
