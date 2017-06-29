@@ -15,21 +15,19 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name='setting',
             old_name='unit',
-            new_name='repetition_unit',
-        ),
+            new_name='repetition_unit',),
         migrations.RenameField(
             model_name='workoutlog',
             old_name='unit',
-            new_name='repetition_unit',
-        ),
+            new_name='repetition_unit',),
         migrations.AddField(
             model_name='setting',
             name='weight_unit',
-            field=models.ForeignKey(verbose_name='Unit', to='core.WeightUnit', default=1),
-        ),
+            field=models.ForeignKey(
+                verbose_name='Unit', to='core.WeightUnit', default=1),),
         migrations.AddField(
             model_name='workoutlog',
             name='weight_unit',
-            field=models.ForeignKey(verbose_name='Unit', to='core.WeightUnit', default=1),
-        ),
+            field=models.ForeignKey(
+                verbose_name='Unit', to='core.WeightUnit', default=1),),
     ]

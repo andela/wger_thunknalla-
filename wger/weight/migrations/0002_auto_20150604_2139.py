@@ -13,15 +13,16 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='weightentry',
-            options={'verbose_name': 'Weight entry', 'get_latest_by': 'date', 'ordering': ['date']},
-        ),
+            options={
+                'verbose_name': 'Weight entry',
+                'get_latest_by': 'date',
+                'ordering': ['date']
+            },),
         migrations.RenameField(
             model_name='weightentry',
             old_name='creation_date',
-            new_name='date',
-        ),
+            new_name='date',),
         migrations.AlterUniqueTogether(
             name='weightentry',
-            unique_together=set([('date', 'user')]),
-        ),
+            unique_together=set([('date', 'user')]),),
     ]
