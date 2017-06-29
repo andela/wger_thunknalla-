@@ -10,8 +10,7 @@ plans. It can also be used as a simple gym management utility, providing differe
 administrative roles (trainer, manager, etc.). It offers a REST API as well, for
 easy integration with other projects and tools.
 
-It is written with python/django and uses jQuery and some D3js for charts.
-
+It is written with python/django and uses jQuery and some D/path/to/current/folder/
 For more details and a live system, refer to the project's site: https://wger.de/
 
 
@@ -73,10 +72,10 @@ Then install the python packages from pypi in the virtualenv::
  $ cd wger
  $ pip install -r requirements.txt  # or requirements_devel.txt to develop
  $ invoke create_settings \
-          --settings-path /home/wger/wger/settings.py \
-          --database-path /home/wger/wger/database.sqlite
+          --settings-path /path/to/current/folder/settings.py \
+          --database-path /path/to/current/folder/database.sqlite
  $ invoke bootstrap_wger \
-          --settings-path /home/wger/wger/settings.py \
+          --settings-path /path/to/current/folder/settings.py \
           --no-start-server
  $ python manage.py runserver
 ```
