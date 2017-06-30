@@ -79,9 +79,7 @@ class WgerAuthenticationMiddleware(object):
     '''
 
     def process_request(self, request):
-        assert hasattr(
-            request,
-            'session'), "The Django authentication middleware requires "
+        assert hasattr(request, 'session'), "The Django authentication middleware requires "
         "session middleware to be installed. Edit your MIDDLEWARE_CLASSES setting to insert"
         "'django.contrib.sessions.middleware.SessionMiddleware'."
 
@@ -96,8 +94,7 @@ class RobotsExclusionMiddleware(object):
 
     def process_response(self, request, response):
         # Don't set it if it's already in the response
-        if check_current_request(request) and response.get(
-                'X-Robots-Tag', None) is None:
+        if check_current_request(request) and response.get('X-Robots-Tag', None) is None:
             response['X-Robots-Tag'] = 'noindex, nofollow'
         return response
 
@@ -115,8 +112,7 @@ class JavascriptAJAXRedirectionMiddleware(object):
 
     def process_response(self, request, response):
 
-        if request.META.get('HTTP_X_WGER_NO_MESSAGES'
-                            ) and b'has-error' not in response.content:
+        if request.META.get('HTTP_X_WGER_NO_MESSAGES') and b'has-error' not in response.content:
 
             logger.debug('Sending X-wger-redirect')
             response['X-wger-redirect'] = request.path

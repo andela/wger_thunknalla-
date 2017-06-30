@@ -221,14 +221,12 @@ class AdminUserNote(m.Model):
             "-timestamp_created",
         ]
 
-    user = m.ForeignKey(
-        User, editable=False, related_name='adminusernote_user')
+    user = m.ForeignKey(User, editable=False, related_name='adminusernote_user')
     '''
     User this note belongs to
     '''
 
-    member = m.ForeignKey(
-        User, editable=False, related_name='adminusernote_member')
+    member = m.ForeignKey(User, editable=False, related_name='adminusernote_member')
     '''
     Gym member this note refers to
     '''
@@ -260,8 +258,8 @@ def gym_document_upload_dir(instance, filename):
     '''
     Returns the upload target for documents
     '''
-    return "gym/documents/{0}/{1}/{2}".format(
-        instance.member.userprofile.gym.id, instance.member.id, uuid.uuid4())
+    return "gym/documents/{0}/{1}/{2}".format(instance.member.userprofile.gym.id,
+                                              instance.member.id, uuid.uuid4())
 
 
 @python_2_unicode_compatible
@@ -283,8 +281,7 @@ class UserDocument(m.Model):
     User this note belongs to
     '''
 
-    member = m.ForeignKey(
-        User, editable=False, related_name='userdocument_member')
+    member = m.ForeignKey(User, editable=False, related_name='userdocument_member')
     '''
     Gym member this note refers to
     '''

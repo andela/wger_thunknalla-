@@ -43,12 +43,9 @@ class LanguageConfig(models.Model):
     SHOW_ITEM_LIST = ((SHOW_ITEM_EXERCISES, _('Exercises')),
                       (SHOW_ITEM_INGREDIENTS, _('Ingredients')), )
 
-    language = models.ForeignKey(
-        Language, related_name='language_source', editable=False)
-    language_target = models.ForeignKey(
-        Language, related_name='language_target', editable=False)
-    item = models.CharField(
-        max_length=2, choices=SHOW_ITEM_LIST, editable=False)
+    language = models.ForeignKey(Language, related_name='language_source', editable=False)
+    language_target = models.ForeignKey(Language, related_name='language_target', editable=False)
+    item = models.CharField(max_length=2, choices=SHOW_ITEM_LIST, editable=False)
     show = models.BooleanField(default=1)
 
     class Meta:
@@ -74,8 +71,7 @@ class LanguageConfig(models.Model):
         super(LanguageConfig, self).save(*args, **kwargs)
 
         # Cached objects
-        cache.delete(
-            cache_mapper.get_language_config_key(self.language, self.item))
+        cache.delete(cache_mapper.get_language_config_key(self.language, self.item))
 
         # Cached template fragments
         delete_template_fragment_cache('muscle-overview', self.language_id)
@@ -87,8 +83,7 @@ class LanguageConfig(models.Model):
         '''
 
         # Cached objects
-        cache.delete(
-            cache_mapper.get_language_config_key(self.language, self.item))
+        cache.delete(cache_mapper.get_language_config_key(self.language, self.item))
 
         # Cached template fragments
         delete_template_fragment_cache('muscle-overview', self.language_id)
@@ -145,7 +140,6 @@ class GymConfig(models.Model):
                         config.gym = self.default_gym
                         config.user = user
                         config.save()
-                        logger.debug('Creating GymUserConfig for user {0}'.
-                                     format(user.username))
+                        logger.debug('Creating GymUserConfig for user {0}'.format(user.username))
 
         return super(GymConfig, self).save(*args, **kwargs)

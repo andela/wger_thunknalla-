@@ -41,10 +41,8 @@ class WorkoutSessionUpdateView(WgerFormMixin, LoginRequiredMixin, UpdateView):
     form_class = WorkoutSessionForm
 
     def get_context_data(self, **kwargs):
-        context = super(WorkoutSessionUpdateView, self).get_context_data(
-            **kwargs)
-        context['form_action'] = reverse(
-            'manager:session:edit', kwargs={'pk': self.object.id})
+        context = super(WorkoutSessionUpdateView, self).get_context_data(**kwargs)
+        context['form_action'] = reverse('manager:session:edit', kwargs={'pk': self.object.id})
         context['title'] = _('Edit workout impression for {0}').format(
             self.object.date)
 
@@ -68,8 +66,7 @@ class WorkoutSessionAddView(WgerFormMixin, LoginRequiredMixin, CreateView):
         '''
         try:
             date = datetime.date(
-                int(self.kwargs['year']),
-                int(self.kwargs['month']), int(self.kwargs['day']))
+                int(self.kwargs['year']), int(self.kwargs['month']), int(self.kwargs['day']))
         except ValueError:
             date = None
 
@@ -86,8 +83,7 @@ class WorkoutSessionAddView(WgerFormMixin, LoginRequiredMixin, CreateView):
         if not self.get_date():
             return HttpResponseBadRequest('You need to use a valid date')
 
-        return super(WorkoutSessionAddView, self).dispatch(
-            request, *args, **kwargs)
+        return super(WorkoutSessionAddView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(WorkoutSessionAddView, self).get_context_data(**kwargs)
@@ -118,8 +114,7 @@ class WorkoutSessionAddView(WgerFormMixin, LoginRequiredMixin, CreateView):
         return super(WorkoutSessionAddView, self).form_valid(form)
 
 
-class WorkoutSessionDeleteView(WgerDeleteMixin, LoginRequiredMixin,
-                               DeleteView):
+class WorkoutSessionDeleteView(WgerDeleteMixin, LoginRequiredMixin, DeleteView):
     '''
     Generic view to delete a workout routine
     '''
@@ -134,21 +129,17 @@ class WorkoutSessionDeleteView(WgerDeleteMixin, LoginRequiredMixin,
         Delete the workout session and, if wished, all associated weight logs as well
         '''
         if self.kwargs['logs'] == 'logs':
-            WorkoutLog.objects.filter(
-                user=self.request.user, date=self.get_object().date).delete()
+            WorkoutLog.objects.filter(user=self.request.user, date=self.get_object().date).delete()
 
-        return super(WorkoutSessionDeleteView, self).delete(
-            request, *args, **kwargs)
+        return super(WorkoutSessionDeleteView, self).delete(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
 
         logs = '' if not self.kwargs['logs'] else self.kwargs['logs']
-        context = super(WorkoutSessionDeleteView, self).get_context_data(
-            **kwargs)
+        context = super(WorkoutSessionDeleteView, self).get_context_data(**kwargs)
         context['form_action'] = reverse(
-            'manager:session:delete',
-            kwargs={'pk': self.object.id,
-                    'logs': logs})
+            'manager:session:delete', kwargs={'pk': self.object.id,
+                                              'logs': logs})
         context['title'] = _(u'Delete {0}?').format(self.object)
         if self.kwargs['logs'] == 'logs':
             context['delete_message'] = _(

@@ -15,8 +15,5 @@ class Migration(migrations.Migration):
             model_name='contract',
             name='amount',
             field=models.DecimalField(
-                default=0,
-                verbose_name='Amount',
-                max_digits=12,
-                decimal_places=2),),
+                default=0, verbose_name='Amount', max_digits=12, decimal_places=2),),
     ]

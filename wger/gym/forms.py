@@ -55,9 +55,7 @@ class GymUserPermisssionForm(forms.ModelForm):
             field_choices.append((self.MANAGER, _('General manager')))
 
         self.fields['role'] = forms.MultipleChoiceField(
-            choices=field_choices,
-            initial=User,
-            widget=BootstrapSelectMultiple())
+            choices=field_choices, initial=User, widget=BootstrapSelectMultiple())
 
 
 class GymUserAddForm(GymUserPermisssionForm, UserPersonalInformationForm):

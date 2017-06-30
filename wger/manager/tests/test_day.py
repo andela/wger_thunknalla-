@@ -58,8 +58,7 @@ class DeleteWorkoutDayTestCase(WorkoutManagerTestCase):
 
         # Fetch the day edit page
         count_before = Day.objects.count()
-        response = self.client.get(
-            reverse('manager:day:delete', kwargs={'pk': 5}))
+        response = self.client.get(reverse('manager:day:delete', kwargs={'pk': 5}))
         count_after = Day.objects.count()
 
         if fail:
@@ -120,8 +119,7 @@ class RenderWorkoutDayTestCase(WorkoutManagerTestCase):
         '''
 
         # Fetch the day edit page
-        response = self.client.get(
-            reverse('manager:day:view', kwargs={'id': 5}))
+        response = self.client.get(reverse('manager:day:view', kwargs={'id': 5}))
 
         if fail:
             self.assertIn(response.status_code, (302, 404))
@@ -166,12 +164,10 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
         '''
         day = Day.objects.get(pk=1)
         day.canonical_representation
-        self.assertTrue(
-            cache.get(cache_mapper.get_workout_canonical(day.training_id)))
+        self.assertTrue(cache.get(cache_mapper.get_workout_canonical(day.training_id)))
 
         day.save()
-        self.assertFalse(
-            cache.get(cache_mapper.get_workout_canonical(day.training_id)))
+        self.assertFalse(cache.get(cache_mapper.get_workout_canonical(day.training_id)))
 
     def test_canonical_form_cache_delete(self):
         '''
@@ -179,12 +175,10 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
         '''
         day = Day.objects.get(pk=1)
         day.canonical_representation
-        self.assertTrue(
-            cache.get(cache_mapper.get_workout_canonical(day.training_id)))
+        self.assertTrue(cache.get(cache_mapper.get_workout_canonical(day.training_id)))
 
         day.delete()
-        self.assertFalse(
-            cache.get(cache_mapper.get_workout_canonical(day.training_id)))
+        self.assertFalse(cache.get(cache_mapper.get_workout_canonical(day.training_id)))
 
 
 class DayTestCase(WorkoutManagerTestCase):

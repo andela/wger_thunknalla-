@@ -15,9 +15,8 @@
 from django.core.urlresolvers import reverse
 
 from wger.core.tests.base_testcase import (
-    WorkoutManagerEditTestCase, WorkoutManagerAddTestCase,
-    WorkoutManagerDeleteTestCase, WorkoutManagerAccessTestCase,
-    delete_testcase_add_methods)
+    WorkoutManagerEditTestCase, WorkoutManagerAddTestCase, WorkoutManagerDeleteTestCase,
+    WorkoutManagerAccessTestCase, delete_testcase_add_methods)
 from wger.gym.models import ContractOption
 
 
@@ -30,8 +29,8 @@ class AddContractOptionTestCase(WorkoutManagerAddTestCase):
     url = reverse('gym:contract-option:add', kwargs={'gym_pk': 1})
     data = {'name': 'Some name'}
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
 
 
 class EditContractOptionTestCase(WorkoutManagerEditTestCase):
@@ -43,8 +42,8 @@ class EditContractOptionTestCase(WorkoutManagerEditTestCase):
     object_class = ContractOption
     url = 'gym:contract-option:edit'
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
     data = {'name': 'Standard contract 16-Gj'}
 
 
@@ -57,8 +56,8 @@ class DeleteContractOptionTestCase(WorkoutManagerDeleteTestCase):
     object_class = ContractOption
     url = 'gym:contract-option:delete'
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
 
 
 delete_testcase_add_methods(DeleteContractOptionTestCase)
@@ -70,5 +69,5 @@ class AccessContractOptionOverviewTestCase(WorkoutManagerAccessTestCase):
     '''
     url = reverse('gym:contract-option:list', kwargs={'gym_pk': 1})
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')

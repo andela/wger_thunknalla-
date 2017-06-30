@@ -16,10 +16,7 @@ class Migration(migrations.Migration):
             name='GymConfig',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('default_gym', models.ForeignKey(
                     blank=True,
                     to='gym.Gym',
@@ -34,23 +31,16 @@ class Migration(migrations.Migration):
             name='LanguageConfig',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('item', models.CharField(
                     max_length=2,
                     editable=False,
                     choices=[(b'1', 'Exercises'), (b'2', 'Ingredients')])),
                 ('show', models.BooleanField(default=1)),
                 ('language', models.ForeignKey(
-                    related_name='language_source',
-                    editable=False,
-                    to='core.Language')),
+                    related_name='language_source', editable=False, to='core.Language')),
                 ('language_target', models.ForeignKey(
-                    related_name='language_target',
-                    editable=False,
-                    to='core.Language')),
+                    related_name='language_target', editable=False, to='core.Language')),
             ],
             options={
                 'ordering': ['item', 'language_target'],

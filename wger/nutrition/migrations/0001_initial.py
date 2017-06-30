@@ -19,10 +19,7 @@ class Migration(migrations.Migration):
             name='Ingredient',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('license_author', models.CharField(
                     help_text=
                     'If you are not the author, enter the name or source here. This is needed for some licenses e.g. the CC-BY-SA.',
@@ -34,19 +31,13 @@ class Migration(migrations.Migration):
                     default=b'1',
                     max_length=2,
                     editable=False,
-                    choices=[(b'1', 'Pending'), (b'2', 'Accepted'),
-                             (b'3',
-                              'Declined'), (b'4',
-                                            'Submitted by administrator'),
-                             (b'5', 'System ingredient')])),
-                ('creation_date', models.DateField(
-                    auto_now_add=True, verbose_name='Date')),
-                ('update_date', models.DateField(
-                    auto_now=True, verbose_name='Date')),
-                ('name', models.CharField(max_length=200,
-                                          verbose_name='Name')),
-                ('energy', models.IntegerField(
-                    help_text='In kcal per 100g', verbose_name='Energy')),
+                    choices=[(b'1', 'Pending'), (b'2', 'Accepted'), (b'3', 'Declined'),
+                             (b'4', 'Submitted by administrator'), (b'5', 'System ingredient')])),
+                ('creation_date', models.DateField(auto_now_add=True, verbose_name='Date')),
+                ('update_date', models.DateField(auto_now=True, verbose_name='Date')),
+                ('name', models.CharField(max_length=200, verbose_name='Name')),
+                ('energy', models.IntegerField(help_text='In kcal per 100g',
+                                               verbose_name='Energy')),
                 ('protein', models.DecimalField(
                     help_text='In g per 100g of product',
                     verbose_name='Protein',
@@ -119,11 +110,9 @@ class Migration(migrations.Migration):
                     null=True,
                     verbose_name='Sodium')),
                 ('language', models.ForeignKey(
-                    editable=False,
-                    to='core.Language',
-                    verbose_name='Language')),
-                ('license', models.ForeignKey(
-                    default=2, verbose_name='License', to='core.License')),
+                    editable=False, to='core.Language', verbose_name='Language')),
+                ('license', models.ForeignKey(default=2, verbose_name='License',
+                                              to='core.License')),
                 ('user', models.ForeignKey(
                     blank=True,
                     editable=False,
@@ -139,10 +128,7 @@ class Migration(migrations.Migration):
             name='IngredientWeightUnit',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('gram', models.IntegerField(verbose_name='Amount in grams')),
                 ('amount', models.DecimalField(
                     default=1,
@@ -151,9 +137,7 @@ class Migration(migrations.Migration):
                     max_digits=5,
                     decimal_places=2)),
                 ('ingredient', models.ForeignKey(
-                    editable=False,
-                    to='nutrition.Ingredient',
-                    verbose_name='Ingredient')),
+                    editable=False, to='nutrition.Ingredient', verbose_name='Ingredient')),
             ],
             options={},
             bases=(models.Model,),),
@@ -161,15 +145,9 @@ class Migration(migrations.Migration):
             name='Meal',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('order', models.IntegerField(
-                    verbose_name='Order',
-                    max_length=1,
-                    editable=False,
-                    blank=True)),
+                    verbose_name='Order', max_length=1, editable=False, blank=True)),
                 ('time', wger.utils.fields.Html5TimeField(
                     null=True, verbose_name='Time (approx)', blank=True)),
             ],
@@ -181,15 +159,9 @@ class Migration(migrations.Migration):
             name='MealItem',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('order', models.IntegerField(
-                    verbose_name='Order',
-                    max_length=1,
-                    editable=False,
-                    blank=True)),
+                    verbose_name='Order', max_length=1, editable=False, blank=True)),
                 ('amount', models.DecimalField(
                     verbose_name='Amount',
                     max_digits=6,
@@ -201,9 +173,7 @@ class Migration(migrations.Migration):
                 ('ingredient', models.ForeignKey(
                     verbose_name='Ingredient', to='nutrition.Ingredient')),
                 ('meal', models.ForeignKey(
-                    editable=False,
-                    to='nutrition.Meal',
-                    verbose_name='Nutrition plan')),
+                    editable=False, to='nutrition.Meal', verbose_name='Nutrition plan')),
                 ('weight_unit', models.ForeignKey(
                     verbose_name='Weight unit',
                     blank=True,
@@ -216,12 +186,9 @@ class Migration(migrations.Migration):
             name='NutritionPlan',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('creation_date', models.DateField(
-                    auto_now_add=True, verbose_name='Creation date')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('creation_date', models.DateField(auto_now_add=True,
+                                                   verbose_name='Creation date')),
                 ('description', models.TextField(
                     help_text=
                     'A description of the goal of the plan, e.g. "Gain mass" or "Prepare for summer"',
@@ -234,13 +201,9 @@ class Migration(migrations.Migration):
                     'Tick the box if you want to mark this plan as having a goal amount of calories. You can use the calculator or enter the value yourself.',
                     verbose_name='Use daily calories')),
                 ('language', models.ForeignKey(
-                    editable=False,
-                    to='core.Language',
-                    verbose_name='Language')),
+                    editable=False, to='core.Language', verbose_name='Language')),
                 ('user', models.ForeignKey(
-                    editable=False,
-                    to=settings.AUTH_USER_MODEL,
-                    verbose_name='User')),
+                    editable=False, to=settings.AUTH_USER_MODEL, verbose_name='User')),
             ],
             options={
                 'ordering': ['-creation_date'],
@@ -250,16 +213,10 @@ class Migration(migrations.Migration):
             name='WeightUnit',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('name', models.CharField(max_length=200,
-                                          verbose_name='Name')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=200, verbose_name='Name')),
                 ('language', models.ForeignKey(
-                    editable=False,
-                    to='core.Language',
-                    verbose_name='Language')),
+                    editable=False, to='core.Language', verbose_name='Language')),
             ],
             options={
                 'ordering': ['name'],
@@ -269,14 +226,11 @@ class Migration(migrations.Migration):
             model_name='meal',
             name='plan',
             field=models.ForeignKey(
-                editable=False,
-                to='nutrition.NutritionPlan',
-                verbose_name='Nutrition plan'),
+                editable=False, to='nutrition.NutritionPlan', verbose_name='Nutrition plan'),
             preserve_default=True,),
         migrations.AddField(
             model_name='ingredientweightunit',
             name='unit',
-            field=models.ForeignKey(
-                verbose_name='Weight unit', to='nutrition.WeightUnit'),
+            field=models.ForeignKey(verbose_name='Weight unit', to='nutrition.WeightUnit'),
             preserve_default=True,),
     ]

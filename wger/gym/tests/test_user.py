@@ -36,8 +36,7 @@ class GymAddUserTestCase(WorkoutManagerTestCase):
         '''
         count_before = User.objects.all().count()
         GymAdminConfig.objects.all().delete()
-        response = self.client.get(
-            reverse('gym:gym:add-user', kwargs={'gym_pk': 1}))
+        response = self.client.get(reverse('gym:gym:add-user', kwargs={'gym_pk': 1}))
         self.assertEqual(GymAdminConfig.objects.all().count(), 0)
         if fail:
             self.assertEqual(response.status_code, 403)
@@ -62,10 +61,8 @@ class GymAddUserTestCase(WorkoutManagerTestCase):
             self.assertEqual(response.status_code, 302)
             self.assertTrue(self.client.session['gym.user']['user_pk'], 3)
             self.assertTrue(self.client.session['gym.user']['password'])
-            self.assertEqual(
-                len(self.client.session['gym.user']['password']), 15)
-            new_user = User.objects.get(
-                pk=self.client.session['gym.user']['user_pk'])
+            self.assertEqual(len(self.client.session['gym.user']['password']), 15)
+            new_user = User.objects.get(pk=self.client.session['gym.user']['user_pk'])
             self.assertEqual(GymAdminConfig.objects.all().count(), 1)
             self.assertEqual(new_user.userprofile.gym_id, 1)
 
@@ -121,8 +118,7 @@ class GymAddUserTestCase(WorkoutManagerTestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response['Content-Type'], 'text/csv')
             today = datetime.date.today()
-            filename = 'User-data-{t.year}-{t.month:02d}-{t.day:02d}-cletus.csv'.format(
-                t=today)
+            filename = 'User-data-{t.year}-{t.month:02d}-{t.day:02d}-cletus.csv'.format(t=today)
             self.assertEqual(response['Content-Disposition'],
                              'attachment; filename={}'.format(filename))
             self.assertGreaterEqual(len(response.content), 90)
@@ -153,8 +149,7 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         '''
         Test the trainer login as an anonymous user
         '''
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 1}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 1}))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(self.client.session.get('trainer.identity'))
 
@@ -163,8 +158,7 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         Test the trainer login as a logged in user without rights
         '''
         self.user_login('test')
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 1}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 1}))
         self.assertEqual(response.status_code, 403)
         self.assertFalse(self.client.session.get('trainer.identity'))
 
@@ -173,8 +167,7 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         Test the trainer login as a logged in user with enough rights
         '''
         self.user_login('admin')
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
         self.assertEqual(response.status_code, 302)
         self.assertTrue(self.client.session.get('trainer.identity'))
 
@@ -186,8 +179,7 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         profile.gym_id = 2
         profile.save()
         self.user_login('admin')
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
         self.assertEqual(response.status_code, 403)
         self.assertFalse(self.client.session.get('trainer.identity'))
 
@@ -197,13 +189,11 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         '''
         user = User.objects.get(pk=2)
         content_type = ContentType.objects.get_for_model(Gym)
-        permission = Permission.objects.get(
-            content_type=content_type, codename='gym_trainer')
+        permission = Permission.objects.get(content_type=content_type, codename='gym_trainer')
         user.user_permissions.add(permission)
 
         self.user_login('admin')
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
         self.assertEqual(response.status_code, 403)
         self.assertFalse(self.client.session.get('trainer.identity'))
 
@@ -213,13 +203,11 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         '''
         user = User.objects.get(pk=2)
         content_type = ContentType.objects.get_for_model(Gym)
-        permission = Permission.objects.get(
-            content_type=content_type, codename='manage_gym')
+        permission = Permission.objects.get(content_type=content_type, codename='manage_gym')
         user.user_permissions.add(permission)
 
         self.user_login('admin')
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
         self.assertEqual(response.status_code, 403)
         self.assertFalse(self.client.session.get('trainer.identity'))
 
@@ -229,13 +217,11 @@ class TrainerLoginTestCase(WorkoutManagerTestCase):
         '''
         user = User.objects.get(pk=2)
         content_type = ContentType.objects.get_for_model(Gym)
-        permission = Permission.objects.get(
-            content_type=content_type, codename='manage_gyms')
+        permission = Permission.objects.get(content_type=content_type, codename='manage_gyms')
         user.user_permissions.add(permission)
 
         self.user_login('admin')
-        response = self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
+        response = self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
         self.assertEqual(response.status_code, 403)
         self.assertFalse(self.client.session.get('trainer.identity'))
 
@@ -250,10 +236,8 @@ class TrainerLogoutTestCase(WorkoutManagerTestCase):
         Test the trainer login as an anonymous user
         '''
         self.user_login('admin')
-        self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
+        self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 2}))
         self.assertTrue(self.client.session.get('trainer.identity'))
 
-        self.client.get(
-            reverse('core:user:trainer-login', kwargs={'user_pk': 1}))
+        self.client.get(reverse('core:user:trainer-login', kwargs={'user_pk': 1}))
         self.assertFalse(self.client.session.get('trainer.identity'))

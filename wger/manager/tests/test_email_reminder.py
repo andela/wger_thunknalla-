@@ -80,8 +80,7 @@ class EmailReminderTestCase(WorkoutManagerTestCase):
         '''
 
         profile = UserProfile.objects.get(user=2)
-        profile.last_workout_notification = datetime.date.today(
-        ) - datetime.timedelta(days=3)
+        profile.last_workout_notification = datetime.date.today() - datetime.timedelta(days=3)
         profile.save()
 
         Schedule.objects.all().delete()
@@ -99,8 +98,7 @@ class EmailReminderTestCase(WorkoutManagerTestCase):
         '''
 
         profile = UserProfile.objects.get(user=2)
-        profile.last_workout_notification = datetime.date.today(
-        ) - datetime.timedelta(days=10)
+        profile.last_workout_notification = datetime.date.today() - datetime.timedelta(days=10)
         profile.save()
 
         Schedule.objects.all().delete()
@@ -184,8 +182,7 @@ class EmailReminderTestCase(WorkoutManagerTestCase):
         Schedule.objects.exclude(user=user).delete()
 
         schedule = Schedule.objects.get(pk=2)
-        schedule.start_date = datetime.date.today() - datetime.timedelta(
-            weeks=4)
+        schedule.start_date = datetime.date.today() - datetime.timedelta(weeks=4)
         schedule.is_active = True
         schedule.is_loop = False
         schedule.save()
@@ -206,8 +203,7 @@ class EmailReminderTestCase(WorkoutManagerTestCase):
 
         # Schedule: 3, 5 and 2 weeks
         schedule = Schedule.objects.get(pk=2)
-        schedule.start_date = datetime.date.today() - datetime.timedelta(
-            weeks=9)
+        schedule.start_date = datetime.date.today() - datetime.timedelta(weeks=9)
         schedule.is_active = True
         schedule.is_loop = False
         schedule.save()
@@ -229,8 +225,7 @@ class EmailReminderTestCase(WorkoutManagerTestCase):
 
         # Schedule: 3, 5 and 2 weeks
         schedule = Schedule.objects.get(pk=2)
-        schedule.start_date = datetime.date.today() - datetime.timedelta(
-            weeks=9)
+        schedule.start_date = datetime.date.today() - datetime.timedelta(weeks=9)
         schedule.is_active = True
         schedule.is_loop = False
         schedule.save()

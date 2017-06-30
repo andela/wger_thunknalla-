@@ -60,12 +60,11 @@ class WeightCsvImportTestCase(WorkoutManagerTestCase):
 
         # 2nd. step
         response = self.client.post(
-            reverse('weight:import-csv'), {
-                'stage': 2,
-                'hash': hash_value,
-                'csv_input': csv_input,
-                'date_format': '%d.%m.%y'
-            })
+            reverse('weight:import-csv'),
+            {'stage': 2,
+             'hash': hash_value,
+             'csv_input': csv_input,
+             'date_format': '%d.%m.%y'})
 
         count_after = WeightEntry.objects.count()
         self.assertEqual(response.status_code, 302)

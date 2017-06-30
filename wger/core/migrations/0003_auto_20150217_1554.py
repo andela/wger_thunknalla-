@@ -19,9 +19,7 @@ class Migration(migrations.Migration):
                 verbose_name='Automatic reminders for weight entries',
                 max_length=30,
                 null=True,
-                help_text=
-                'Number of days after the last weight entry (enter 0 to deactivate)'
-            ),
+                help_text='Number of days after the last weight entry (enter 0 to deactivate)'),
             preserve_default=True,),
         migrations.AlterField(
             model_name='userprofile',

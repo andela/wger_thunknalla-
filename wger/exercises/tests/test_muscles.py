@@ -16,10 +16,9 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 
 from wger.core.tests import api_base_test
-from wger.core.tests.base_testcase import (
-    WorkoutManagerTestCase, WorkoutManagerDeleteTestCase,
-    WorkoutManagerEditTestCase, WorkoutManagerAddTestCase,
-    WorkoutManagerAccessTestCase)
+from wger.core.tests.base_testcase import (WorkoutManagerTestCase, WorkoutManagerDeleteTestCase,
+                                           WorkoutManagerEditTestCase, WorkoutManagerAddTestCase,
+                                           WorkoutManagerAccessTestCase)
 from wger.exercises.models import Muscle
 from wger.utils.cache import get_template_cache_name
 
@@ -33,8 +32,7 @@ class MuscleRepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual(
-            "{0}".format(Muscle.objects.get(pk=1)), 'Anterior testoid')
+        self.assertEqual("{0}".format(Muscle.objects.get(pk=1)), 'Anterior testoid')
 
 
 class MuscleAdminOverviewTest(WorkoutManagerAccessTestCase):
@@ -45,8 +43,8 @@ class MuscleAdminOverviewTest(WorkoutManagerAccessTestCase):
     anonymous_fail = True
     user_success = 'admin'
     user_fail = ('manager1', 'manager2'
-                 'general_manager1', 'manager3', 'manager4', 'test', 'member1',
-                 'member2', 'member3', 'member4', 'member5')
+                 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
 
 
 class MusclesShareButtonTestCase(WorkoutManagerTestCase):
@@ -111,11 +109,9 @@ class MuscleCacheTestCase(WorkoutManagerTestCase):
         '''
 
         if not self.is_mobile:
-            self.assertFalse(
-                cache.get(get_template_cache_name('muscle-overview', 2)))
+            self.assertFalse(cache.get(get_template_cache_name('muscle-overview', 2)))
             self.client.get(reverse('exercise:muscle:overview'))
-            self.assertTrue(
-                cache.get(get_template_cache_name('muscle-overview', 2)))
+            self.assertTrue(cache.get(get_template_cache_name('muscle-overview', 2)))
 
 
 class MuscleOverviewTestCase(WorkoutManagerAccessTestCase):

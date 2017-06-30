@@ -24,5 +24,5 @@ class AccessContractTestCase(WorkoutManagerAccessTestCase):
     '''
     url = reverse('email:email:overview', kwargs={'gym_pk': 1})
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')

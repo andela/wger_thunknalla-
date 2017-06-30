@@ -23,15 +23,12 @@ from wger.weight.forms import WeightCsvImportForm
 
 urlpatterns = [
     url(r'^add/$', login_required(views.WeightAddView.as_view()), name='add'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        login_required(views.WeightUpdateView.as_view()),
-        name='edit'),
+    url(r'^(?P<pk>\d+)/edit/$', login_required(views.WeightUpdateView.as_view()), name='edit'),
     url(r'^export-csv/$', views.export_csv, name='export-csv'),
     url(r'^import-csv/$',
         login_required(views.WeightCsvImportFormPreview(WeightCsvImportForm)),
         name='import-csv'),
-    url(r'^overview/(?P<username>[\w.@+-]+)$', views.overview,
-        name='overview'),
+    url(r'^overview/(?P<username>[\w.@+-]+)$', views.overview, name='overview'),
     # url(r'^overview/$',
     #     views.overview,
     #     name='overview'),

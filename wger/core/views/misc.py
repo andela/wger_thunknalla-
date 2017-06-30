@@ -61,8 +61,7 @@ def demo_entries(request):
     if not settings.WGER_SETTINGS['ALLOW_GUEST_USERS']:
         return HttpResponseRedirect(reverse('software:features'))
 
-    if (((not request.user.is_authenticated() or
-          request.user.userprofile.is_temporary) and
+    if (((not request.user.is_authenticated() or request.user.userprofile.is_temporary) and
          not request.session['has_demo_data'])):
         # If we reach this from a page that has no user created by the
         # middleware, do that now
@@ -92,16 +91,14 @@ def dashboard(request):
     template_data = {}
 
     # Load the last workout, either from a schedule or a 'regular' one
-    (current_workout,
-     schedule) = Schedule.objects.get_current_workout(request.user)
+    (current_workout, schedule) = Schedule.objects.get_current_workout(request.user)
 
     template_data['current_workout'] = current_workout
     template_data['schedule'] = schedule
 
     # Load the last nutritional plan, if one exists
     try:
-        plan = NutritionPlan.objects.filter(
-            user=request.user).latest('creation_date')
+        plan = NutritionPlan.objects.filter(user=request.user).latest('creation_date')
     except ObjectDoesNotExist:
         plan = False
     template_data['plan'] = plan
@@ -178,8 +175,7 @@ class FeedbackClass(FormView):
         context['form_action'] = reverse('core:feedback')
         context['submit_text'] = _('Send')
         context['contribute_url'] = reverse('software:contribute')
-        context['extend_template'] = 'base_empty.html' if self.request.is_ajax(
-        ) else 'base.html'
+        context['extend_template'] = 'base_empty.html' if self.request.is_ajax() else 'base.html'
         return context
 
     def get_form_class(self):
@@ -187,8 +183,7 @@ class FeedbackClass(FormView):
         Load the correct feedback form depending on the user
         (either with reCaptcha field or not)
         '''
-        if self.request.user.is_anonymous(
-        ) or self.request.user.userprofile.is_temporary:
+        if self.request.user.is_anonymous() or self.request.user.userprofile.is_temporary:
             return FeedbackAnonymousForm
         else:
             return FeedbackRegisteredForm

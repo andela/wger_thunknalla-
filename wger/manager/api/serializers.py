@@ -17,12 +17,12 @@
 
 from rest_framework import serializers
 
-from wger.core.api.serializers import (
-    DaysOfWeekSerializer, RepetitionUnitSerializer, WeightUnitSerializer)
+from wger.core.api.serializers import (DaysOfWeekSerializer, RepetitionUnitSerializer,
+                                       WeightUnitSerializer)
 from wger.exercises.api.serializers import ExerciseSerializer
 
-from wger.manager.models import (Workout, ScheduleStep, Day, Setting, Set,
-                                 Schedule, WorkoutLog, WorkoutSession)
+from wger.manager.models import (Workout, ScheduleStep, Day, Setting, Set, Schedule, WorkoutLog,
+                                 WorkoutSession)
 
 
 class WorkoutSerializer(serializers.ModelSerializer):

@@ -18,13 +18,9 @@ class Migration(migrations.Migration):
             name='UserCache',
             fields=[
                 ('id', models.AutoField(
-                    auto_created=True,
-                    primary_key=True,
-                    serialize=False,
-                    verbose_name='ID')),
+                    auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('last_activity', models.DateField(null=True)),
-                ('user', models.OneToOneField(
-                    editable=False, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(editable=False, to=settings.AUTH_USER_MODEL)),
             ],),
         migrations.AlterField(
             model_name='userprofile',
@@ -32,8 +28,7 @@ class Migration(migrations.Migration):
             field=models.IntegerField(
                 default=0,
                 verbose_name='Automatic reminders for weight entries',
-                help_text=
-                'Number of days after the last weight entry (enter 0 to deactivate)',
+                help_text='Number of days after the last weight entry (enter 0 to deactivate)',
                 validators=[
                     django.core.validators.MinValueValidator(0),
                     django.core.validators.MaxValueValidator(30)

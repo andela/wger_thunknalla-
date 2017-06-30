@@ -17,19 +17,18 @@
 import datetime
 import decimal
 
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import IntegerField
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
-from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from wger.gym.models import Gym
 
+from wger.gym.models import Gym
 from wger.utils.constants import TWOPLACES
 from wger.utils.units import AbstractWeight
-
 from wger.weight.models import WeightEntry
 
 
@@ -126,15 +125,17 @@ class UserProfile(models.Model):
     '''
 
     # Also show ingredients in english while composing a nutritional plan
-    # (obviously this is only meaningful if the user has a language other than english)
+    # (obviously this is only meaningful if the user has a language
+    # other than english)
+
     show_english_ingredients = models.BooleanField(
         verbose_name=_('Also use ingredients in English'),
         help_text=_('''Check to also show ingredients in English while creating
-a nutritional plan. These ingredients are extracted from a list provided
-by the US Department of Agriculture. It is extremely complete, with around
-7000 entries, but can be somewhat overwhelming and make the search difficult.'''
-                    ),
-        default=True)
+                    a nutritional plan. These ingredients are extracted from a
+                    list provided by the US Department of Agriculture. It is
+                    extremely complete, with around 7000 entries, but can be
+                    somewhat overwhelming and make the search difficult.'''
+                    ), default=True)
 
     workout_reminder_active = models.BooleanField(
         verbose_name=_('Activate workout reminders'),
@@ -364,9 +365,10 @@ by the US Department of Agriculture. It is extremely complete, with around
         '''
         Make sure the total amount of hours is 24
         '''
-        if ((self.sleep_hours and self.freetime_hours and self.work_hours) and (
-                self.sleep_hours + self.freetime_hours + self.work_hours) > 24):
-            raise ValidationError(_('The sum of all hours has to be 24'))
+        if (self.sleep_hours and self.freetime_hours and self.work_hours):
+            hrs = self.sleep_hours + self.freetime_hours + self.work_hours
+            if hrs > 24:
+                raise ValidationError(_('The sum of all hours has to be 24'))
 
     def __str__(self):
         '''

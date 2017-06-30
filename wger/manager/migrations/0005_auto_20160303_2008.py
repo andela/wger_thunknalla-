@@ -16,13 +16,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='setting',
             name='unit',
-            field=models.ForeignKey(
-                verbose_name='Unit', default=1, to='core.RepetitionUnit'),),
+            field=models.ForeignKey(verbose_name='Unit', default=1, to='core.RepetitionUnit'),),
         migrations.AddField(
             model_name='workoutlog',
             name='unit',
-            field=models.ForeignKey(
-                verbose_name='Unit', default=1, to='core.RepetitionUnit'),),
+            field=models.ForeignKey(verbose_name='Unit', default=1, to='core.RepetitionUnit'),),
         migrations.AlterField(
             model_name='day',
             name='description',

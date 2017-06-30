@@ -43,8 +43,7 @@ class GymOverviewTest(WorkoutManagerAccessTestCase):
     url = 'gym:gym:list'
     anonymous_fail = True
     user_success = ('admin', 'general_manager1', 'general_manager2')
-    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4',
-                 'manager3')
+    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4', 'manager3')
 
 
 class GymUserOverviewTest(WorkoutManagerAccessTestCase):
@@ -53,8 +52,8 @@ class GymUserOverviewTest(WorkoutManagerAccessTestCase):
     '''
     url = reverse_lazy('gym:gym:user-list', kwargs={'pk': 1})
     anonymous_fail = True
-    user_success = ('admin', 'trainer2', 'trainer3', 'manager1',
-                    'general_manager1', 'general_manager2')
+    user_success = ('admin', 'trainer2', 'trainer3', 'manager1', 'general_manager1',
+                    'general_manager2')
     user_fail = ('member1', 'member2', 'trainer4', 'manager3')
 
 
@@ -66,8 +65,7 @@ class AddGymTestCase(WorkoutManagerAddTestCase):
     url = 'gym:gym:add'
     data = {'name': 'The name here'}
     user_success = ('admin', 'general_manager1')
-    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4',
-                 'manager1', 'manager3')
+    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4', 'manager1', 'manager3')
 
 
 class DeleteGymTestCase(WorkoutManagerDeleteTestCase):
@@ -79,8 +77,7 @@ class DeleteGymTestCase(WorkoutManagerDeleteTestCase):
     object_class = Gym
     url = 'gym:gym:delete'
     user_success = ('admin', 'general_manager1', 'general_manager2')
-    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4',
-                 'manager1', 'manager3')
+    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4', 'manager1', 'manager3')
 
 
 delete_testcase_add_methods(DeleteGymTestCase)
@@ -95,10 +92,8 @@ class EditGymTestCase(WorkoutManagerEditTestCase):
     url = 'gym:gym:edit'
     pk = 1
     data = {'name': 'A different name'}
-    user_success = ('admin', 'manager1', 'general_manager1',
-                    'general_manager2')
-    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4',
-                 'manager3')
+    user_success = ('admin', 'manager1', 'general_manager1', 'general_manager2')
+    user_fail = ('member1', 'member2', 'trainer2', 'trainer3', 'trainer4', 'manager3')
 
 
 class GymTestCase(WorkoutManagerTestCase):

@@ -32,8 +32,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            convert_logs, reverse_code=migrations.RunPython.noop),
-        migrations.RunPython(
-            convert_settings, reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(convert_logs, reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(convert_settings, reverse_code=migrations.RunPython.noop),
     ]

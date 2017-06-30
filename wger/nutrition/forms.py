@@ -32,9 +32,7 @@ class UnitChooserForm(forms.Form):
     '''
     amount = forms.DecimalField(decimal_places=2, max_digits=5, localize=True)
     unit = forms.ModelChoiceField(
-        queryset=IngredientWeightUnit.objects.none(),
-        empty_label="g",
-        required=False)
+        queryset=IngredientWeightUnit.objects.none(), empty_label="g", required=False)
 
     def __init__(self, *args, **kwargs):
         super(UnitChooserForm, self).__init__(*args, **kwargs)
@@ -80,8 +78,8 @@ class PhysicalActivitiesForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('sleep_hours', 'work_hours', 'work_intensity', 'sport_hours',
-                  'sport_intensity', 'freetime_hours', 'freetime_intensity')
+        fields = ('sleep_hours', 'work_hours', 'work_intensity', 'sport_hours', 'sport_intensity',
+                  'freetime_hours', 'freetime_intensity')
 
 
 class DailyCaloriesForm(forms.ModelForm):
@@ -111,11 +109,8 @@ class DailyCaloriesForm(forms.ModelForm):
 
 class MealItemForm(forms.ModelForm):
     weight_unit = forms.ModelChoiceField(
-        queryset=IngredientWeightUnit.objects.none(),
-        empty_label="g",
-        required=False)
-    ingredient = forms.ModelChoiceField(
-        queryset=Ingredient.objects.all(), widget=forms.HiddenInput)
+        queryset=IngredientWeightUnit.objects.none(), empty_label="g", required=False)
+    ingredient = forms.ModelChoiceField(queryset=Ingredient.objects.all(), widget=forms.HiddenInput)
 
     class Meta:
         model = MealItem

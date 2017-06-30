@@ -11,8 +11,7 @@ def update_permission_names(apps, schema_editor):
     Permission = apps.get_model("auth", "Permission")
 
     for name in [
-            'Trainer, can see the users for a gym',
-            'Admin, can manage users for a gym',
+            'Trainer, can see the users for a gym', 'Admin, can manage users for a gym',
             'Admin, can administrate the different gyms'
     ]:
 

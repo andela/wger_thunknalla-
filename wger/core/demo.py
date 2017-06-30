@@ -26,10 +26,8 @@ from django.utils.translation import ugettext as _
 from wger.weight.models import WeightEntry
 from wger.exercises.models import Exercise
 from wger.core.models import DaysOfWeek
-from wger.manager.models import (Workout, Day, Set, Setting, WorkoutLog,
-                                 Schedule, ScheduleStep)
-from wger.nutrition.models import (NutritionPlan, Meal, MealItem, Ingredient,
-                                   IngredientWeightUnit)
+from wger.manager.models import (Workout, Day, Set, Setting, WorkoutLog, Schedule, ScheduleStep)
+from wger.nutrition.models import (NutritionPlan, Meal, MealItem, Ingredient, IngredientWeightUnit)
 
 from wger.utils.language import load_language
 
@@ -113,8 +111,7 @@ def create_demo_entries(user):
     day_set.save()
     day_set.exercises.add(exercise)
 
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=8, order=1))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=8, order=1))
 
     # Weight log entries
     for reps in (7, 10):
@@ -137,8 +134,7 @@ def create_demo_entries(user):
     day_set.save()
     day_set.exercises.add(exercise)
 
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=10, order=1))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=10, order=1))
 
     # Weight log entries
     for reps in (5, 10, 12):
@@ -161,12 +157,9 @@ def create_demo_entries(user):
     day_set.save()
     day_set.exercises.add(exercise)
 
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=30, order=1))
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=99, order=2))
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=35, order=3))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=30, order=1))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=99, order=2))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=35, order=3))
 
     # Leg raises, supersets with crunches
     if language.short_name == 'de':
@@ -175,12 +168,9 @@ def create_demo_entries(user):
         exercise = Exercise.objects.get(pk=126)
     day_set.exercises.add(exercise)
 
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=30, order=1))
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=40, order=2))
-    setting_list.append(
-        Setting(set=day_set, exercise=exercise, reps=99, order=3))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=30, order=1))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=40, order=2))
+    setting_list.append(Setting(set=day_set, exercise=exercise, reps=99, order=3))
 
     Setting.objects.bulk_create(setting_list)
 
@@ -196,9 +186,7 @@ def create_demo_entries(user):
         creation_date = datetime.date.today() - datetime.timedelta(days=i)
         if creation_date not in existing_entries:
             entry = WeightEntry(
-                user=user,
-                weight=80 + 0.5 * i + random.randint(1, 3),
-                date=creation_date)
+                user=user, weight=80 + 0.5 * i + random.randint(1, 3), date=creation_date)
             temp.append(entry)
     WeightEntry.objects.bulk_create(temp)
 

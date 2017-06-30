@@ -163,8 +163,7 @@ class ScheduleTestCase(WorkoutManagerTestCase):
         Helper function
         '''
 
-        response = self.client.get(
-            reverse('manager:schedule:view', kwargs={'pk': 2}))
+        response = self.client.get(reverse('manager:schedule:view', kwargs={'pk': 2}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'This schedule is a loop')
 
@@ -172,8 +171,7 @@ class ScheduleTestCase(WorkoutManagerTestCase):
         schedule.is_loop = False
         schedule.save()
 
-        response = self.client.get(
-            reverse('manager:schedule:view', kwargs={'pk': 2}))
+        response = self.client.get(reverse('manager:schedule:view', kwargs={'pk': 2}))
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, 'This schedule is a loop')
 
@@ -244,8 +242,7 @@ class ScheduleTestCase(WorkoutManagerTestCase):
         self.assertFalse(schedule.is_active)
         self.assertNotEqual(schedule.start_date, datetime.date.today())
 
-        response = self.client.get(
-            reverse('manager:schedule:start', kwargs={'pk': 2}))
+        response = self.client.get(reverse('manager:schedule:start', kwargs={'pk': 2}))
         schedule = Schedule.objects.get(pk=2)
         if fail:
             self.assertIn(response.status_code, STATUS_CODES_FAIL)
@@ -325,10 +322,7 @@ class ScheduleModelTestCase(WorkoutManagerTestCase):
         Workout.objects.filter(user=user).delete()
         Schedule.objects.filter(user=user).delete()
 
-    def create_schedule(self,
-                        user,
-                        start_date=datetime.date.today(),
-                        is_loop=False):
+    def create_schedule(self, user, start_date=datetime.date.today(), is_loop=False):
         '''
         Helper function
         '''
@@ -378,8 +372,7 @@ class ScheduleModelTestCase(WorkoutManagerTestCase):
         step.workout = workout
         step.duration = 3
         step.save()
-        self.assertEqual(schedule.get_current_scheduled_workout().workout,
-                         workout)
+        self.assertEqual(schedule.get_current_scheduled_workout().workout, workout)
 
     def test_get_workout_steps_test_3(self):
         '''
@@ -414,8 +407,7 @@ class ScheduleModelTestCase(WorkoutManagerTestCase):
         step3.duration = 2
         step3.order = 3
         step3.save()
-        self.assertEqual(schedule.get_current_scheduled_workout().workout,
-                         workout2)
+        self.assertEqual(schedule.get_current_scheduled_workout().workout, workout2)
 
     def test_get_workout_steps_test_4(self):
         '''
@@ -461,8 +453,7 @@ class ScheduleModelTestCase(WorkoutManagerTestCase):
         self.delete_objects(user)
 
         start_date = datetime.date.today() - datetime.timedelta(weeks=7)
-        schedule = self.create_schedule(
-            user, start_date=start_date, is_loop=True)
+        schedule = self.create_schedule(user, start_date=start_date, is_loop=True)
         workout = self.create_workout(user)
         step = ScheduleStep()
         step.schedule = schedule
@@ -486,8 +477,7 @@ class ScheduleModelTestCase(WorkoutManagerTestCase):
         step3.duration = 2
         step3.order = 3
         step3.save()
-        self.assertTrue(schedule.get_current_scheduled_workout().workout,
-                        workout)
+        self.assertTrue(schedule.get_current_scheduled_workout().workout, workout)
 
 
 class SchedulePdfExportTestCase(WorkoutManagerTestCase):
@@ -511,9 +501,8 @@ class SchedulePdfExportTestCase(WorkoutManagerTestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'application/pdf')
-        self.assertEqual(
-            response['Content-Disposition'],
-            'attachment; filename=Schedule-1-{0}.pdf'.format(pdf_type))
+        self.assertEqual(response['Content-Disposition'],
+                         'attachment; filename=Schedule-1-{0}.pdf'.format(pdf_type))
 
         # Approximate size only
         self.assertGreater(int(response['Content-Length']), 29000)
@@ -536,17 +525,15 @@ class SchedulePdfExportTestCase(WorkoutManagerTestCase):
         '''
 
         response = self.client.get(
-            reverse(
-                'manager:schedule:pdf-{0}'.format(pdf_type), kwargs={'pk': 1}))
+            reverse('manager:schedule:pdf-{0}'.format(pdf_type), kwargs={'pk': 1}))
 
         if fail:
             self.assertIn(response.status_code, (403, 404, 302))
         else:
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response['Content-Type'], 'application/pdf')
-            self.assertEqual(
-                response['Content-Disposition'],
-                'attachment; filename=Schedule-1-{0}.pdf'.format(pdf_type))
+            self.assertEqual(response['Content-Disposition'],
+                             'attachment; filename=Schedule-1-{0}.pdf'.format(pdf_type))
 
             # Approximate size only
             self.assertGreater(int(response['Content-Length']), 29000)
@@ -562,22 +549,19 @@ class SchedulePdfExportTestCase(WorkoutManagerTestCase):
         response = self.client.get(
             reverse(
                 'manager:schedule:pdf-{0}'.format(pdf_type),
-                kwargs={
-                    'pk': 3,
-                    'images': 0,
-                    'comments': 1,
-                    'uidb64': uid,
-                    'token': token
-                }))
+                kwargs={'pk': 3,
+                        'images': 0,
+                        'comments': 1,
+                        'uidb64': uid,
+                        'token': token}))
 
         if fail:
             self.assertIn(response.status_code, (403, 404, 302))
         else:
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response['Content-Type'], 'application/pdf')
-            self.assertEqual(
-                response['Content-Disposition'],
-                'attachment; filename=Schedule-3-{0}.pdf'.format(pdf_type))
+            self.assertEqual(response['Content-Disposition'],
+                             'attachment; filename=Schedule-3-{0}.pdf'.format(pdf_type))
 
             # Approximate size only
             self.assertGreater(int(response['Content-Length']), 29000)
@@ -592,22 +576,19 @@ class SchedulePdfExportTestCase(WorkoutManagerTestCase):
         response = self.client.get(
             reverse(
                 'manager:schedule:pdf-{0}'.format(pdf_type),
-                kwargs={
-                    'pk': 3,
-                    'images': 1,
-                    'comments': 0,
-                    'uidb64': uid,
-                    'token': token
-                }))
+                kwargs={'pk': 3,
+                        'images': 1,
+                        'comments': 0,
+                        'uidb64': uid,
+                        'token': token}))
 
         if fail:
             self.assertIn(response.status_code, (403, 404, 302))
         else:
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response['Content-Type'], 'application/pdf')
-            self.assertEqual(
-                response['Content-Disposition'],
-                'attachment; filename=Schedule-3-{0}.pdf'.format(pdf_type))
+            self.assertEqual(response['Content-Disposition'],
+                             'attachment; filename=Schedule-3-{0}.pdf'.format(pdf_type))
 
             # Approximate size only
             self.assertGreater(int(response['Content-Length']), 29000)
@@ -623,22 +604,19 @@ class SchedulePdfExportTestCase(WorkoutManagerTestCase):
         response = self.client.get(
             reverse(
                 'manager:schedule:pdf-{0}'.format(pdf_type),
-                kwargs={
-                    'pk': 3,
-                    'images': 1,
-                    'comments': 1,
-                    'uidb64': uid,
-                    'token': token
-                }))
+                kwargs={'pk': 3,
+                        'images': 1,
+                        'comments': 1,
+                        'uidb64': uid,
+                        'token': token}))
 
         if fail:
             self.assertIn(response.status_code, (403, 404, 302))
         else:
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response['Content-Type'], 'application/pdf')
-            self.assertEqual(
-                response['Content-Disposition'],
-                'attachment; filename=Schedule-3-{0}.pdf'.format(pdf_type))
+            self.assertEqual(response['Content-Disposition'],
+                             'attachment; filename=Schedule-3-{0}.pdf'.format(pdf_type))
 
             # Approximate size only
             self.assertGreater(int(response['Content-Length']), 29000)

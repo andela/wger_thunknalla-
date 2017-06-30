@@ -17,26 +17,25 @@
 import logging
 from decimal import Decimal
 
-from django.db import models
-
-from django.template.loader import render_to_string
-# django.utils.text.slugify in django 1.5!
-from django.template.defaultfilters import slugify
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
-from django.core import mail
-from django.core.cache import cache
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core import mail
+from django.core.cache import cache
+from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+# django.utils.text.slugify in django 1.5!
+from django.template.defaultfilters import slugify
+from django.template.loader import render_to_string
+from django.utils import translation
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from django.utils import translation
-from django.conf import settings
 
 from wger.core.models import Language
-from wger.utils.constants import TWOPLACES
 from wger.utils.cache import cache_mapper
+from wger.utils.constants import TWOPLACES
 from wger.utils.fields import Html5TimeField
 from wger.utils.models import AbstractLicenseModel
 from wger.utils.units import AbstractWeight
@@ -366,8 +365,8 @@ class Ingredient(AbstractLicenseModel, models.Model):
         - 1g of carbohydrates: 4kcal
         - 1g of fat: 9kcal
 
-        The sum is then compared to the given total energy, with ENERGY_APPROXIMATION
-        percent tolerance.
+        The sum is then compared to the given total energy, with
+        ENERGY_APPROXIMATION percent tolerance.
         '''
 
         # Note: calculations in 100 grams, to save us the '/100' everywhere

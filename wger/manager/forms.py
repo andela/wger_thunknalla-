@@ -20,16 +20,13 @@ This file contains forms used in the application
 from captcha.fields import ReCaptchaField
 
 from django.utils.translation import ugettext as _
-from django.forms import (Form, MultipleHiddenInput, ModelForm, DateField,
-                          IntegerField, DecimalField, CharField, widgets,
-                          ModelChoiceField)
+from django.forms import (Form, MultipleHiddenInput, ModelForm, DateField, IntegerField,
+                          DecimalField, CharField, widgets, ModelChoiceField)
 
 from wger.core.models import (RepetitionUnit, WeightUnit)
 from wger.exercises.models import (Exercise, ExerciseCategory)
-from wger.manager.models import (WorkoutSession, Workout, Day, Set, Setting,
-                                 WorkoutLog)
-from wger.utils.widgets import (TranslatedSelectMultiple, TranslatedSelect,
-                                ExerciseAjaxSelect)
+from wger.manager.models import (WorkoutSession, Workout, Day, Set, Setting, WorkoutLog)
+from wger.utils.widgets import (TranslatedSelectMultiple, TranslatedSelect, ExerciseAjaxSelect)
 from wger.utils.constants import DATE_FORMATS
 from wger.utils.widgets import Html5DateInput
 

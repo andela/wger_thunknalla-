@@ -56,8 +56,7 @@ class Command(BaseCommand):
                     < datetime.timedelta(weeks=1)):
                 continue
 
-            (current_workout,
-             schedule) = Schedule.objects.get_current_workout(profile.user)
+            (current_workout, schedule) = Schedule.objects.get_current_workout(profile.user)
 
             # No schedules, use the default workout length in user profile
             if not schedule and current_workout:
@@ -66,8 +65,7 @@ class Command(BaseCommand):
 
                 if datetime.timedelta(days=profile.workout_reminder) > delta:
                     if int(options['verbosity']) >= 3:
-                        self.stdout.write(
-                            "* Workout '{0}' overdue".format(current_workout))
+                        self.stdout.write("* Workout '{0}' overdue".format(current_workout))
                     counter += 1
 
                     self.send_email(profile.user, current_workout, delta)
@@ -81,12 +79,10 @@ class Command(BaseCommand):
                 if schedule_step == schedule.schedulestep_set.last():
 
                     delta = schedule.get_end_date() - datetime.date.today()
-                    if datetime.timedelta(
-                            days=profile.workout_reminder) > delta:
+                    if datetime.timedelta(days=profile.workout_reminder) > delta:
                         if int(options['verbosity']) >= 3:
                             self.stdout.write(
-                                "* Workout '{0}' overdue - schedule".format(
-                                    schedule_step.workout))
+                                "* Workout '{0}' overdue - schedule".format(schedule_step.workout))
 
                         counter += 1
                         self.send_email(profile.user, current_workout, delta)
@@ -118,8 +114,7 @@ class Command(BaseCommand):
         }
 
         subject = _('Workout will expire soon')
-        message = loader.render_to_string('workout/email_reminder.tpl',
-                                          context)
+        message = loader.render_to_string('workout/email_reminder.tpl', context)
         mail.send_mail(
             subject,
             message,

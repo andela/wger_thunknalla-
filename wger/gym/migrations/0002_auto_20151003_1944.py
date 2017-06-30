@@ -17,14 +17,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='gym',
             name='email',
-            field=models.EmailField(
-                max_length=254, verbose_name='Email', blank=True, null=True),),
+            field=models.EmailField(max_length=254, verbose_name='Email', blank=True, null=True),),
         migrations.AlterField(
             model_name='gym',
             name='zip_code',
-            field=models.CharField(
-                max_length=10, verbose_name='ZIP code', blank=True, null=True),
-        ),
+            field=models.CharField(max_length=10, verbose_name='ZIP code', blank=True, null=True),),
         migrations.AlterField(
             model_name='gymconfig',
             name='weeks_inactive',

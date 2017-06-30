@@ -15,11 +15,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import include, patterns, url
 from django.contrib.auth.decorators import login_required
 
-from wger.exercises.views import (exercises, comments, categories, muscles,
-                                  images, equipment)
+from wger.exercises.views import categories, comments, equipment, exercises, images, muscles
 
 # sub patterns for muscles
 patterns_muscle = [

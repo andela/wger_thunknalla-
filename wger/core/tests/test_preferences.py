@@ -68,9 +68,7 @@ class PreferencesTestCase(WorkoutManagerTestCase):
         self.assertTrue(profile.workout_reminder_active)
         self.assertEqual(profile.workout_reminder, 30)
         self.assertEqual(profile.workout_duration, 12)
-        self.assertEqual(
-            User.objects.get(username='test').email,
-            'my-new-email@example.com')
+        self.assertEqual(User.objects.get(username='test').email, 'my-new-email@example.com')
 
         # Change some preferences
         response = self.client.post(
@@ -111,12 +109,11 @@ class PreferencesTestCase(WorkoutManagerTestCase):
 
         # Test has no contracts
         user = User.objects.get(username='test')
-        self.assertEqual(user.userprofile.address, {
-            'phone': '',
-            'zip_code': '',
-            'street': '',
-            'city': ''
-        })
+        self.assertEqual(user.userprofile.address,
+                         {'phone': '',
+                          'zip_code': '',
+                          'street': '',
+                          'city': ''})
 
 
 class UserBodyweightTestCase(WorkoutManagerTestCase):
@@ -239,8 +236,8 @@ class PreferencesCalculationsTestCase(WorkoutManagerTestCase):
         user = User.objects.get(pk=2)
         bmi = user.userprofile.calculate_bmi()
         self.assertEqual(bmi,
-                         user.userprofile.weight.quantize(TWOPLACES) /
-                         decimal.Decimal(1.80 * 1.80).quantize(TWOPLACES))
+                         user.userprofile.weight.quantize(TWOPLACES) / decimal.Decimal(
+                             1.80 * 1.80).quantize(TWOPLACES))
 
     def test_basal_metabolic_rate(self):
         '''

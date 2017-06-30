@@ -35,10 +35,7 @@ class Migration(migrations.Migration):
             model_name='userprofile',
             name='gender',
             field=models.CharField(
-                choices=[('1', 'Male'), ('2', 'Female')],
-                null=True,
-                default='1',
-                max_length=1),
+                choices=[('1', 'Male'), ('2', 'Female')], null=True, default='1', max_length=1),
             preserve_default=True,),
         migrations.AlterField(
             model_name='userprofile',
@@ -55,8 +52,7 @@ class Migration(migrations.Migration):
             model_name='userprofile',
             name='weight_unit',
             field=models.CharField(
-                choices=[('kg', 'Metric (kilogram)'), ('lb',
-                                                       'Imperial (pound)')],
+                choices=[('kg', 'Metric (kilogram)'), ('lb', 'Imperial (pound)')],
                 verbose_name='Weight unit',
                 max_length=2,
                 default='kg'),

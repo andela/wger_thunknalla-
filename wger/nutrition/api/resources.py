@@ -19,9 +19,8 @@ from tastypie.authentication import ApiKeyAuthentication
 from tastypie.resources import ModelResource
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
-from wger.nutrition.models import (Ingredient, WeightUnit,
-                                   IngredientWeightUnit, NutritionPlan, Meal,
-                                   MealItem)
+from wger.nutrition.models import (Ingredient, WeightUnit, IngredientWeightUnit, NutritionPlan,
+                                   Meal, MealItem)
 from wger.utils.resources import UserObjectsOnlyAuthorization
 from wger.core.api.resources import LicenseResource, LanguageResource
 
@@ -81,8 +80,7 @@ class NutritionPlanResource(ModelResource):
     Resource for nutritional plans
     '''
 
-    meals = fields.ToManyField('wger.nutrition.api.resources.MealResource',
-                               'meal_set')
+    meals = fields.ToManyField('wger.nutrition.api.resources.MealResource', 'meal_set')
 
     def authorized_read_list(self, object_list, bundle):
         '''
@@ -101,12 +99,7 @@ class NutritionPlanResource(ModelResource):
         queryset = NutritionPlan.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {
-            'id': ALL,
-            'creation_date': ALL,
-            'description': ALL,
-            'has_goal_calories': ALL
-        }
+        filtering = {'id': ALL, 'creation_date': ALL, 'description': ALL, 'has_goal_calories': ALL}
 
 
 class MealResource(ModelResource):
@@ -115,8 +108,7 @@ class MealResource(ModelResource):
     '''
 
     plan = fields.ToOneField(NutritionPlanResource, 'plan')
-    meal_items = fields.ToManyField(
-        'wger.nutrition.api.resources.MealItemResource', 'mealitem_set')
+    meal_items = fields.ToManyField('wger.nutrition.api.resources.MealItemResource', 'mealitem_set')
 
     def authorized_read_list(self, object_list, bundle):
         '''
@@ -135,12 +127,7 @@ class MealResource(ModelResource):
         queryset = Meal.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {
-            'id': ALL,
-            'order': ALL,
-            'plan': ALL_WITH_RELATIONS,
-            'time': ALL
-        }
+        filtering = {'id': ALL, 'order': ALL, 'plan': ALL_WITH_RELATIONS, 'time': ALL}
 
 
 class MealItemResource(ModelResource):
@@ -150,8 +137,7 @@ class MealItemResource(ModelResource):
 
     meal = fields.ToOneField(MealResource, 'meal')
     ingredient = fields.ToOneField(IngredientResource, 'ingredient')
-    weight_unit = fields.ToOneField(
-        WeightUnitResource, 'weight_unit', null=True)
+    weight_unit = fields.ToOneField(WeightUnitResource, 'weight_unit', null=True)
 
     def authorized_read_list(self, object_list, bundle):
         '''

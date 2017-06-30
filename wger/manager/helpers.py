@@ -20,8 +20,7 @@ from calendar import HTMLCalendar
 
 from reportlab.lib import colors
 from reportlab.lib.units import cm
-from reportlab.platypus import (Paragraph, Table, KeepTogether, ListFlowable,
-                                ListItem, Image)
+from reportlab.platypus import (Paragraph, Table, KeepTogether, ListFlowable, ListItem, Image)
 
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -30,11 +29,7 @@ from wger.utils.helpers import normalize_decimal
 from wger.utils.pdf import styleSheet
 
 
-def render_workout_day(day,
-                       nr_of_weeks=7,
-                       images=False,
-                       comments=False,
-                       only_table=False):
+def render_workout_day(day, nr_of_weeks=7, images=False, comments=False, only_table=False):
     '''
     Render a table with reportlab with the contents of the training day
 
@@ -69,10 +64,9 @@ def render_workout_day(day,
     set_count = 1
     day_markers.append(len(data))
 
-    p = Paragraph(u'<para align="center">%(days)s: %(description)s</para>' % {
-        'days': day['days_of_week']['text'],
-        'description': day['obj'].description
-    }, styleSheet["Bold"])
+    p = Paragraph(u'<para align="center">%(days)s: %(description)s</para>' %
+                  {'days': day['days_of_week']['text'],
+                   'description': day['obj'].description}, styleSheet["Bold"])
 
     data.append([p])
 
@@ -85,10 +79,7 @@ def render_workout_day(day,
     # Sets
     exercise_start = len(data)
     for set in day['set_list']:
-        group_exercise_marker[set['obj'].id] = {
-            'start': len(data),
-            'end': len(data)
-        }
+        group_exercise_marker[set['obj'].id] = {'start': len(data), 'end': len(data)}
 
         # Exercises
         for exercise in set['exercise_list']:
@@ -98,18 +89,15 @@ def render_workout_day(day,
             if exercise['has_weight']:
                 setting_out = []
                 for i in exercise['setting_text'].split(u'–'):
-                    setting_out.append(
-                        Paragraph(i, styleSheet["Small"], bulletText=''))
+                    setting_out.append(Paragraph(i, styleSheet["Small"], bulletText=''))
             else:
-                setting_out = Paragraph(exercise['setting_text'],
-                                        styleSheet["Small"])
+                setting_out = Paragraph(exercise['setting_text'], styleSheet["Small"])
 
             # Collect a list of the exercise comments
             item_list = [Paragraph('', styleSheet["Small"])]
             if comments:
                 item_list = [
-                    ListItem(
-                        Paragraph(i, style=styleSheet["ExerciseComments"]))
+                    ListItem(Paragraph(i, style=styleSheet["ExerciseComments"]))
                     for i in exercise['comment_list']
                 ]
 
@@ -142,8 +130,7 @@ def render_workout_day(day,
                     start='square')
             ]
 
-            data.append([set_count, exercise_content, setting_out] +
-                        [''] * nr_of_weeks)
+            data.append([set_count, exercise_content, setting_out] + [''] * nr_of_weeks)
         set_count += 1
 
     table_style = [
@@ -172,8 +159,7 @@ def render_workout_day(day,
         start_marker = group_exercise_marker[marker]['start']
         end_marker = group_exercise_marker[marker]['end']
 
-        table_style.append(('VALIGN', (0, start_marker), (0, end_marker),
-                            'MIDDLE'))
+        table_style.append(('VALIGN', (0, start_marker), (0, end_marker), 'MIDDLE'))
         table_style.append(('SPAN', (0, start_marker), (0, end_marker)))
 
     # Set an alternating background colour for rows with exercises.
@@ -181,8 +167,7 @@ def render_workout_day(day,
     # list
     for i in range(exercise_start, len(data) + 1):
         if not i % 2:
-            table_style.append(('BACKGROUND', (1, i - 1), (-1, i - 1),
-                                colors.lavender))
+            table_style.append(('BACKGROUND', (1, i - 1), (-1, i - 1), colors.lavender))
 
     # Put everything together and manually set some of the widths
     t = Table(data, style=table_style)
@@ -362,8 +347,8 @@ class WorkoutCalendar(HTMLCalendar):
         body = []
         body.append('<a href="{0}" '
                     'data-log="log-{1}" '
-                    'class="btn btn-block {2} calendar-link">'.format(
-                        url, formatted_date, background_css))
+                    'class="btn btn-block {2} calendar-link">'.format(url, formatted_date,
+                                                                      background_css))
         body.append(repr(day))
         body.append('</a>')
         return self.day_cell(cssclass, '{0}'.format(''.join(body)))
@@ -390,5 +375,4 @@ class WorkoutCalendar(HTMLCalendar):
         '''
         Renders a day cell
         '''
-        return '<td class="{0}" style="vertical-align: middle;">{1}</td>'.format(
-            cssclass, body)
+        return '<td class="{0}" style="vertical-align: middle;">{1}</td>'.format(cssclass, body)

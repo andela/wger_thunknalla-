@@ -48,10 +48,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='exercise',
             name='name_original',
-            field=models.CharField(
-                default='', max_length=200, verbose_name='Name'),),
-        migrations.RunPython(
-            copy_name, reverse_code=migrations.RunPython.noop),
-        migrations.RunPython(
-            capitalize_name, reverse_code=migrations.RunPython.noop),
+            field=models.CharField(default='', max_length=200, verbose_name='Name'),),
+        migrations.RunPython(copy_name, reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(capitalize_name, reverse_code=migrations.RunPython.noop),
     ]

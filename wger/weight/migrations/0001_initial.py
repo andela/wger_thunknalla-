@@ -17,10 +17,7 @@ class Migration(migrations.Migration):
             name='WeightEntry',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('creation_date', models.DateField(verbose_name='Date')),
                 ('weight', models.DecimalField(
                     verbose_name='Weight',
@@ -30,8 +27,7 @@ class Migration(migrations.Migration):
                         django.core.validators.MinValueValidator(30),
                         django.core.validators.MaxValueValidator(300)
                     ])),
-                ('user', models.ForeignKey(
-                    verbose_name='User', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(verbose_name='User', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['creation_date'],

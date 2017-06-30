@@ -16,7 +16,7 @@
 
 from django import forms
 
-from wger.exercises.models import ExerciseImage, ExerciseComment
+from wger.exercises.models import ExerciseComment, ExerciseImage
 
 
 class ExerciseImageForm(forms.ModelForm):

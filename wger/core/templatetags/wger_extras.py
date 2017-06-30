@@ -20,10 +20,8 @@ from django.forms.widgets import (CheckboxInput, ClearableFileInput)
 from django.utils.safestring import mark_safe
 from django.utils.translation import (ugettext_lazy as _, pgettext)
 
-from wger.utils.constants import (PAGINATION_MAX_TOTAL_PAGES,
-                                  PAGINATION_PAGES_AROUND_CURRENT)
-from wger.utils.widgets import (BootstrapSelectMultipleTranslatedOriginal,
-                                BootstrapSelectMultiple)
+from wger.utils.constants import (PAGINATION_MAX_TOTAL_PAGES, PAGINATION_PAGES_AROUND_CURRENT)
+from wger.utils.widgets import (BootstrapSelectMultipleTranslatedOriginal, BootstrapSelectMultiple)
 
 register = template.Library()
 
@@ -45,11 +43,7 @@ def render_day(day, editable=True):
     '''
     Renders a day as it will be displayed in the workout overview
     '''
-    return {
-        'day': day.canonical_representation,
-        'workout': day.training,
-        'editable': editable
-    }
+    return {'day': day.canonical_representation, 'workout': day.training, 'editable': editable}
 
 
 @register.inclusion_tag('tags/pagination.html')
@@ -64,15 +58,13 @@ def pagination(paginator, page):
     if paginator.num_pages > PAGINATION_MAX_TOTAL_PAGES:
 
         start_page = page.number - PAGINATION_PAGES_AROUND_CURRENT
-        for i in range(page.number - PAGINATION_PAGES_AROUND_CURRENT,
-                       page.number + 1):
+        for i in range(page.number - PAGINATION_PAGES_AROUND_CURRENT, page.number + 1):
             if i > 0:
                 start_page = i
                 break
 
         end_page = page.number + PAGINATION_PAGES_AROUND_CURRENT
-        for i in range(page.number,
-                       page.number + PAGINATION_PAGES_AROUND_CURRENT):
+        for i in range(page.number, page.number + PAGINATION_PAGES_AROUND_CURRENT):
             if i > paginator.num_pages:
                 end_page = i
                 break
@@ -203,8 +195,7 @@ class SpacelessNode(template.base.Node):
     def render(self, context):
         if settings.WGER_SETTINGS['REMOVE_WHITESPACE']:
             from django.utils.html import strip_spaces_between_tags
-            return strip_spaces_between_tags(
-                self.nodelist.render(context).strip())
+            return strip_spaces_between_tags(self.nodelist.render(context).strip())
         else:
             return self.nodelist.render(context)
 
@@ -252,11 +243,8 @@ def is_multiple(field):
     :param field: a form field
     :return: boolen
     '''
-    return isinstance(
-        field.field.widget,
-        BootstrapSelectMultiple) or isinstance(
-        field.field.widget,
-        BootstrapSelectMultipleTranslatedOriginal)
+    return isinstance(field.field.widget, BootstrapSelectMultiple) or isinstance(
+        field.field.widget, BootstrapSelectMultipleTranslatedOriginal)
 
 
 @register.filter(name='is_fileupload')
@@ -291,8 +279,7 @@ def render_form_submit(save_text='Save', button_class='default'):
     :param save_text: the text to use on the submit button
     :param button_class: CSS class to apply to the button, default 'default'
     """
-    if button_class in ('default', 'primary', 'success', 'info', 'warning',
-                        'danger', 'link'):
+    if button_class in ('default', 'primary', 'success', 'info', 'warning', 'danger', 'link'):
         button_class = button_class
     else:
         button_class = 'default'

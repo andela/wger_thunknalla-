@@ -85,16 +85,15 @@ def view(request, id, slug=None):
     return render(request, 'ingredient/view.html', template_data)
 
 
-class IngredientDeleteView(WgerDeleteMixin, LoginRequiredMixin,
-                           PermissionRequiredMixin, DeleteView):
+class IngredientDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin,
+                           DeleteView):
     '''
     Generic view to delete an existing ingredient
     '''
 
     model = Ingredient
-    fields = ('name', 'energy', 'protein', 'carbohydrates',
-              'carbohydrates_sugar', 'fat', 'fat_saturated', 'fibres',
-              'sodium')
+    fields = ('name', 'energy', 'protein', 'carbohydrates', 'carbohydrates_sugar', 'fat',
+              'fat_saturated', 'fibres', 'sodium')
     template_name = 'delete.html'
     success_url = reverse_lazy('nutrition:ingredient:list')
     messages = ugettext_lazy('Successfully deleted')
@@ -117,13 +116,12 @@ class IngredientMixin(WgerFormMixin):
     '''
 
     fields = [
-        'name', 'energy', 'protein', 'carbohydrates', 'carbohydrates_sugar',
-        'fat', 'fat_saturated', 'fibres', 'sodium', 'license', 'license_author'
+        'name', 'energy', 'protein', 'carbohydrates', 'carbohydrates_sugar', 'fat', 'fat_saturated',
+        'fibres', 'sodium', 'license', 'license_author'
     ]
 
 
-class IngredientEditView(IngredientMixin, LoginRequiredMixin,
-                         PermissionRequiredMixin, UpdateView):
+class IngredientEditView(IngredientMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     '''
     Generic view to update an existing ingredient
     '''
@@ -172,12 +170,10 @@ class IngredientCreateView(IngredientMixin, CreateView):
         '''
         if request.user.userprofile.is_temporary:
             return HttpResponseForbidden()
-        return super(IngredientCreateView, self).dispatch(
-            request, *args, **kwargs)
+        return super(IngredientCreateView, self).dispatch(request, *args, **kwargs)
 
 
-class PendingIngredientListView(LoginRequiredMixin, PermissionRequiredMixin,
-                                ListView):
+class PendingIngredientListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     '''
     List all ingredients pending review
     '''
@@ -192,7 +188,7 @@ class PendingIngredientListView(LoginRequiredMixin, PermissionRequiredMixin,
         Only show ingredients pending review
         '''
         return Ingredient.objects.filter(
-            status=Ingredient.INGREDIENT_STATUS_PENDING) .order_by('-creation_date')
+            status=Ingredient.INGREDIENT_STATUS_PENDING).order_by('-creation_date')
 
 
 @permission_required('nutrition.add_ingredient')

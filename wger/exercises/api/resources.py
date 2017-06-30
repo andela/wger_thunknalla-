@@ -22,25 +22,21 @@ from easy_thumbnails.files import get_thumbnailer
 
 from wger.core.api.resources import LanguageResource, LicenseResource
 
-from wger.exercises.models import (Exercise, ExerciseCategory, ExerciseComment,
-                                   ExerciseImage, Muscle, Equipment)
+from wger.exercises.models import (Exercise, ExerciseCategory, ExerciseComment, ExerciseImage,
+                                   Muscle, Equipment)
 
 
 class ExerciseResource(ModelResource):
-    category = fields.ToOneField(
-        'wger.exercises.api.resources.ExerciseCategoryResource', 'category')
-    muscles = fields.ToManyField('wger.exercises.api.resources.MuscleResource',
-                                 'muscles')
-    muscles_secondary = fields.ToManyField(
-        'wger.exercises.api.resources.MuscleResource', 'muscles_secondary')
-    comments = fields.ToManyField(
-        'wger.exercises.api.resources.ExerciseCommentResource',
-        'exercisecomment_set')
-    images = fields.ToManyField(
-        'wger.exercises.api.resources.ExerciseImageResource',
-        'exerciseimage_set')
-    equipment = fields.ToManyField(
-        'wger.exercises.api.resources.EquipmentResource', 'equipment')
+    category = fields.ToOneField('wger.exercises.api.resources.ExerciseCategoryResource',
+                                 'category')
+    muscles = fields.ToManyField('wger.exercises.api.resources.MuscleResource', 'muscles')
+    muscles_secondary = fields.ToManyField('wger.exercises.api.resources.MuscleResource',
+                                           'muscles_secondary')
+    comments = fields.ToManyField('wger.exercises.api.resources.ExerciseCommentResource',
+                                  'exercisecomment_set')
+    images = fields.ToManyField('wger.exercises.api.resources.ExerciseImageResource',
+                                'exerciseimage_set')
+    equipment = fields.ToManyField('wger.exercises.api.resources.EquipmentResource', 'equipment')
     language = fields.ToOneField(LanguageResource, 'language')
     license = fields.ToOneField(LicenseResource, 'license')
 
@@ -79,19 +75,12 @@ class ExerciseCategoryResource(ModelResource):
 
 
 class ExerciseImageResource(ModelResource):
-    exercise = fields.ToOneField(
-        'wger.exercises.api.resources.ExerciseResource', 'exercise')
+    exercise = fields.ToOneField('wger.exercises.api.resources.ExerciseResource', 'exercise')
     license = fields.ToOneField(LicenseResource, 'license')
 
     class Meta:
         queryset = ExerciseImage.objects.all()
-        filtering = {
-            'id': ALL,
-            "image": ALL,
-            "is_main": ALL,
-            "license": ALL,
-            "license_author": ALL
-        }
+        filtering = {'id': ALL, "image": ALL, "is_main": ALL, "license": ALL, "license_author": ALL}
 
     def dehydrate(self, bundle):
         '''
@@ -110,8 +99,7 @@ class ExerciseImageResource(ModelResource):
 
 
 class ExerciseCommentResource(ModelResource):
-    exercise = fields.ToOneField(
-        'wger.exercises.api.resources.ExerciseResource', 'exercise')
+    exercise = fields.ToOneField('wger.exercises.api.resources.ExerciseResource', 'exercise')
 
     class Meta:
         queryset = ExerciseComment.objects.all()

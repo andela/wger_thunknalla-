@@ -16,8 +16,7 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 
 from wger.core.tests import api_base_test
-from wger.core.tests.base_testcase import (WorkoutManagerTestCase,
-                                           WorkoutManagerEditTestCase,
+from wger.core.tests.base_testcase import (WorkoutManagerTestCase, WorkoutManagerEditTestCase,
                                            WorkoutManagerAddTestCase)
 from wger.exercises.models import Exercise, ExerciseComment
 from wger.utils.cache import cache_mapper
@@ -32,8 +31,7 @@ class ExerciseCommentRepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual(
-            "{0}".format(ExerciseComment.objects.get(pk=1)), 'test 123')
+        self.assertEqual("{0}".format(ExerciseComment.objects.get(pk=1)), 'test 123')
 
 
 class AddExerciseCommentTestCase(WorkoutManagerAddTestCase):
@@ -76,8 +74,7 @@ class ExercisecommentsTestCase(WorkoutManagerTestCase):
         self.assertEqual(len(comments), 1)
 
         # Delete the comment
-        response = self.client.post(
-            reverse('exercise:comment:delete', kwargs={'id': 1}))
+        response = self.client.post(reverse('exercise:comment:delete', kwargs={'id': 1}))
         comments = exercise_1.exercisecomment_set.all()
 
         self.assertEqual(response.status_code, 302)
@@ -126,12 +123,10 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
         for set in comment.exercise.set_set.all():
             set.exerciseday.training.canonical_representation
             workout_id = set.exerciseday.training_id
-            self.assertTrue(
-                cache.get(cache_mapper.get_workout_canonical(workout_id)))
+            self.assertTrue(cache.get(cache_mapper.get_workout_canonical(workout_id)))
 
             comment.save()
-            self.assertFalse(
-                cache.get(cache_mapper.get_workout_canonical(workout_id)))
+            self.assertFalse(cache.get(cache_mapper.get_workout_canonical(workout_id)))
 
     def test_canonical_form_cache_delete(self):
         '''
@@ -144,13 +139,11 @@ class WorkoutCacheTestCase(WorkoutManagerTestCase):
             workout_id = set.exerciseday.training_id
             workout_ids.append(workout_id)
             set.exerciseday.training.canonical_representation
-            self.assertTrue(
-                cache.get(cache_mapper.get_workout_canonical(workout_id)))
+            self.assertTrue(cache.get(cache_mapper.get_workout_canonical(workout_id)))
 
         comment.delete()
         for workout_id in workout_ids:
-            self.assertFalse(
-                cache.get(cache_mapper.get_workout_canonical(workout_id)))
+            self.assertFalse(cache.get(cache_mapper.get_workout_canonical(workout_id)))
 
 
 class ExerciseCommentApiTestCase(api_base_test.ApiBaseResourceTestCase):

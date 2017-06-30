@@ -33,9 +33,8 @@ class EmailInactiveUserTestCase(WorkoutManagerTestCase):
 
         recipment_list = [message.to[0] for message in mail.outbox]
         trainer_list = [
-            'trainer4@example.com', 'trainer5@example.com',
-            'trainer1@example.com', 'trainer2@example.com',
-            'trainer3@example.com'
+            'trainer4@example.com', 'trainer5@example.com', 'trainer1@example.com',
+            'trainer2@example.com', 'trainer3@example.com'
         ]
         recipment_list.sort()
         trainer_list.sort()

@@ -18,12 +18,8 @@ class Migration(migrations.Migration):
             name='DaysOfWeek',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('day_of_week', models.CharField(
-                    max_length=9, verbose_name='Day of the week')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('day_of_week', models.CharField(max_length=9, verbose_name='Day of the week')),
             ],
             options={
                 'ordering': ['pk'],
@@ -33,14 +29,9 @@ class Migration(migrations.Migration):
             name='Language',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('short_name', models.CharField(
-                    max_length=2, verbose_name='Language short name')),
-                ('full_name', models.CharField(
-                    max_length=30, verbose_name='Language full name')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('short_name', models.CharField(max_length=2, verbose_name='Language short name')),
+                ('full_name', models.CharField(max_length=30, verbose_name='Language full name')),
             ],
             options={
                 'ordering': ['full_name'],
@@ -50,15 +41,10 @@ class Migration(migrations.Migration):
             name='License',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('full_name', models.CharField(
-                    max_length=60, verbose_name='Full name')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('full_name', models.CharField(max_length=60, verbose_name='Full name')),
                 ('short_name', models.CharField(
-                    max_length=15,
-                    verbose_name='Short name, e.g. CC-BY-SA 3')),
+                    max_length=15, verbose_name='Short name, e.g. CC-BY-SA 3')),
                 ('url', models.URLField(
                     help_text='Link to license text or other information',
                     null=True,
@@ -73,16 +59,11 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('is_temporary', models.BooleanField(
-                    default=False, editable=False)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('is_temporary', models.BooleanField(default=False, editable=False)),
                 ('show_comments', models.BooleanField(
                     default=True,
-                    help_text=
-                    'Check to show exercise comments on the workout view',
+                    help_text='Check to show exercise comments on the workout view',
                     verbose_name='Show exercise comments')),
                 ('show_english_ingredients', models.BooleanField(
                     default=True,
@@ -96,8 +77,7 @@ class Migration(migrations.Migration):
                     verbose_name='Activate workout reminders')),
                 ('workout_reminder', models.IntegerField(
                     default=14,
-                    help_text=
-                    'The number of days you want to be reminded before a workout expires.',
+                    help_text='The number of days you want to be reminded before a workout expires.',
                     verbose_name='Remind before expiration',
                     validators=[
                         django.core.validators.MinValueValidator(1),
@@ -112,12 +92,10 @@ class Migration(migrations.Migration):
                         django.core.validators.MinValueValidator(1),
                         django.core.validators.MaxValueValidator(30)
                     ])),
-                ('last_workout_notification', models.DateField(
-                    null=True, editable=False)),
+                ('last_workout_notification', models.DateField(null=True, editable=False)),
                 ('timer_active', models.BooleanField(
                     default=True,
-                    help_text=
-                    'Check to activate timer pauses between exercises.',
+                    help_text='Check to activate timer pauses between exercises.',
                     verbose_name='Use pauses in workout timer')),
                 ('timer_pause', models.IntegerField(
                     default=90,
@@ -208,8 +186,7 @@ class Migration(migrations.Migration):
                     verbose_name='Physical intensity')),
                 ('calories', models.IntegerField(
                     default=2500,
-                    help_text=
-                    'Total caloric intake, including e.g. any surplus',
+                    help_text='Total caloric intake, including e.g. any surplus',
                     null=True,
                     verbose_name='Total daily calories',
                     validators=[
@@ -220,10 +197,8 @@ class Migration(migrations.Migration):
                     default=b'kg',
                     max_length=2,
                     verbose_name='Weight unit',
-                    choices=[(b'kg', 'Metric (kilogram)'),
-                             (b'lb', 'Imperial (pound)')])),
-                ('gym', models.ForeignKey(
-                    blank=True, editable=False, to='gym.Gym', null=True)),
+                    choices=[(b'kg', 'Metric (kilogram)'), (b'lb', 'Imperial (pound)')])),
+                ('gym', models.ForeignKey(blank=True, editable=False, to='gym.Gym', null=True)),
                 ('notification_language', models.ForeignKey(
                     default=2,
                     verbose_name='Notification language',
@@ -231,8 +206,7 @@ class Migration(migrations.Migration):
                     help_text=
                     'Language to use when sending you email notifications, e.g. email reminders for workouts. This does not affect the language used on the website.'
                 )),
-                ('user', models.OneToOneField(
-                    editable=False, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(editable=False, to=settings.AUTH_USER_MODEL)),
             ],
             options={},
             bases=(models.Model,),),

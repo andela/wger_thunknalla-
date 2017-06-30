@@ -27,5 +27,5 @@ class EditGymConfigTestCase(WorkoutManagerEditTestCase):
     url = 'gym:config:edit'
     data = {'weeks_inactive': 10}
     user_success = ('admin', 'manager1', 'manager2')
-    user_fail = ('member1', 'general_manager1', 'trainer1', 'trainer2',
-                 'trainer3', 'trainer4', 'manager3')
+    user_fail = ('member1', 'general_manager1', 'trainer1', 'trainer2', 'trainer3', 'trainer4',
+                 'manager3')

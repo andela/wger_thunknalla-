@@ -15,12 +15,8 @@ class Migration(migrations.Migration):
             name='RepetitionUnit',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    primary_key=True,
-                    auto_created=True)),
-                ('name', models.CharField(verbose_name='Name',
-                                          max_length=100)),
+                    verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('name', models.CharField(verbose_name='Name', max_length=100)),
             ],
             options={
                 'ordering': ['name'],

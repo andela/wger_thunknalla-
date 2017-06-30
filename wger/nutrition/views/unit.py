@@ -51,8 +51,7 @@ class WeightUnitListView(PermissionRequiredMixin, ListView):
         return WeightUnit.objects.filter(language=load_language())
 
 
-class WeightUnitCreateView(WgerFormMixin, LoginRequiredMixin,
-                           PermissionRequiredMixin, CreateView):
+class WeightUnitCreateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     '''
     Generic view to add a new weight unit for ingredients
     '''
@@ -71,8 +70,8 @@ class WeightUnitCreateView(WgerFormMixin, LoginRequiredMixin,
         return super(WeightUnitCreateView, self).form_valid(form)
 
 
-class WeightUnitDeleteView(WgerDeleteMixin, LoginRequiredMixin,
-                           PermissionRequiredMixin, DeleteView):
+class WeightUnitDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin,
+                           DeleteView):
     '''
     Generic view to delete a weight unit
     '''
@@ -93,8 +92,7 @@ class WeightUnitDeleteView(WgerDeleteMixin, LoginRequiredMixin,
         return context
 
 
-class WeightUnitUpdateView(WgerFormMixin, LoginRequiredMixin,
-                           PermissionRequiredMixin, UpdateView):
+class WeightUnitUpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     '''
     Generic view to update an weight unit
     '''

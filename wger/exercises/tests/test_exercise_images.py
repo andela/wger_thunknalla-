@@ -15,9 +15,8 @@
 from django.core.files import File
 from django.core.urlresolvers import reverse
 
-from wger.core.tests.base_testcase import (
-    WorkoutManagerTestCase, WorkoutManagerEditTestCase,
-    WorkoutManagerAddTestCase, WorkoutManagerDeleteTestCase)
+from wger.core.tests.base_testcase import (WorkoutManagerTestCase, WorkoutManagerEditTestCase,
+                                           WorkoutManagerAddTestCase, WorkoutManagerDeleteTestCase)
 from wger.exercises.models import Exercise, ExerciseImage
 
 
@@ -35,9 +34,7 @@ class MainImageTestCase(WorkoutManagerTestCase):
         image = ExerciseImage()
         image.exercise = exercise
         image.status = ExerciseImage.STATUS_ACCEPTED
-        image.image.save(
-            filename,
-            File(open('wger/exercises/tests/{0}'.format(filename), 'rb')))
+        image.image.save(filename, File(open('wger/exercises/tests/{0}'.format(filename), 'rb')))
         image.save()
         return (image.pk)
 

@@ -30,8 +30,8 @@ class AddContractTestCase(WorkoutManagerAddTestCase):
     url = reverse('gym:contract:add', kwargs={'user_pk': 14})
     data = {'amount': 30, 'payment': '2'}
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
 
 
 class AccessContractTestCase(WorkoutManagerAccessTestCase):
@@ -40,8 +40,8 @@ class AccessContractTestCase(WorkoutManagerAccessTestCase):
     '''
     url = reverse('gym:contract:view', kwargs={'pk': 1})
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
 
 
 class AccessContractOverviewTestCase(WorkoutManagerAccessTestCase):
@@ -50,8 +50,8 @@ class AccessContractOverviewTestCase(WorkoutManagerAccessTestCase):
     '''
     url = reverse('gym:contract:list', kwargs={'user_pk': 4})
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
 
 
 class EditContractTestCase(WorkoutManagerEditTestCase):
@@ -63,8 +63,8 @@ class EditContractTestCase(WorkoutManagerEditTestCase):
     object_class = Contract
     url = 'gym:contract:edit'
     user_success = ('manager1', 'manager2')
-    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test',
-                 'member1', 'member2', 'member3', 'member4', 'member5')
+    user_fail = ('admin', 'general_manager1', 'manager3', 'manager4', 'test', 'member1', 'member2',
+                 'member3', 'member4', 'member5')
     data = {
         'note': 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr',
         'amount': 35,

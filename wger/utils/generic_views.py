@@ -26,8 +26,8 @@ from django.views.generic.edit import ModelFormMixin
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from wger.utils.constants import (
-    HTML_TAG_WHITELIST, HTML_ATTRIBUTES_WHITELIST, HTML_STYLES_WHITELIST)
+from wger.utils.constants import (HTML_TAG_WHITELIST, HTML_ATTRIBUTES_WHITELIST,
+                                  HTML_STYLES_WHITELIST)
 
 logger = logging.getLogger(__name__)
 
@@ -74,8 +74,7 @@ class WgerPermissionMixin(object):
         if self.login_required or self.permission_required:
             if not request.user.is_authenticated():
                 return HttpResponseRedirect(
-                    reverse_lazy('core:user:login') +
-                    '?next={0}'.format(request.path))
+                    reverse_lazy('core:user:login') + '?next={0}'.format(request.path))
 
             if self.permission_required:
                 has_permission = False
@@ -87,12 +86,10 @@ class WgerPermissionMixin(object):
                     has_permission = True
 
                 if not has_permission:
-                    return HttpResponseForbidden(
-                        'You are not allowed to access this object')
+                    return HttpResponseForbidden('You are not allowed to access this object')
 
         # Dispatch normally
-        return super(WgerPermissionMixin, self).dispatch(
-            request, *args, **kwargs)
+        return super(WgerPermissionMixin, self).dispatch(request, *args, **kwargs)
 
 
 # , PermissionRequiredMixin
@@ -172,8 +169,7 @@ class WgerFormMixin(ModelFormMixin):
 
         # Template to extend. For AJAX requests we don't need the rest of the
         # template, only the form
-        context['extend_template'] = 'base_empty.html' if self.request.is_ajax(
-        ) else 'base.html'
+        context['extend_template'] = 'base_empty.html' if self.request.is_ajax() else 'base.html'
 
         return context
 
@@ -203,8 +199,7 @@ class WgerFormMixin(ModelFormMixin):
 
         # Nothing to see, please move along
         if owner_object and owner_object.user != self.request.user:
-            return HttpResponseForbidden(
-                'You are not allowed to access this object')
+            return HttpResponseForbidden('You are not allowed to access this object')
 
         # Dispatch normally
         return super(WgerFormMixin, self).dispatch(request, *args, **kwargs)
@@ -283,8 +278,7 @@ class WgerDeleteMixin(ModelFormMixin):
 
         # Template to extend. For AJAX requests we don't need the rest of the
         # template, only the form
-        context['extend_template'] = 'base_empty.html' if self.request.is_ajax(
-        ) else 'base.html'
+        context['extend_template'] = 'base_empty.html' if self.request.is_ajax() else 'base.html'
 
         return context
 
@@ -332,8 +326,7 @@ class TextTemplateView(TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         response_kwargs['content_type'] = 'text/plain'
-        return super(TextTemplateView, self).render_to_response(
-            context, **response_kwargs)
+        return super(TextTemplateView, self).render_to_response(context, **response_kwargs)
 
 
 class WebappManifestView(TemplateView):
@@ -346,5 +339,4 @@ class WebappManifestView(TemplateView):
 
     def render_to_response(self, context, **response_kwargs):
         response_kwargs['content_type'] = 'application/x-web-app-manifest+json'
-        return super(WebappManifestView, self).render_to_response(
-            context, **response_kwargs)
+        return super(WebappManifestView, self).render_to_response(context, **response_kwargs)

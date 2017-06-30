@@ -15,13 +15,10 @@ class Migration(migrations.Migration):
             name='ContractOption',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=25, verbose_name='Name')),
-                ('description', models.TextField(
-                    null=True, verbose_name='Description', blank=True)),
+                ('description', models.TextField(null=True, verbose_name='Description',
+                                                 blank=True)),
                 ('gym', models.ForeignKey(editable=False, to='gym.Gym')),
             ],
             options={
@@ -33,6 +30,5 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='contract',
             name='options',
-            field=models.ManyToManyField(
-                to='gym.ContractOption', verbose_name='Options'),),
+            field=models.ManyToManyField(to='gym.ContractOption', verbose_name='Options'),),
     ]

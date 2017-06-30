@@ -67,9 +67,4 @@ class LicenseResource(ModelResource):
 
     class Meta:
         queryset = License.objects.all()
-        filtering = {
-            'id': ALL,
-            "full_name": ALL,
-            "short_name": ALL,
-            "url": ALL
-        }
+        filtering = {'id': ALL, "full_name": ALL, "short_name": ALL, "url": ALL}

@@ -34,8 +34,7 @@ from sortedm2m.fields import SortedManyToManyField
 from wger.core.models import DaysOfWeek, RepetitionUnit, WeightUnit
 from wger.exercises.models import Exercise
 from wger.manager.helpers import reps_smart_text
-from wger.utils.cache import (cache_mapper, reset_workout_canonical_form,
-                              reset_workout_log)
+from wger.utils.cache import (cache_mapper, reset_workout_canonical_form, reset_workout_log)
 from wger.utils.fields import Html5DateField
 
 logger = logging.getLogger(__name__)
@@ -111,8 +110,7 @@ class Workout(models.Model):
         of a workout structure is needed. As an additional benefit, the template
         caches are not needed anymore.
         '''
-        workout_canonical_form = cache.get(
-            cache_mapper.get_workout_canonical(self.pk))
+        workout_canonical_form = cache.get(cache_mapper.get_workout_canonical(self.pk))
         if not workout_canonical_form:
             day_canonical_repr = []
             muscles_front = []
@@ -154,9 +152,7 @@ class Workout(models.Model):
                 'day_list': day_canonical_repr
             }
             # Save to cache
-            cache.set(
-                cache_mapper.get_workout_canonical(self.pk),
-                workout_canonical_form)
+            cache.set(cache_mapper.get_workout_canonical(self.pk), workout_canonical_form)
 
         return workout_canonical_form
 
@@ -183,8 +179,7 @@ class ScheduleManager(models.Manager):
                 if not schedule.get_current_scheduled_workout():
                     raise ObjectDoesNotExist
 
-                active_workout = schedule.get_current_scheduled_workout(
-                ).workout
+                active_workout = schedule.get_current_scheduled_workout().workout
             else:
                 # same as above
                 raise ObjectDoesNotExist
@@ -194,8 +189,7 @@ class ScheduleManager(models.Manager):
 
             schedule = False
             try:
-                active_workout = Workout.objects.filter(
-                    user=user).latest('creation_date')
+                active_workout = Workout.objects.filter(user=user).latest('creation_date')
 
             # no luck, there aren't even workouts for the user
             except ObjectDoesNotExist:
@@ -286,8 +280,7 @@ class Schedule(models.Model):
             return False
         while not found:
             for step in steps:
-                current_limit = start_date + datetime.timedelta(
-                    weeks=step.duration)
+                current_limit = start_date + datetime.timedelta(weeks=step.duration)
                 if current_limit >= datetime.date.today():
                     found = True
                     return step
@@ -470,8 +463,7 @@ class Day(models.Model):
                         muscles_back_secondary.append(muscle.id)
 
                 for setting in Setting.objects.filter(
-                        set=set_obj, exercise=exercise).order_by(
-                            'order', 'id'):
+                        set=set_obj, exercise=exercise).order_by('order', 'id'):
                     setting_tmp.append(setting)
 
                 # "Smart" textual representation
@@ -527,14 +519,10 @@ class Day(models.Model):
                         exercise['repetition_units'] = repetition_units
 
             canonical_repr.append({
-                'obj':
-                set_obj,
-                'exercise_list':
-                exercise_tmp,
-                'is_superset':
-                True if len(exercise_tmp) > 1 else False,
-                'has_settings':
-                has_setting_tmp,
+                'obj': set_obj,
+                'exercise_list': exercise_tmp,
+                'is_superset': True if len(exercise_tmp) > 1 else False,
+                'has_settings': has_setting_tmp,
                 'muscles': {
                     'back': muscles_back,
                     'front': muscles_front,
@@ -673,8 +661,7 @@ class Setting(models.Model):
         '''
         Return a more human-readable representation
         '''
-        return u"settings for exercise {0} in set {1}".format(
-            self.exercise.id, self.set.id)
+        return u"settings for exercise {0} in set {1}".format(self.exercise.id, self.set.id)
 
     def save(self, *args, **kwargs):
         '''
@@ -750,8 +737,7 @@ class WorkoutLog(models.Model):
         '''
         Return a more human-readable representation
         '''
-        return u"Log entry: {0} - {1} kg on {2}".format(
-            self.reps, self.weight, self.date)
+        return u"Log entry: {0} - {1} kg on {2}".format(self.reps, self.weight, self.date)
 
     def get_owner_object(self):
         '''
@@ -777,8 +763,7 @@ class WorkoutLog(models.Model):
         '''
         Reset cache
         '''
-        reset_workout_log(self.user_id, self.date.year, self.date.month,
-                          self.date.day)
+        reset_workout_log(self.user_id, self.date.year, self.date.month, self.date.day)
 
         # If the user selected "Until Failure", do only 1 "repetition",
         # everythin else doesn't make sense.
@@ -790,8 +775,7 @@ class WorkoutLog(models.Model):
         '''
         Reset cache
         '''
-        reset_workout_log(self.user_id, self.date.year, self.date.month,
-                          self.date.day)
+        reset_workout_log(self.user_id, self.date.year, self.date.month, self.date.day)
         super(WorkoutLog, self).delete(*args, **kwargs)
 
 
@@ -880,8 +864,7 @@ class WorkoutSession(models.Model):
         Perform some additional validations
         '''
 
-        if (not self.time_end and self.time_start) or (self.time_end and
-                                                       not self.time_start):
+        if (not self.time_end and self.time_start) or (self.time_end and not self.time_start):
             raise ValidationError(
                 _("If you enter a time, you must enter both start and end time."))
 

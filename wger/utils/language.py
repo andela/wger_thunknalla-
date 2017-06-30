@@ -68,8 +68,7 @@ def load_item_languages(item, language_code=None):
     if not languages:
         languages = []
 
-        config = LanguageConfig.objects.filter(
-            language=language, item=item, show=True)
+        config = LanguageConfig.objects.filter(language=language, item=item, show=True)
         if not config:
             languages.append(Language.objects.get(short_name="en"))
             return languages
@@ -77,8 +76,7 @@ def load_item_languages(item, language_code=None):
         for i in config:
             languages.append(i.language_target)
 
-        cache.set(
-            cache_mapper.get_language_config_key(language, item), languages)
+        cache.set(cache_mapper.get_language_config_key(language, item), languages)
 
     return languages
 

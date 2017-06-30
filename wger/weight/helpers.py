@@ -51,8 +51,7 @@ def parse_weight_csv(request, cleaned_data):
     # Process the CSV items first
     for row in parsed_csv:
         try:
-            parsed_date = datetime.datetime.strptime(
-                row[0], cleaned_data['date_format'])
+            parsed_date = datetime.datetime.strptime(row[0], cleaned_data['date_format'])
             parsed_weight = decimal.Decimal(row[1].replace(',', '.'))
             duplicate_date_in_db = WeightEntry.objects.filter(
                 date=parsed_date, user=request.user).exists()
@@ -76,8 +75,7 @@ def parse_weight_csv(request, cleaned_data):
 
     # Create the valid weight entries
     for date, weight in distinct_weight_entries:
-        weight_list.append(
-            WeightEntry(date=date, weight=weight, user=request.user))
+        weight_list.append(WeightEntry(date=date, weight=weight, user=request.user))
 
     return (weight_list, error_list)
 
@@ -107,11 +105,9 @@ def group_log_entries(user, year, month, day=None):
         sessions = WorkoutSession.objects.filter(user=user, date=filter_date)
 
     else:
-        logs = WorkoutLog.objects.filter(
-            user=user, date__year=year, date__month=month)
+        logs = WorkoutLog.objects.filter(user=user, date__year=year, date__month=month)
 
-        sessions = WorkoutSession.objects.filter(
-            user=user, date__year=year, date__month=month)
+        sessions = WorkoutSession.objects.filter(user=user, date__year=year, date__month=month)
 
     logs = logs.order_by('date', 'id')
     out = cache.get(cache_mapper.get_workout_log_list(log_hash))
@@ -187,12 +183,10 @@ def process_log_entries(logs):
         # Only add if weight is the maximum for the day
         if entry.weight != max_weight[entry.date][entry.reps]:
             continue
-        if (entry.date, entry.reps,
-                entry.weight) in entry_list[entry.reps]['seen']:
+        if (entry.date, entry.reps, entry.weight) in entry_list[entry.reps]['seen']:
             continue
 
-        entry_list[entry.reps]['seen'].append((entry.date, entry.reps,
-                                               entry.weight))
+        entry_list[entry.reps]['seen'].append((entry.date, entry.reps, entry.weight))
         entry_list[entry.reps]['list'].append({
             'date': entry.date,
             'weight': entry.weight,

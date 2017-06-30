@@ -91,41 +91,33 @@ def render_footer(url, date=None):
                             <a href="{url}">{url}</a> -
                             wger Workout Manager
                             {version}
-                        </para>'''.format(
-            date=date, url=url, version=get_version()), styleSheet["Normal"])
+                        </para>'''.format(date=date, url=url, version=get_version()),
+                      styleSheet["Normal"])
     return p
 
 
 # register new truetype fonts for reportlab
 pdfmetrics.registerFont(
-    TTFont('OpenSans',
-           path_join(settings.SITE_ROOT,
-                     'core/static/fonts/OpenSans-Light.ttf')))
+    TTFont('OpenSans', path_join(settings.SITE_ROOT, 'core/static/fonts/OpenSans-Light.ttf')))
 pdfmetrics.registerFont(
-    TTFont('OpenSans-Bold',
-           path_join(settings.SITE_ROOT,
-                     'core/static/fonts/OpenSans-Bold.ttf')))
+    TTFont('OpenSans-Bold', path_join(settings.SITE_ROOT, 'core/static/fonts/OpenSans-Bold.ttf')))
 pdfmetrics.registerFont(
     TTFont('OpenSans-Regular',
-           path_join(settings.SITE_ROOT,
-                     'core/static/fonts/OpenSans-Regular.ttf')))
+           path_join(settings.SITE_ROOT, 'core/static/fonts/OpenSans-Regular.ttf')))
 pdfmetrics.registerFont(
     TTFont('OpenSans-Italic',
-           path_join(settings.SITE_ROOT,
-                     'core/static/fonts/OpenSans-LightItalic.ttf')))
+           path_join(settings.SITE_ROOT, 'core/static/fonts/OpenSans-LightItalic.ttf')))
 
 styleSheet = StyleSheet1()
-styleSheet.add(
-    ParagraphStyle(
-        name='Normal',
-        fontName='OpenSans',
-        fontSize=10,
-        leading=12,))
-styleSheet.add(
-    ParagraphStyle(
-        parent=styleSheet['Normal'],
-        fontSize=8,
-        name='Small',))
+styleSheet.add(ParagraphStyle(
+    name='Normal',
+    fontName='OpenSans',
+    fontSize=10,
+    leading=12,))
+styleSheet.add(ParagraphStyle(
+    parent=styleSheet['Normal'],
+    fontSize=8,
+    name='Small',))
 styleSheet.add(
     ParagraphStyle(
         parent=styleSheet['Normal'],
@@ -144,8 +136,7 @@ styleSheet.add(
         name='SubHeader',
         fontSize=12,
         fontName='OpenSans',))
-styleSheet.add(
-    ParagraphStyle(
-        parent=styleSheet['Normal'],
-        name='Bold',
-        fontName='OpenSans-Bold',))
+styleSheet.add(ParagraphStyle(
+    parent=styleSheet['Normal'],
+    name='Bold',
+    fontName='OpenSans-Bold',))

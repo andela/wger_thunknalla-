@@ -71,9 +71,8 @@ def users(request, gym_pk):
             gym.name.encode('utf8'), user.username, user.email,
             user.first_name.encode('utf8'),
             user.last_name.encode('utf8'),
-            user.userprofile.get_gender_display().encode('utf8'),
-            user.userprofile.age, address['zip_code'],
-            address['city'].encode('utf8'), address['street'].encode('utf8'),
+            user.userprofile.get_gender_display().encode('utf8'), user.userprofile.age,
+            address['zip_code'], address['city'].encode('utf8'), address['street'].encode('utf8'),
             address['phone'].encode('utf8')
         ])
 
@@ -81,7 +80,6 @@ def users(request, gym_pk):
     today = datetime.date.today()
     filename = 'User-data-gym-{gym}-{t.year}-{t.month:02d}-{t.day:02d}.csv'.format(
         t=today, gym=gym.id)
-    response['Content-Disposition'] = 'attachment; filename={0}'.format(
-        filename)
+    response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
     response['Content-Length'] = len(response.content)
     return response

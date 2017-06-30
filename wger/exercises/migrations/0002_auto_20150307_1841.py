@@ -29,10 +29,7 @@ class Migration(migrations.Migration):
             model_name='exercise',
             name='uuid',
             field=models.CharField(
-                editable=False,
-                max_length=36,
-                verbose_name='UUID',
-                default=uuid.uuid4),
+                editable=False, max_length=36, verbose_name='UUID', default=uuid.uuid4),
             preserve_default=True,),
         migrations.RunPython(generate_uuids),
     ]

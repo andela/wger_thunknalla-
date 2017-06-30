@@ -23,8 +23,8 @@ from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from wger.core.api.resources import DaysOfWeekResource
 from wger.exercises.api.resources import ExerciseResource
 from wger.utils.resources import UserObjectsOnlyAuthorization
-from wger.manager.models import (WorkoutSession, Workout, Schedule,
-                                 ScheduleStep, Day, Set, Setting, WorkoutLog)
+from wger.manager.models import (WorkoutSession, Workout, Schedule, ScheduleStep, Day, Set, Setting,
+                                 WorkoutLog)
 
 
 class WorkoutResource(ModelResource):
@@ -32,8 +32,7 @@ class WorkoutResource(ModelResource):
     Resource for workouts
     '''
 
-    days = fields.ToManyField('wger.manager.api.resources.DayResource',
-                              'day_set')
+    days = fields.ToManyField('wger.manager.api.resources.DayResource', 'day_set')
 
     def authorized_read_list(self, object_list, bundle):
         '''
@@ -53,8 +52,7 @@ class WorkoutSessionResource(ModelResource):
     Resource for workout sessions
     '''
 
-    workout = fields.ToOneField('wger.manager.api.resources.WorkoutResource',
-                                'workout')
+    workout = fields.ToOneField('wger.manager.api.resources.WorkoutResource', 'workout')
 
     def authorized_read_list(self, object_list, bundle):
         '''
@@ -64,15 +62,9 @@ class WorkoutSessionResource(ModelResource):
 
     class Meta:
         queryset = WorkoutSession.objects.all()
-        authentication = MultiAuthentication(SessionAuthentication(),
-                                             ApiKeyAuthentication())
+        authentication = MultiAuthentication(SessionAuthentication(), ApiKeyAuthentication())
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {
-            'id': ALL,
-            "date": ALL,
-            "time_start": ALL,
-            "time_end": ALL
-        }
+        filtering = {'id': ALL, "date": ALL, "time_start": ALL, "time_end": ALL}
 
 
 class ScheduleStepResource(ModelResource):
@@ -81,8 +73,7 @@ class ScheduleStepResource(ModelResource):
     '''
 
     workout = fields.ToOneField(WorkoutResource, 'workout')
-    schedule = fields.ToOneField('wger.manager.api.resources.ScheduleResource',
-                                 'schedule')
+    schedule = fields.ToOneField('wger.manager.api.resources.ScheduleResource', 'schedule')
 
     def authorized_read_list(self, object_list, bundle):
         '''
@@ -94,11 +85,7 @@ class ScheduleStepResource(ModelResource):
         queryset = ScheduleStep.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {
-            'id': ALL,
-            'schedule': ALL_WITH_RELATIONS,
-            'workout': ALL_WITH_RELATIONS
-        }
+        filtering = {'id': ALL, 'schedule': ALL_WITH_RELATIONS, 'workout': ALL_WITH_RELATIONS}
 
 
 class ScheduleResource(ModelResource):
@@ -139,11 +126,7 @@ class DayResource(ModelResource):
         queryset = Day.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {
-            'id': ALL,
-            'description': ALL,
-            'workout': ALL_WITH_RELATIONS
-        }
+        filtering = {'id': ALL, 'description': ALL, 'workout': ALL_WITH_RELATIONS}
 
 
 class SetResource(ModelResource):
@@ -158,19 +141,13 @@ class SetResource(ModelResource):
         '''
         Filter to own objects
         '''
-        return object_list.filter(
-            exerciseday__training__user=bundle.request.user)
+        return object_list.filter(exerciseday__training__user=bundle.request.user)
 
     class Meta:
         queryset = Set.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {
-            'id': ALL,
-            'day': ALL_WITH_RELATIONS,
-            'order': ALL,
-            'sets': ALL
-        }
+        filtering = {'id': ALL, 'day': ALL_WITH_RELATIONS, 'order': ALL, 'sets': ALL}
 
 
 class SettingResource(ModelResource):
@@ -185,8 +162,7 @@ class SettingResource(ModelResource):
         '''
         Filter to own objects
         '''
-        return object_list.filter(
-            set__exerciseday__training__user=bundle.request.user)
+        return object_list.filter(set__exerciseday__training__user=bundle.request.user)
 
     class Meta:
         queryset = Setting.objects.all()

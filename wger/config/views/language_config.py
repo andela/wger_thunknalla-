@@ -27,8 +27,8 @@ from wger.utils.generic_views import WgerFormMixin
 logger = logging.getLogger(__name__)
 
 
-class LanguageConfigUpdateView(WgerFormMixin, LoginRequiredMixin,
-                               PermissionRequiredMixin, UpdateView):
+class LanguageConfigUpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
+                               UpdateView):
     '''
     Generic view to edit a language config
     '''
@@ -40,12 +40,10 @@ class LanguageConfigUpdateView(WgerFormMixin, LoginRequiredMixin,
         '''
         Return to the language page
         '''
-        return reverse_lazy(
-            'core:language:view', kwargs={'pk': self.object.language_id})
+        return reverse_lazy('core:language:view', kwargs={'pk': self.object.language_id})
 
     def get_context_data(self, **kwargs):
-        context = super(LanguageConfigUpdateView, self).get_context_data(
-            **kwargs)
+        context = super(LanguageConfigUpdateView, self).get_context_data(**kwargs)
         context['form_action'] = reverse(
             'config:language_config:edit', kwargs={'pk': self.object.id})
         context['title'] = _('Edit')

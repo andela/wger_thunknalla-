@@ -19,8 +19,7 @@ import logging
 import datetime
 
 from django.shortcuts import render, get_object_or_404
-from django.http import (HttpResponse, HttpResponseForbidden,
-                         HttpResponseRedirect)
+from django.http import (HttpResponse, HttpResponseForbidden, HttpResponseRedirect)
 from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -31,8 +30,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, cm
 from reportlab.platypus import (Paragraph, SimpleDocTemplate, Table, Spacer)
 
-from wger.nutrition.models import (NutritionPlan, MEALITEM_WEIGHT_GRAM,
-                                   MEALITEM_WEIGHT_UNIT)
+from wger.nutrition.models import (NutritionPlan, MEALITEM_WEIGHT_GRAM, MEALITEM_WEIGHT_UNIT)
 from wger import get_version
 from wger.utils.generic_views import WgerFormMixin, WgerDeleteMixin
 from wger.utils.helpers import check_token, make_token
@@ -68,8 +66,7 @@ def add(request):
     plan.language = load_language()
     plan.save()
 
-    return HttpResponseRedirect(
-        reverse('nutrition:plan:view', kwargs={'id': plan.id}))
+    return HttpResponseRedirect(reverse('nutrition:plan:view', kwargs={'id': plan.id}))
 
 
 class PlanDeleteView(WgerDeleteMixin, DeleteView):
@@ -181,8 +178,7 @@ def copy(request, pk):
             item.save()
 
     # Redirect
-    return HttpResponseRedirect(
-        reverse('nutrition:plan:view', kwargs={'id': plan.id}))
+    return HttpResponseRedirect(reverse('nutrition:plan:view', kwargs={'id': plan.id}))
 
 
 def export_pdf(request, id, uidb64=None, token=None):
@@ -257,17 +253,14 @@ def export_pdf(request, id, uidb64=None, token=None):
         for item in meal.mealitem_set.select_related():
             ingredient_markers.append(len(data))
 
-            p = Paragraph(u'<para>{0}</para>'.format(item.ingredient.name),
-                          styleSheet["Normal"])
+            p = Paragraph(u'<para>{0}</para>'.format(item.ingredient.name), styleSheet["Normal"])
             if item.get_unit_type() == MEALITEM_WEIGHT_GRAM:
                 unit_name = 'g'
             else:
                 unit_name = ' ' + item.weight_unit.unit.name
 
-            data.append([
-                Paragraph(u"{0}{1}".format(item.amount, unit_name),
-                          styleSheet["Normal"]), p
-            ])
+            data.append(
+                [Paragraph(u"{0}{1}".format(item.amount, unit_name), styleSheet["Normal"]), p])
 
     # Set general table styles
     table_style = []
@@ -275,10 +268,8 @@ def export_pdf(request, id, uidb64=None, token=None):
     # Set specific styles, e.g. background for title cells
     for marker in meal_markers:
         # Set background colour for headings
-        table_style.append(('BACKGROUND', (0, marker), (-1, marker),
-                            header_colour))
-        table_style.append(('BOX', (0, marker), (-1, marker), 1.25,
-                            colors.black))
+        table_style.append(('BACKGROUND', (0, marker), (-1, marker), header_colour))
+        table_style.append(('BOX', (0, marker), (-1, marker), 1.25, colors.black))
 
         # Make the headings span the whole width
         table_style.append(('SPAN', (0, marker), (-1, marker)))
@@ -298,9 +289,8 @@ def export_pdf(request, id, uidb64=None, token=None):
 
     # Set the title (if available)
     if plan.description:
-        p = Paragraph(
-            '<para align="center"><strong>%(description)s</strong></para>' %
-            {'description': plan.description}, styleSheet["Bold"])
+        p = Paragraph('<para align="center"><strong>%(description)s</strong></para>' %
+                      {'description': plan.description}, styleSheet["Bold"])
         elements.append(p)
 
         # Filler
@@ -415,7 +405,6 @@ def export_pdf(request, id, uidb64=None, token=None):
     elements.append(p)
     doc.build(elements)
 
-    response[
-        'Content-Disposition'] = 'attachment; filename=nutritional-plan.pdf'
+    response['Content-Disposition'] = 'attachment; filename=nutritional-plan.pdf'
     response['Content-Length'] = len(response.content)
     return response

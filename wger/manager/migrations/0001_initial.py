@@ -21,17 +21,13 @@ class Migration(migrations.Migration):
             name='Day',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(
                     help_text=
                     'Ususally a description about what parts are trained, like "Arms" or "Pull Day"',
                     max_length=100,
                     verbose_name='Description')),
-                ('day', models.ManyToManyField(
-                    to='core.DaysOfWeek', verbose_name='Day')),
+                ('day', models.ManyToManyField(to='core.DaysOfWeek', verbose_name='Day')),
             ],
             options={},
             bases=(models.Model,),),
@@ -39,10 +35,7 @@ class Migration(migrations.Migration):
             name='Schedule',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(
                     help_text=
                     "Name or short description of the schedule. For example 'Program XYZ'.",
@@ -61,9 +54,7 @@ class Migration(migrations.Migration):
                     'Tick the box if you want to repeat the schedules in a loop (i.e. A, B, C, A, B, C, and so on)',
                     verbose_name='Is loop')),
                 ('user', models.ForeignKey(
-                    editable=False,
-                    to=settings.AUTH_USER_MODEL,
-                    verbose_name='User')),
+                    editable=False, to=settings.AUTH_USER_MODEL, verbose_name='User')),
             ],
             options={},
             bases=(models.Model,),),
@@ -71,10 +62,7 @@ class Migration(migrations.Migration):
             name='ScheduleStep',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('duration', models.IntegerField(
                     default=4,
                     help_text='The duration in weeks',
@@ -83,10 +71,8 @@ class Migration(migrations.Migration):
                         django.core.validators.MinValueValidator(1),
                         django.core.validators.MaxValueValidator(25)
                     ])),
-                ('order', models.IntegerField(
-                    default=1, max_length=1, verbose_name='Order')),
-                ('schedule', models.ForeignKey(
-                    verbose_name='schedule', to='manager.Schedule')),
+                ('order', models.IntegerField(default=1, max_length=1, verbose_name='Order')),
+                ('schedule', models.ForeignKey(verbose_name='schedule', to='manager.Schedule')),
             ],
             options={
                 'ordering': ['order'],
@@ -96,12 +82,8 @@ class Migration(migrations.Migration):
             name='Set',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('order', models.IntegerField(
-                    null=True, verbose_name='Order', blank=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('order', models.IntegerField(null=True, verbose_name='Order', blank=True)),
                 ('sets', models.IntegerField(
                     default=4,
                     verbose_name='Number of sets',
@@ -109,8 +91,7 @@ class Migration(migrations.Migration):
                         django.core.validators.MinValueValidator(0),
                         django.core.validators.MaxValueValidator(10)
                     ])),
-                ('exerciseday', models.ForeignKey(
-                    verbose_name='Exercise day', to='manager.Day')),
+                ('exerciseday', models.ForeignKey(verbose_name='Exercise day', to='manager.Day')),
                 ('exercises', models.ManyToManyField(
                     to='exercises.Exercise', verbose_name='Exercises')),
             ],
@@ -122,24 +103,17 @@ class Migration(migrations.Migration):
             name='Setting',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('reps', models.IntegerField(
                     verbose_name='Repetitions',
                     validators=[
                         django.core.validators.MinValueValidator(0),
                         django.core.validators.MaxValueValidator(100)
                     ])),
-                ('order', models.IntegerField(
-                    verbose_name='Order', blank=True)),
-                ('comment', models.CharField(
-                    max_length=100, verbose_name='Comment', blank=True)),
-                ('exercise', models.ForeignKey(
-                    verbose_name='Exercises', to='exercises.Exercise')),
-                ('set', models.ForeignKey(
-                    verbose_name='Sets', to='manager.Set')),
+                ('order', models.IntegerField(verbose_name='Order', blank=True)),
+                ('comment', models.CharField(max_length=100, verbose_name='Comment', blank=True)),
+                ('exercise', models.ForeignKey(verbose_name='Exercises', to='exercises.Exercise')),
+                ('set', models.ForeignKey(verbose_name='Sets', to='manager.Set')),
             ],
             options={
                 'ordering': ['order', 'id'],
@@ -149,20 +123,16 @@ class Migration(migrations.Migration):
             name='Workout',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('creation_date', models.DateField(
-                    auto_now_add=True, verbose_name='Creation date')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('creation_date', models.DateField(auto_now_add=True,
+                                                   verbose_name='Creation date')),
                 ('comment', models.CharField(
                     help_text=
                     "A short description or goal of the workout. For example 'Focus on back' or 'Week 1 of program xy'.",
                     max_length=100,
                     verbose_name='Description',
                     blank=True)),
-                ('user', models.ForeignKey(
-                    verbose_name='User', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(verbose_name='User', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ['-creation_date'],
@@ -172,10 +142,7 @@ class Migration(migrations.Migration):
             name='WorkoutLog',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('reps', models.IntegerField(
                     verbose_name='Repetitions',
                     validators=[django.core.validators.MinValueValidator(0)])),
@@ -184,16 +151,11 @@ class Migration(migrations.Migration):
                     max_digits=5,
                     decimal_places=2,
                     validators=[django.core.validators.MinValueValidator(0)])),
-                ('date',
-                 wger.utils.fields.Html5DateField(verbose_name='Date')),
-                ('exercise', models.ForeignKey(
-                    verbose_name='Exercise', to='exercises.Exercise')),
+                ('date', wger.utils.fields.Html5DateField(verbose_name='Date')),
+                ('exercise', models.ForeignKey(verbose_name='Exercise', to='exercises.Exercise')),
                 ('user', models.ForeignKey(
-                    editable=False,
-                    to=settings.AUTH_USER_MODEL,
-                    verbose_name='User')),
-                ('workout', models.ForeignKey(
-                    verbose_name='Workout', to='manager.Workout')),
+                    editable=False, to=settings.AUTH_USER_MODEL, verbose_name='User')),
+                ('workout', models.ForeignKey(verbose_name='Workout', to='manager.Workout')),
             ],
             options={
                 'ordering': ['date', 'reps'],
@@ -203,15 +165,10 @@ class Migration(migrations.Migration):
             name='WorkoutSession',
             fields=[
                 ('id', models.AutoField(
-                    verbose_name='ID',
-                    serialize=False,
-                    auto_created=True,
-                    primary_key=True)),
-                ('date',
-                 wger.utils.fields.Html5DateField(verbose_name='Date')),
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date', wger.utils.fields.Html5DateField(verbose_name='Date')),
                 ('notes', models.TextField(
-                    help_text=
-                    'Any notes you might want to save about this workout session.',
+                    help_text='Any notes you might want to save about this workout session.',
                     null=True,
                     verbose_name='Notes',
                     blank=True)),
@@ -221,16 +178,11 @@ class Migration(migrations.Migration):
                     'Your impression about this workout session. Did you exercise as well as you could?',
                     max_length=2,
                     verbose_name='General impression',
-                    choices=[(b'1', 'Bad'), (b'2', 'Neutral'), (b'3',
-                                                                'Good')])),
-                ('time_start', models.TimeField(
-                    null=True, verbose_name='Start time', blank=True)),
-                ('time_end', models.TimeField(
-                    null=True, verbose_name='Finish time', blank=True)),
-                ('user', models.ForeignKey(
-                    verbose_name='User', to=settings.AUTH_USER_MODEL)),
-                ('workout', models.ForeignKey(
-                    verbose_name='Workout', to='manager.Workout')),
+                    choices=[(b'1', 'Bad'), (b'2', 'Neutral'), (b'3', 'Good')])),
+                ('time_start', models.TimeField(null=True, verbose_name='Start time', blank=True)),
+                ('time_end', models.TimeField(null=True, verbose_name='Finish time', blank=True)),
+                ('user', models.ForeignKey(verbose_name='User', to=settings.AUTH_USER_MODEL)),
+                ('workout', models.ForeignKey(verbose_name='Workout', to='manager.Workout')),
             ],
             options={
                 'ordering': ['date'],
@@ -247,7 +199,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='day',
             name='training',
-            field=models.ForeignKey(
-                verbose_name='Workout', to='manager.Workout'),
+            field=models.ForeignKey(verbose_name='Workout', to='manager.Workout'),
             preserve_default=True,),
     ]

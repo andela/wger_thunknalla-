@@ -46,8 +46,7 @@ class EquipmentListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = 'exercises.change_equipment'
 
 
-class EquipmentEditView(WgerFormMixin, LoginRequiredMixin,
-                        PermissionRequiredMixin, UpdateView):
+class EquipmentEditView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     '''
     Generic view to update an existing equipment item
     '''
@@ -61,14 +60,12 @@ class EquipmentEditView(WgerFormMixin, LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(EquipmentEditView, self).get_context_data(**kwargs)
         context['title'] = _('Edit {0}').format(self.object)
-        context['form_action'] = reverse(
-            'exercise:equipment:edit', kwargs={'pk': self.object.id})
+        context['form_action'] = reverse('exercise:equipment:edit', kwargs={'pk': self.object.id})
 
         return context
 
 
-class EquipmentAddView(WgerFormMixin, LoginRequiredMixin,
-                       PermissionRequiredMixin, CreateView):
+class EquipmentAddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     '''
     Generic view to add a new equipment item
     '''
@@ -89,8 +86,7 @@ class EquipmentAddView(WgerFormMixin, LoginRequiredMixin,
         return context
 
 
-class EquipmentDeleteView(WgerDeleteMixin, LoginRequiredMixin,
-                          PermissionRequiredMixin, DeleteView):
+class EquipmentDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     '''
     Generic view to delete an existing exercise image
     '''
@@ -109,8 +105,7 @@ class EquipmentDeleteView(WgerDeleteMixin, LoginRequiredMixin,
         context = super(EquipmentDeleteView, self).get_context_data(**kwargs)
 
         context['title'] = _('Delete equipment?')
-        context['form_action'] = reverse(
-            'exercise:equipment:delete', kwargs={'pk': pk})
+        context['form_action'] = reverse('exercise:equipment:delete', kwargs={'pk': pk})
 
         return context
 
@@ -129,11 +124,9 @@ class EquipmentOverviewView(ListView):
         Send some additional data to the template
         '''
         context = super(EquipmentOverviewView, self).get_context_data(**kwargs)
-        context['exercise_languages'] = load_item_languages(
-            LanguageConfig.SHOW_ITEM_EXERCISES)
+        context['exercise_languages'] = load_item_languages(LanguageConfig.SHOW_ITEM_EXERCISES)
         for equipment in context['equipment_list']:
             equipment.name = _(equipment.name)
-        context['equipment_list'] = sorted(
-            context['equipment_list'], key=lambda e: e.name)
+        context['equipment_list'] = sorted(context['equipment_list'], key=lambda e: e.name)
         context['show_shariff'] = True
         return context

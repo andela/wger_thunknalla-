@@ -37,11 +37,9 @@ class UserPreferencesForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('show_comments', 'show_english_ingredients',
-                  'workout_reminder_active', 'workout_reminder',
-                  'workout_duration', 'notification_language', 'weight_unit',
-                  'timer_active', 'timer_pause', 'ro_access',
-                  'num_days_weight_reminder')
+        fields = ('show_comments', 'show_english_ingredients', 'workout_reminder_active',
+                  'workout_reminder', 'workout_duration', 'notification_language', 'weight_unit',
+                  'timer_active', 'timer_pause', 'ro_access', 'num_days_weight_reminder')
 
 
 class UserEmailForm(forms.ModelForm):

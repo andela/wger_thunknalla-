@@ -34,8 +34,7 @@ Exercise images
 '''
 
 
-class ExerciseImageEditView(WgerFormMixin, LoginRequiredMixin,
-                            PermissionRequiredMixin, UpdateView):
+class ExerciseImageEditView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     '''
     Generic view to update an existing exercise image
     '''
@@ -46,21 +45,18 @@ class ExerciseImageEditView(WgerFormMixin, LoginRequiredMixin,
     form_class = ExerciseImageForm
 
     def get_success_url(self):
-        return reverse(
-            'exercise:exercise:view', kwargs={'id': self.object.exercise.id})
+        return reverse('exercise:exercise:view', kwargs={'id': self.object.exercise.id})
 
     # Send some additional data to the template
     def get_context_data(self, **kwargs):
         context = super(ExerciseImageEditView, self).get_context_data(**kwargs)
         context['enctype'] = 'multipart/form-data'
-        context['form_action'] = reverse(
-            'exercise:image:edit', kwargs={'pk': self.object.id})
+        context['form_action'] = reverse('exercise:image:edit', kwargs={'pk': self.object.id})
 
         return context
 
 
-class ExerciseImageAddView(WgerFormMixin, LoginRequiredMixin,
-                           PermissionRequiredMixin, CreateView):
+class ExerciseImageAddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     '''
     Generic view to add a new exercise image
     '''
@@ -71,14 +67,12 @@ class ExerciseImageAddView(WgerFormMixin, LoginRequiredMixin,
     form_class = ExerciseImageForm
 
     def form_valid(self, form):
-        form.instance.exercise = Exercise.objects.get(
-            pk=self.kwargs['exercise_pk'])
+        form.instance.exercise = Exercise.objects.get(pk=self.kwargs['exercise_pk'])
         form.instance.set_author(self.request)
         return super(ExerciseImageAddView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse(
-            'exercise:exercise:view', kwargs={'id': self.object.exercise.id})
+        return reverse('exercise:exercise:view', kwargs={'id': self.object.exercise.id})
 
     def get_context_data(self, **kwargs):
         '''
@@ -87,14 +81,13 @@ class ExerciseImageAddView(WgerFormMixin, LoginRequiredMixin,
         context = super(ExerciseImageAddView, self).get_context_data(**kwargs)
         context['enctype'] = 'multipart/form-data'
         context['form_action'] = reverse(
-            'exercise:image:add',
-            kwargs={'exercise_pk': self.kwargs['exercise_pk']})
+            'exercise:image:add', kwargs={'exercise_pk': self.kwargs['exercise_pk']})
 
         return context
 
 
-class ExerciseImageDeleteView(WgerDeleteMixin, LoginRequiredMixin,
-                              PermissionRequiredMixin, DeleteView):
+class ExerciseImageDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin,
+                              DeleteView):
     '''
     Generic view to delete an existing exercise image
     '''
@@ -108,9 +101,7 @@ class ExerciseImageDeleteView(WgerDeleteMixin, LoginRequiredMixin,
         '''
         Return to exercise image
         '''
-        return reverse(
-            'exercise:exercise:view',
-            kwargs={'id': self.kwargs['exercise_pk']})
+        return reverse('exercise:exercise:view', kwargs={'id': self.kwargs['exercise_pk']})
 
     def get_context_data(self, **kwargs):
         '''
@@ -118,14 +109,12 @@ class ExerciseImageDeleteView(WgerDeleteMixin, LoginRequiredMixin,
         '''
         pk = self.kwargs['pk']
         exercise_pk = self.kwargs['exercise_pk']
-        context = super(ExerciseImageDeleteView, self).get_context_data(
-            **kwargs)
+        context = super(ExerciseImageDeleteView, self).get_context_data(**kwargs)
 
         context['title'] = _('Delete exercise image?')
         context['form_action'] = reverse(
-            'exercise:image:delete',
-            kwargs={'pk': pk,
-                    'exercise_pk': exercise_pk})
+            'exercise:image:delete', kwargs={'pk': pk,
+                                             'exercise_pk': exercise_pk})
 
         return context
 

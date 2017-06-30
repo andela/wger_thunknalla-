@@ -21,12 +21,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 
-from wger.manager.api.serializers import (
-    WorkoutSerializer, ScheduleStepSerializer, WorkoutCanonicalFormSerializer,
-    DaySerializer, SettingSerializer, SetSerializer, ScheduleSerializer,
-    WorkoutLogSerializer, WorkoutSessionSerializer)
-from wger.manager.models import (Workout, Set, ScheduleStep, Schedule, Day,
-                                 Setting, WorkoutLog, WorkoutSession)
+from wger.manager.api.serializers import (WorkoutSerializer, ScheduleStepSerializer,
+                                          WorkoutCanonicalFormSerializer, DaySerializer,
+                                          SettingSerializer, SetSerializer, ScheduleSerializer,
+                                          WorkoutLogSerializer, WorkoutSessionSerializer)
+from wger.manager.models import (Workout, Set, ScheduleStep, Schedule, Day, Setting, WorkoutLog,
+                                 WorkoutSession)
 from wger.utils.viewsets import WgerOwnerObjectModelViewSet
 
 
@@ -59,8 +59,7 @@ class WorkoutViewSet(viewsets.ModelViewSet):
         This is basically the same form as used in the application
         '''
 
-        out = WorkoutCanonicalFormSerializer(
-            self.get_object().canonical_representation).data
+        out = WorkoutCanonicalFormSerializer(self.get_object().canonical_representation).data
         return Response(out)
 
 
@@ -71,8 +70,7 @@ class WorkoutSessionViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = WorkoutSessionSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('date', 'workout', 'notes', 'impression', 'time_start',
-                     'time_end')
+    filter_fields = ('date', 'workout', 'notes', 'impression', 'time_start', 'time_end')
 
     def get_queryset(self):
         '''
@@ -173,8 +171,7 @@ class SetViewSet(WgerOwnerObjectModelViewSet):
         '''
         Only allow access to appropriate objects
         '''
-        return Set.objects.filter(
-            exerciseday__training__user=self.request.user)
+        return Set.objects.filter(exerciseday__training__user=self.request.user)
 
     def get_owner_objects(self):
         '''
@@ -196,8 +193,7 @@ class SettingViewSet(WgerOwnerObjectModelViewSet):
         '''
         Only allow access to appropriate objects
         '''
-        return Setting.objects.filter(
-            set__exerciseday__training__user=self.request.user)
+        return Setting.objects.filter(set__exerciseday__training__user=self.request.user)
 
     def perform_create(self, serializer):
         '''

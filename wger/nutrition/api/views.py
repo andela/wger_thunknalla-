@@ -20,13 +20,12 @@ from rest_framework.decorators import detail_route
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from wger.nutrition.api.serializers import (
-    NutritionPlanSerializer, IngredientWeightUnitSerializer,
-    WeightUnitSerializer, MealItemSerializer, MealSerializer,
-    IngredientSerializer)
+from wger.nutrition.api.serializers import (NutritionPlanSerializer, IngredientWeightUnitSerializer,
+                                            WeightUnitSerializer, MealItemSerializer,
+                                            MealSerializer, IngredientSerializer)
 from wger.nutrition.forms import UnitChooserForm
-from wger.nutrition.models import (Ingredient, Meal, MealItem, WeightUnit,
-                                   IngredientWeightUnit, NutritionPlan)
+from wger.nutrition.models import (Ingredient, Meal, MealItem, WeightUnit, IngredientWeightUnit,
+                                   NutritionPlan)
 from wger.utils.language import load_ingredient_languages, load_language
 from wger.utils.viewsets import WgerOwnerObjectModelViewSet
 
@@ -38,10 +37,9 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     ordering_fields = '__all__'
-    filter_fields = ('carbohydrates', 'carbohydrates_sugar', 'creation_date',
-                     'energy', 'fat', 'fat_saturated', 'fibres', 'name',
-                     'protein', 'sodium', 'status', 'update_date', 'language',
-                     'user', 'license', 'license_author')
+    filter_fields = ('carbohydrates', 'carbohydrates_sugar', 'creation_date', 'energy', 'fat',
+                     'fat_saturated', 'fibres', 'name', 'protein', 'sodium', 'status',
+                     'update_date', 'language', 'user', 'license', 'license_author')
 
     @detail_route()
     def get_values(self, request, pk):
@@ -105,9 +103,7 @@ def search(request):
     if q:
         languages = load_ingredient_languages(request)
         ingredients = Ingredient.objects.filter(
-            name__icontains=q,
-            language__in=languages,
-            status__in=Ingredient.INGREDIENT_STATUS_OK)
+            name__icontains=q, language__in=languages, status__in=Ingredient.INGREDIENT_STATUS_OK)
 
         for ingredient in ingredients:
             ingredient_json = {
@@ -150,8 +146,7 @@ class NutritionPlanViewSet(viewsets.ModelViewSet):
     serializer_class = NutritionPlanSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('creation_date', 'language', 'description',
-                     'has_goal_calories')
+    filter_fields = ('creation_date', 'language', 'description', 'has_goal_calories')
 
     def get_queryset(self):
         '''
@@ -170,8 +165,7 @@ class NutritionPlanViewSet(viewsets.ModelViewSet):
         '''
         Return an overview of the nutritional plan's values
         '''
-        return Response(
-            NutritionPlan.objects.get(pk=pk).get_nutritional_values())
+        return Response(NutritionPlan.objects.get(pk=pk).get_nutritional_values())
 
 
 class MealViewSet(WgerOwnerObjectModelViewSet):

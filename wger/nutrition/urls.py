@@ -18,8 +18,8 @@
 from django.contrib.auth.decorators import login_required
 from django.conf.urls import (patterns, url, include)
 
-from wger.nutrition.views import (ingredient, bmi, calculator, plan, meal,
-                                  meal_item, unit, unit_ingredient)
+from wger.nutrition.views import (ingredient, bmi, calculator, plan, meal, meal_item, unit,
+                                  unit_ingredient)
 
 # sub patterns for nutritional plans
 patterns_plan = [
@@ -27,12 +27,8 @@ patterns_plan = [
     url(r'^add/$', plan.add, name='add'),
     url(r'^(?P<id>\d+)/view/$', plan.view, name='view'),
     url(r'^(?P<pk>\d+)/copy/$', plan.copy, name='copy'),
-    url(r'^(?P<pk>\d+)/delete/$',
-        login_required(plan.PlanDeleteView.as_view()),
-        name='delete'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        login_required(plan.PlanEditView.as_view()),
-        name='edit'),
+    url(r'^(?P<pk>\d+)/delete/$', login_required(plan.PlanDeleteView.as_view()), name='delete'),
+    url(r'^(?P<pk>\d+)/edit/$', login_required(plan.PlanEditView.as_view()), name='edit'),
     url(r'^(?P<id>\d+)/pdf/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})$',
         plan.export_pdf,
         name='export-pdf'),
@@ -41,12 +37,8 @@ patterns_plan = [
 
 # sub patterns for meals
 patterns_meal = [
-    url(r'^(?P<plan_pk>\d+)/meal/add/$',
-        login_required(meal.MealCreateView.as_view()),
-        name='add'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        login_required(meal.MealEditView.as_view()),
-        name='edit'),
+    url(r'^(?P<plan_pk>\d+)/meal/add/$', login_required(meal.MealCreateView.as_view()), name='add'),
+    url(r'^(?P<pk>\d+)/edit/$', login_required(meal.MealEditView.as_view()), name='edit'),
     url(r'^(?P<id>\d+)/delete/$', meal.delete_meal, name='delete'),
 ]
 
@@ -55,29 +47,17 @@ patterns_meal_item = [
     url(r'^(?P<meal_id>\d+)/item/add/$',
         login_required(meal_item.MealItemCreateView.as_view()),
         name='add'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        login_required(meal_item.MealItemEditView.as_view()),
-        name='edit'),
-    url(r'^(?P<item_id>\d+)/delete/$',
-        meal_item.delete_meal_item,
-        name='delete'),
+    url(r'^(?P<pk>\d+)/edit/$', login_required(meal_item.MealItemEditView.as_view()), name='edit'),
+    url(r'^(?P<item_id>\d+)/delete/$', meal_item.delete_meal_item, name='delete'),
 ]
 
 # sub patterns for ingredient
 patterns_ingredient = [
-    url(r'^(?P<pk>\d+)/delete/$',
-        ingredient.IngredientDeleteView.as_view(),
-        name='delete'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        ingredient.IngredientEditView.as_view(),
-        name='edit'),
-    url(r'^add/$',
-        login_required(ingredient.IngredientCreateView.as_view()),
-        name='add'),
+    url(r'^(?P<pk>\d+)/delete/$', ingredient.IngredientDeleteView.as_view(), name='delete'),
+    url(r'^(?P<pk>\d+)/edit/$', ingredient.IngredientEditView.as_view(), name='edit'),
+    url(r'^add/$', login_required(ingredient.IngredientCreateView.as_view()), name='add'),
     url(r'^overview/$', ingredient.IngredientListView.as_view(), name='list'),
-    url(r'^pending/$',
-        ingredient.PendingIngredientListView.as_view(),
-        name='pending'),
+    url(r'^pending/$', ingredient.PendingIngredientListView.as_view(), name='pending'),
     url(r'^(?P<pk>\d+)/accept/$', ingredient.accept, name='accept'),
     url(r'^(?P<pk>\d+)/decline/$', ingredient.decline, name='decline'),
     url(r'^(?P<id>\d+)/view/$', ingredient.view, name='view'),
@@ -88,12 +68,8 @@ patterns_ingredient = [
 patterns_weight_unit = [
     url(r'^list/$', unit.WeightUnitListView.as_view(), name='list'),
     url(r'^add/$', unit.WeightUnitCreateView.as_view(), name='add'),
-    url(r'^(?P<pk>\d+)/delete/$',
-        unit.WeightUnitDeleteView.as_view(),
-        name='delete'),
-    url(r'^(?P<pk>\d+)/edit/$',
-        unit.WeightUnitUpdateView.as_view(),
-        name='edit'),
+    url(r'^(?P<pk>\d+)/delete/$', unit.WeightUnitDeleteView.as_view(), name='delete'),
+    url(r'^(?P<pk>\d+)/edit/$', unit.WeightUnitUpdateView.as_view(), name='edit'),
 ]
 
 # sub patterns for weight units / ingredient cross table
@@ -120,8 +96,7 @@ patterns_bmi = [
 patterns_calories = [
     url(r'^$', calculator.view, name='view'),
     url(r'^bmr$', calculator.calculate_bmr, name='bmr'),
-    url(r'^activities$', calculator.calculate_activities,
-        name='activities'),  # JS
+    url(r'^activities$', calculator.calculate_activities, name='activities'),  # JS
 ]
 
 urlpatterns = [
@@ -130,9 +105,7 @@ urlpatterns = [
     url(r'^meal/item/', include(patterns_meal_item, namespace="meal_item")),
     url(r'^ingredient/', include(patterns_ingredient, namespace="ingredient")),
     url(r'^unit/', include(patterns_weight_unit, namespace="weight_unit")),
-    url(r'^unit-to-ingredient/',
-        include(patterns_unit_ingredient, namespace="unit_ingredient")),
+    url(r'^unit-to-ingredient/', include(patterns_unit_ingredient, namespace="unit_ingredient")),
     url(r'^calculator/bmi/', include(patterns_bmi, namespace="bmi")),
-    url(r'^calculator/calories/',
-        include(patterns_calories, namespace="calories")),
+    url(r'^calculator/calories/', include(patterns_calories, namespace="calories")),
 ]
