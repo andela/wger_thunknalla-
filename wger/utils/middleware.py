@@ -116,7 +116,7 @@ class JavascriptAJAXRedirectionMiddleware(object):
     def process_response(self, request, response):
 
         if request.META.get('HTTP_X_WGER_NO_MESSAGES'
-                           ) and b'has-error' not in response.content:
+                            ) and b'has-error' not in response.content:
 
             logger.debug('Sending X-wger-redirect')
             response['X-wger-redirect'] = request.path

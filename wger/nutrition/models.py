@@ -20,7 +20,8 @@ from decimal import Decimal
 from django.db import models
 
 from django.template.loader import render_to_string
-from django.template.defaultfilters import slugify  # django.utils.text.slugify in django 1.5!
+# django.utils.text.slugify in django 1.5!
+from django.template.defaultfilters import slugify
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
@@ -153,8 +154,8 @@ class NutritionPlan(models.Model):
         # In percent
         if energy:
             for key in result['percent'].keys():
-                result['percent'][key] = \
-                    result['total'][key] * ENERGY_FACTOR[key][unit] / energy * 100
+                result['percent'][key] = result['total'][key] * \
+                    ENERGY_FACTOR[key][unit] / energy * 100
 
         # Per body weight
         weight_entry = self.get_closest_weight_entry()
@@ -682,8 +683,8 @@ class MealItem(models.Model):
             'energy'] += self.ingredient.energy * item_weight / 100
         nutritional_info[
             'protein'] += self.ingredient.protein * item_weight / 100
-        nutritional_info[
-            'carbohydrates'] += self.ingredient.carbohydrates * item_weight / 100
+        nutritional_info['carbohydrates'] += self.ingredient.carbohydrates * \
+            item_weight / 100
 
         if self.ingredient.carbohydrates_sugar:
             nutritional_info['carbohydrates_sugar'] += self.ingredient.carbohydrates_sugar \
@@ -692,8 +693,8 @@ class MealItem(models.Model):
         nutritional_info['fat'] += self.ingredient.fat * item_weight / 100
 
         if self.ingredient.fat_saturated:
-            nutritional_info[
-                'fat_saturated'] += self.ingredient.fat_saturated * item_weight / 100
+            nutritional_info['fat_saturated'] += self.ingredient.fat_saturated * \
+                item_weight / 100
 
         if self.ingredient.fibres:
             nutritional_info[

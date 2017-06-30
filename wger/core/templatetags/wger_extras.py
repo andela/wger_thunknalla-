@@ -252,8 +252,11 @@ def is_multiple(field):
     :param field: a form field
     :return: boolen
     '''
-    return isinstance(field.field.widget, BootstrapSelectMultiple) \
-        or isinstance(field.field.widget, BootstrapSelectMultipleTranslatedOriginal)
+    return isinstance(
+        field.field.widget,
+        BootstrapSelectMultiple) or isinstance(
+        field.field.widget,
+        BootstrapSelectMultipleTranslatedOriginal)
 
 
 @register.filter(name='is_fileupload')

@@ -153,7 +153,8 @@ def add(request, pk):
                 session_form = HelperWorkoutSessionForm(
                     data=post_copy, instance=session)
 
-            # Save the Workout Session only if there is not already one for this date
+            # Save the Workout Session only if there is not already one for
+            # this date
             instance = session_form.save(commit=False)
             if not WorkoutSession.objects.filter(
                     user=request.user, date=log_date).exists():
@@ -192,7 +193,8 @@ def add(request, pk):
         dateform = HelperDateForm(initial={'date': datetime.date.today()})
 
         # Depending on whether there is already a workout session for today, update
-        # the current one or create a new one (this will be the most usual case)
+        # the current one or create a new one (this will be the most usual
+        # case)
         if WorkoutSession.objects.filter(
                 user=request.user, date=datetime.date.today()).exists():
             session = WorkoutSession.objects.get(
@@ -256,10 +258,11 @@ class WorkoutLogDetailView(DetailView, LoginRequiredMixin):
                     #       expected. Also, adding the unit IDs to the exclude list
                     #       also has the disadvantage that if new ones are added in a
                     #       local instance, they could "slip" through.
-                    logs = exercise_list['obj'].workoutlog_set.filter(user=self.owner_user,
-                                                                      weight_unit__in=(1, 2),
-                                                                      workout=self.object) \
-                        .exclude(repetition_unit_id__in=(2, 3, 4, 5, 6, 7, 8))
+                    logs = exercise_list['obj'].workoutlog_set.filter(
+                        user=self.owner_user, weight_unit__in=(
+                            1, 2), workout=self.object) .exclude(
+                        repetition_unit_id__in=(
+                            2, 3, 4, 5, 6, 7, 8))
                     entry_log, chart_data = process_log_entries(logs)
                     if entry_log:
                         exercise_log[exercise_list['obj'].id].append(entry_log)

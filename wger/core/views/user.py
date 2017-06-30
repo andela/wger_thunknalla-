@@ -479,10 +479,10 @@ class UserDetailView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
                 'last_log': logs.last()
             })
         context['workouts'] = out
-        context['weight_entries'] = WeightEntry.objects.filter(user=self.object)\
-            .order_by('-date')[:5]
-        context['nutrition_plans'] = NutritionPlan.objects.filter(user=self.object)\
-            .order_by('-creation_date')[:5]
+        context['weight_entries'] = WeightEntry.objects.filter(
+            user=self.object) .order_by('-date')[:5]
+        context['nutrition_plans'] = NutritionPlan.objects.filter(
+            user=self.object) .order_by('-creation_date')[:5]
         context['session'] = WorkoutSession.objects.filter(
             user=self.object).order_by('-date')[:10]
         context['admin_notes'] = AdminUserNote.objects.filter(

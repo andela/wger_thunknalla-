@@ -521,7 +521,8 @@ class Day(models.Model):
                         exercise['setting_obj_list'].pop(-1)
                         setting_text, setting_list, weight_list,\
                             reps_list, repetition_units, weight_units = \
-                            reps_smart_text(exercise['setting_obj_list'], set_obj)
+                            reps_smart_text(
+                                exercise['setting_obj_list'], set_obj)
                         exercise['setting_text'] = setting_text
                         exercise['repetition_units'] = repetition_units
 
@@ -882,8 +883,7 @@ class WorkoutSession(models.Model):
         if (not self.time_end and self.time_start) or (self.time_end and
                                                        not self.time_start):
             raise ValidationError(
-                _("If you enter a time, you must enter both start and end time."
-                  ))
+                _("If you enter a time, you must enter both start and end time."))
 
         if self.time_end and self.time_start and self.time_start > self.time_end:
             raise ValidationError(

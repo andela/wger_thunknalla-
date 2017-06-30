@@ -75,7 +75,7 @@ def search(request):
             language_code=request.GET.get('language', None))
         exercises = (Exercise.objects.filter(name__icontains=q).filter(
             language__in=languages).filter(status=Exercise.STATUS_ACCEPTED)
-                     .order_by('category__name', 'name').distinct())
+            .order_by('category__name', 'name').distinct())
 
         for exercise in exercises:
             if exercise.main_image:

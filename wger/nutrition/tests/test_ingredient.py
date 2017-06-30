@@ -199,7 +199,8 @@ class IngredientSearchTestCase(WorkoutManagerTestCase):
         self.assertEqual(result['suggestions'][1]['value'],
                          'Test ingredient 1')
 
-        # Search for an ingredient pending review (0 hits, "Pending ingredient")
+        # Search for an ingredient pending review (0 hits, "Pending
+        # ingredient")
         response = self.client.get(
             reverse('ingredient-search'), {'term': 'Pending'}, **kwargs)
         self.assertEqual(response.status_code, 200)

@@ -246,7 +246,7 @@ def gym_permissions_user_edit(request, user_pk):
         return HttpResponseForbidden()
 
     if user.has_perm('gym.manage_gym'
-                    ) and user.userprofile.gym != member.userprofile.gym:
+                     ) and user.userprofile.gym != member.userprofile.gym:
         return HttpResponseForbidden()
 
     # Calculate available user permissions

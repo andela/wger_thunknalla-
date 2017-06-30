@@ -109,7 +109,8 @@ def view(request, id, slug=None):
                     'images/muscles/secondary/muscle-%s.svg' % muscle.id)
 
         # Append the "main" background, with the silhouette of the human body
-        # This has to happen as the last step, so it is rendered behind the muscles.
+        # This has to happen as the last step, so it is rendered behind the
+        # muscles.
         backgrounds_front.append('images/muscles/muscular_system_front.svg')
         backgrounds_back.append('images/muscles/muscular_system_back.svg')
         backgrounds = (backgrounds_front, backgrounds_back)
