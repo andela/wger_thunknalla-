@@ -182,24 +182,25 @@ class WeightLogOverviewAddTestCase(WorkoutManagerTestCase):
 
         # Add new log entries
         count_before = WorkoutLog.objects.count()
-        response = self.client.post(reverse('manager:day:log', kwargs={'pk': 1}),
-                                    {'date': '2012-01-01',
-                                     'notes': 'My cool impression',
-                                     'impression': '3',
-                                     'time_start': datetime.time(10, 0),
-                                     'time_end': datetime.time(12, 0),
-                                     'form-0-reps': 10,
-                                     'form-0-repetition_unit': 1,
-                                     'form-0-weight': 10,
-                                     'form-0-weight_unit': 1,
-                                     'form-1-reps': 10,
-                                     'form-1-repetition_unit': 1,
-                                     'form-1-weight': 10,
-                                     'form-1-weight_unit': 1,
-                                     'form-TOTAL_FORMS': 3,
-                                     'form-INITIAL_FORMS': 0,
-                                     'form-MAX-NUM_FORMS': 3
-                                     })
+        response = self.client.post(
+            reverse('manager:day:log', kwargs={'pk': 1}), {
+                'date': '2012-01-01',
+                'notes': 'My cool impression',
+                'impression': '3',
+                'time_start': datetime.time(10, 0),
+                'time_end': datetime.time(12, 0),
+                'form-0-reps': 10,
+                'form-0-repetition_unit': 1,
+                'form-0-weight': 10,
+                'form-0-weight_unit': 1,
+                'form-1-reps': 10,
+                'form-1-repetition_unit': 1,
+                'form-1-weight': 10,
+                'form-1-weight_unit': 1,
+                'form-TOTAL_FORMS': 3,
+                'form-INITIAL_FORMS': 0,
+                'form-MAX-NUM_FORMS': 3
+            })
         count_after = WorkoutLog.objects.count()
 
         # Logged out users get a 302 redirect to login page
@@ -315,14 +316,15 @@ class WeightLogEntryEditTestCase(WorkoutManagerTestCase):
             self.assertEqual(response.status_code, 200)
 
         date_before = WorkoutLog.objects.get(pk=1).date
-        response = self.client.post(reverse('manager:log:edit', kwargs={'pk': 1}),
-                                    {'date': '2012-01-01',
-                                     'reps': 10,
-                                     'repetition_unit': 2,
-                                     'weight_unit': 3,
-                                     'weight': 10,
-                                     'exercise': 1
-                                     })
+        response = self.client.post(
+            reverse('manager:log:edit', kwargs={'pk': 1}), {
+                'date': '2012-01-01',
+                'reps': 10,
+                'repetition_unit': 2,
+                'weight_unit': 3,
+                'weight': 10,
+                'exercise': 1
+            })
 
         date_after = WorkoutLog.objects.get(pk=1).date
 
@@ -384,10 +386,13 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         self.user_login('admin')
         self.assertFalse(cache.get(cache_mapper.get_workout_log_list(log_hash)))
 
-        self.client.get(reverse('manager:workout:calendar-day', kwargs={'username': 'admin',
-                                                                        'year': 2012,
-                                                                        'month': 10,
-                                                                        'day': 1}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar-day',
+                kwargs={'username': 'admin',
+                        'year': 2012,
+                        'month': 10,
+                        'day': 1}))
         self.assertTrue(cache.get(cache_mapper.get_workout_log_list(log_hash)))
 
     def test_calendar_anonymous(self):
@@ -398,9 +403,11 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         self.user_logout()
         self.assertFalse(cache.get(cache_mapper.get_workout_log_list(log_hash)))
 
-        self.client.get(reverse('manager:workout:calendar', kwargs={'username': 'admin',
-                                                                    'year': 2012,
-                                                                    'month': 10}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar', kwargs={'username': 'admin',
+                                                    'year': 2012,
+                                                    'month': 10}))
         self.assertTrue(cache.get(cache_mapper.get_workout_log_list(log_hash)))
 
     def test_calendar_day_anonymous(self):
@@ -411,10 +418,13 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         self.user_logout()
         self.assertFalse(cache.get(cache_mapper.get_workout_log_list(log_hash)))
 
-        self.client.get(reverse('manager:workout:calendar-day', kwargs={'username': 'admin',
-                                                                        'year': 2012,
-                                                                        'month': 10,
-                                                                        'day': 1}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar-day',
+                kwargs={'username': 'admin',
+                        'year': 2012,
+                        'month': 10,
+                        'day': 1}))
         self.assertTrue(cache.get(cache_mapper.get_workout_log_list(log_hash)))
 
     def test_cache_update_log(self):
@@ -425,10 +435,13 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         log_hash_day = hash((1, 2012, 10, 1))
         self.user_login('admin')
         self.client.get(reverse('manager:workout:calendar', kwargs={'year': 2012, 'month': 10}))
-        self.client.get(reverse('manager:workout:calendar-day', kwargs={'username': 'admin',
-                                                                        'year': 2012,
-                                                                        'month': 10,
-                                                                        'day': 1}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar-day',
+                kwargs={'username': 'admin',
+                        'year': 2012,
+                        'month': 10,
+                        'day': 1}))
 
         log = WorkoutLog.objects.get(pk=1)
         log.weight = 35
@@ -445,10 +458,13 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         log_hash_day = hash((1, 2012, 10, 1))
         self.user_login('admin')
         self.client.get(reverse('manager:workout:calendar', kwargs={'year': 2012, 'month': 10}))
-        self.client.get(reverse('manager:workout:calendar-day', kwargs={'username': 'admin',
-                                                                        'year': 2012,
-                                                                        'month': 10,
-                                                                        'day': 1}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar-day',
+                kwargs={'username': 'admin',
+                        'year': 2012,
+                        'month': 10,
+                        'day': 1}))
 
         log = WorkoutLog.objects.get(pk=3)
         log.weight = 35
@@ -465,10 +481,13 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         log_hash_day = hash((1, 2012, 10, 1))
         self.user_login('admin')
         self.client.get(reverse('manager:workout:calendar', kwargs={'year': 2012, 'month': 10}))
-        self.client.get(reverse('manager:workout:calendar-day', kwargs={'username': 'admin',
-                                                                        'year': 2012,
-                                                                        'month': 10,
-                                                                        'day': 1}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar-day',
+                kwargs={'username': 'admin',
+                        'year': 2012,
+                        'month': 10,
+                        'day': 1}))
 
         log = WorkoutLog.objects.get(pk=1)
         log.delete()
@@ -484,10 +503,13 @@ class WorkoutLogCacheTestCase(WorkoutManagerTestCase):
         log_hash_day = hash((1, 2012, 10, 1))
         self.user_login('admin')
         self.client.get(reverse('manager:workout:calendar', kwargs={'year': 2012, 'month': 10}))
-        self.client.get(reverse('manager:workout:calendar-day', kwargs={'username': 'admin',
-                                                                        'year': 2012,
-                                                                        'month': 10,
-                                                                        'day': 1}))
+        self.client.get(
+            reverse(
+                'manager:workout:calendar-day',
+                kwargs={'username': 'admin',
+                        'year': 2012,
+                        'month': 10,
+                        'day': 1}))
 
         log = WorkoutLog.objects.get(pk=3)
         log.delete()
@@ -503,10 +525,12 @@ class WorkoutLogApiTestCase(api_base_test.ApiBaseResourceTestCase):
     pk = 5
     resource = WorkoutLog
     private_resource = True
-    data = {"exercise": 1,
-            "workout": 3,
-            "reps": 3,
-            "repetition_unit": 1,
-            "weight_unit": 2,
-            "weight": 2,
-            "date": datetime.date.today()}
+    data = {
+        "exercise": 1,
+        "workout": 3,
+        "reps": 3,
+        "repetition_unit": 1,
+        "weight_unit": 2,
+        "weight": 2,
+        "date": datetime.date.today()
+    }

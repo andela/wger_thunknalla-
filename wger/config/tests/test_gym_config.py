@@ -40,11 +40,13 @@ class GymConfigTestCase(WorkoutManagerTestCase):
         gym_config.save()
 
         # Register
-        registration_data = {'username': 'myusername',
-                             'password1': 'secret',
-                             'password2': 'secret',
-                             'email': 'my.email@example.com',
-                             'g-recaptcha-response': 'PASSED', }
+        registration_data = {
+            'username': 'myusername',
+            'password1': 'secret',
+            'password2': 'secret',
+            'email': 'my.email@example.com',
+            'g-recaptcha-response': 'PASSED',
+        }
         self.client.post(reverse('core:user:registration'), registration_data)
         new_user = User.objects.all().last()
 
@@ -61,11 +63,13 @@ class GymConfigTestCase(WorkoutManagerTestCase):
         gym_config.save()
 
         # Register
-        registration_data = {'username': 'myusername',
-                             'password1': 'secret',
-                             'password2': 'secret',
-                             'email': 'my.email@example.com',
-                             'g-recaptcha-response': 'PASSED', }
+        registration_data = {
+            'username': 'myusername',
+            'password1': 'secret',
+            'password2': 'secret',
+            'email': 'my.email@example.com',
+            'g-recaptcha-response': 'PASSED',
+        }
         self.client.post(reverse('core:user:registration'), registration_data)
 
         new_user = User.objects.all().last()

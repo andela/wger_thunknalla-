@@ -22,12 +22,7 @@ from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-from django.views.generic import (
-    DetailView,
-    ListView,
-    CreateView,
-    UpdateView
-)
+from django.views.generic import (DetailView, ListView, CreateView, UpdateView)
 
 from wger.utils.generic_views import WgerFormMixin
 from wger.gym.models import Contract, Gym
@@ -57,13 +52,7 @@ class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Create
         out = {}
         if Contract.objects.filter(member=self.member).exists():
             last_contract = Contract.objects.filter(member=self.member).first()
-            for key in ('amount',
-                        'payment',
-                        'email',
-                        'zip_code',
-                        'city',
-                        'street',
-                        'phone',
+            for key in ('amount', 'payment', 'email', 'zip_code', 'city', 'street', 'phone',
                         'profession'):
                 out[key] = getattr(last_contract, key)
         elif self.member.email:
@@ -97,8 +86,8 @@ class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Create
         Send some additional data to the template
         '''
         context = super(AddView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('gym:contract:add',
-                                         kwargs={'user_pk': self.kwargs['user_pk']})
+        context['form_action'] = reverse(
+            'gym:contract:add', kwargs={'user_pk': self.kwargs['user_pk']})
         return context
 
 

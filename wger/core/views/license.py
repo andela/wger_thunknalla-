@@ -20,20 +20,11 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-from django.views.generic import (
-    ListView,
-    DeleteView,
-    CreateView,
-    UpdateView
-)
+from django.views.generic import (ListView, DeleteView, CreateView, UpdateView)
 
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 
 from wger.core.models import License
-
 
 logger = logging.getLogger(__name__)
 

@@ -18,16 +18,12 @@ from django.core import mail
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
 
-from wger.core.tests.base_testcase import (
-    STATUS_CODES_FAIL,
-    WorkoutManagerTestCase,
-    WorkoutManagerDeleteTestCase
-)
+from wger.core.tests.base_testcase import (STATUS_CODES_FAIL, WorkoutManagerTestCase,
+                                           WorkoutManagerDeleteTestCase)
 from wger.exercises.models import (
     Exercise,
     Muscle,
-    ExerciseCategory,
-)
+    ExerciseCategory,)
 from wger.utils.cache import get_template_cache_name, cache_mapper
 
 
@@ -231,11 +227,12 @@ class ExercisesTestCase(WorkoutManagerTestCase):
 
         # Add an exercise
         count_before = Exercise.objects.count()
-        response = self.client.post(reverse('exercise:exercise:add'),
-                                    {'category': 2,
-                                     'name_original': 'my test exercise',
-                                     'license': 1,
-                                     'muscles': [1, 2]})
+        response = self.client.post(
+            reverse('exercise:exercise:add'),
+            {'category': 2,
+             'name_original': 'my test exercise',
+             'license': 1,
+             'muscles': [1, 2]})
         count_after = Exercise.objects.count()
         self.assertIn(response.status_code, STATUS_CODES_FAIL)
 
@@ -267,12 +264,14 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         # Add an exercise
         count_before = Exercise.objects.count()
         description = 'a nice, long and accurate description for the exercise'
-        response = self.client.post(reverse('exercise:exercise:add'),
-                                    {'category': 2,
-                                     'name_original': 'my test exercise',
-                                     'license': 1,
-                                     'description': description,
-                                     'muscles': [1, 2]})
+        response = self.client.post(
+            reverse('exercise:exercise:add'), {
+                'category': 2,
+                'name_original': 'my test exercise',
+                'license': 1,
+                'description': description,
+                'muscles': [1, 2]
+            })
         count_after = Exercise.objects.count()
         self.assertEqual(response.status_code, 302)
         new_location = response['Location']
@@ -300,38 +299,42 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.assertEqual(exercise_1.name, 'my Test Exercise')
 
         # Wrong category - adding
-        response = self.client.post(reverse('exercise:exercise:add'),
-                                    {'category': 111,
-                                     'name_original': 'my test exercise',
-                                     'license': 1,
-                                     'muscles': [1, 2]})
+        response = self.client.post(
+            reverse('exercise:exercise:add'),
+            {'category': 111,
+             'name_original': 'my test exercise',
+             'license': 1,
+             'muscles': [1, 2]})
         self.assertTrue(response.context['form'].errors['category'])
 
         # Wrong category - editing
-        response = self.client.post(reverse('exercise:exercise:edit', kwargs={'pk': '1'}),
-                                    {'category': 111,
-                                     'name_original': 'my test exercise',
-                                     'license': 1,
-                                     'muscles': [1, 2]})
+        response = self.client.post(
+            reverse('exercise:exercise:edit', kwargs={'pk': '1'}),
+            {'category': 111,
+             'name_original': 'my test exercise',
+             'license': 1,
+             'muscles': [1, 2]})
         if admin:
             self.assertTrue(response.context['form'].errors['category'])
         else:
             self.assertIn(response.status_code, STATUS_CODES_FAIL)
 
         # No muscles - adding
-        response = self.client.post(reverse('exercise:exercise:add'),
-                                    {'category': 1,
-                                     'name_original': 'my test exercise',
-                                     'license': 1,
-                                     'muscles': []})
+        response = self.client.post(
+            reverse('exercise:exercise:add'),
+            {'category': 1,
+             'name_original': 'my test exercise',
+             'license': 1,
+             'muscles': []})
         self.assertFalse(response.context['form'].errors.get('muscles'))
 
         # No muscles - editing
-        response = self.client.post(reverse('exercise:exercise:edit', kwargs={'pk': '1'}),
-                                    {'category': 1,
-                                     'name_original': 'my test exercise',
-                                     'license': 1,
-                                     'muscles': []})
+        response = self.client.post(
+            reverse('exercise:exercise:edit', kwargs={'pk': '1'}),
+            {'category': 1,
+             'name_original': 'my test exercise',
+             'license': 1,
+             'muscles': []})
         if admin:
             self.assertFalse(response.context['form'].errors.get('muscles'))
         else:
@@ -358,8 +361,7 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         '''
 
         # 1 hit, "Very cool exercise"
-        response = self.client.get(reverse('exercise-search'),
-                                   {'term': 'cool'})
+        response = self.client.get(reverse('exercise-search'), {'term': 'cool'})
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.content.decode('utf8'))
         self.assertEqual(len(result), 1)
@@ -370,8 +372,7 @@ class ExercisesTestCase(WorkoutManagerTestCase):
         self.assertEqual(result['suggestions'][0]['data']['image_thumbnail'], None)
 
         # 0 hits, "Pending exercise"
-        response = self.client.get(reverse('exercise-search'),
-                                   {'term': 'Pending'})
+        response = self.client.get(reverse('exercise-search'), {'term': 'Pending'})
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.content.decode('utf8'))
         self.assertEqual(len(result['suggestions']), 0)
@@ -444,8 +445,8 @@ class ExercisesCacheTestCase(WorkoutManagerTestCase):
         old_exercise_bg = cache.get(cache_mapper.get_exercise_muscle_bg_key(2))
         old_muscle_overview = cache.get(get_template_cache_name('muscle-overview', 2))
         old_exercise_overview = cache.get(get_template_cache_name('exercise-overview', 2))
-        old_exercise_overview_mobile = cache.get(get_template_cache_name('exercise-overview-mobile',
-                                                                         2))
+        old_exercise_overview_mobile = cache.get(
+            get_template_cache_name('exercise-overview-mobile', 2))
 
         exercise = Exercise.objects.get(pk=2)
         exercise.name = 'Very cool exercise 2'
@@ -465,8 +466,8 @@ class ExercisesCacheTestCase(WorkoutManagerTestCase):
         new_exercise_bg = cache.get(cache_mapper.get_exercise_muscle_bg_key(2))
         new_muscle_overview = cache.get(get_template_cache_name('muscle-overview', 2))
         new_exercise_overview = cache.get(get_template_cache_name('exercise-overview', 2))
-        new_exercise_overview_mobile = cache.get(get_template_cache_name('exercise-overview-mobile',
-                                                                         2))
+        new_exercise_overview_mobile = cache.get(
+            get_template_cache_name('exercise-overview-mobile', 2))
 
         if not self.is_mobile:
             self.assertNotEqual(old_exercise_bg, new_exercise_bg)

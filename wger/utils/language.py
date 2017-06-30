@@ -22,9 +22,7 @@ from wger.core.models import Language
 from wger.config.models import LanguageConfig
 from wger.utils.cache import cache_mapper
 
-
 logger = logging.getLogger(__name__)
-
 
 # ************************
 # Language functions
@@ -103,7 +101,8 @@ def load_ingredient_languages(request):
         profile = request.user.userprofile
         show_english = profile.show_english_ingredients
 
-        # If the user's language is not english and has the preference, add english to the list
+        # If the user's language is not english and has the preference, add
+        # english to the list
         if show_english and language.short_name != 'en':
             languages = list(set(languages + [Language.objects.get(pk=2)]))
 

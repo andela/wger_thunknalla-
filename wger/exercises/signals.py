@@ -14,9 +14,7 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
-from django.db.models.signals import pre_save
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.signal_handlers import generate_aliases
@@ -39,8 +37,8 @@ def delete_exercise_image_on_delete(sender, instance, **kwargs):
 @receiver(pre_save, sender=ExerciseImage)
 def delete_exercise_image_on_update(sender, instance, **kwargs):
     '''
-    Delete the corresponding image from the filesystem when the an ExerciseImage
-    object was changed
+    Delete the corresponding image from the filesystem when the an
+    ExerciseImage object was changed
     '''
     if not instance.pk:
         return False

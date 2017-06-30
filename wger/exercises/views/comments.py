@@ -28,18 +28,14 @@ from wger.exercises.forms import CommentForm
 from wger.exercises.models import Exercise, ExerciseComment
 from wger.utils.generic_views import WgerFormMixin
 
-
 logger = logging.getLogger(__name__)
-
 
 # ************************
 #    Exercise comments
 # ************************
 
 
-class ExerciseCommentEditView(WgerFormMixin,
-                              LoginRequiredMixin,
-                              PermissionRequiredMixin,
+class ExerciseCommentEditView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
                               UpdateView):
     '''
     Generic view to update an existing exercise comment
@@ -56,15 +52,12 @@ class ExerciseCommentEditView(WgerFormMixin,
     # Send some additional data to the template
     def get_context_data(self, **kwargs):
         context = super(ExerciseCommentEditView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('exercise:comment:edit',
-                                         kwargs={'pk': self.object.id})
+        context['form_action'] = reverse('exercise:comment:edit', kwargs={'pk': self.object.id})
 
         return context
 
 
-class ExerciseCommentAddView(WgerFormMixin,
-                             LoginRequiredMixin,
-                             PermissionRequiredMixin,
+class ExerciseCommentAddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
                              CreateView):
     '''
     Generic view to add a new exercise comment
@@ -87,8 +80,8 @@ class ExerciseCommentAddView(WgerFormMixin,
         Send some additional data to the template
         '''
         context = super(ExerciseCommentAddView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('exercise:comment:add',
-                                         kwargs={'exercise_pk': self.kwargs['exercise_pk']})
+        context['form_action'] = reverse(
+            'exercise:comment:add', kwargs={'exercise_pk': self.kwargs['exercise_pk']})
 
         return context
 

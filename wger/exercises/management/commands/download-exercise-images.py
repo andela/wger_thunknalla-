@@ -40,13 +40,12 @@ class Command(BaseCommand):
     Otherwise, the exercise is simply skipped
     '''
 
-    option_list = BaseCommand.option_list + (
-        make_option('--remote-url',
-                    action='store',
-                    dest='remote_url',
-                    default='https://wger.de',
-                    help='Remote URL to fetch the exercises from (default: https://wger.de)'),
-    )
+    option_list = BaseCommand.option_list + (make_option(
+        '--remote-url',
+        action='store',
+        dest='remote_url',
+        default='https://wger.de',
+        help='Remote URL to fetch the exercises from (default: https://wger.de)'),)
 
     help = ('Download exercise images from wger.de and update the local database\n'
             '\n'
@@ -81,9 +80,8 @@ class Command(BaseCommand):
             exercise_id = exercise_json['id']
 
             self.stdout.write('')
-            self.stdout.write(u"*** Processing {0} (ID: {1}, UUID: {2})".format(exercise_name,
-                                                                                exercise_id,
-                                                                                exercise_uuid))
+            self.stdout.write(u"*** Processing {0} (ID: {1}, UUID: {2})".format(
+                exercise_name, exercise_id, exercise_uuid))
 
             try:
                 exercise = Exercise.objects.get(uuid=exercise_uuid)
@@ -98,8 +96,8 @@ class Command(BaseCommand):
 
                 for image_json in images['results']:
                     image_id = image_json['id']
-                    result = requests.get(thumbnail_api.format(remote_url, image_id),
-                                          headers=headers).json()
+                    result = requests.get(
+                        thumbnail_api.format(remote_url, image_id), headers=headers).json()
 
                     image_name = os.path.basename(result['original'])
                     self.stdout.write('    Fetching image {0} - {1}'.format(image_id, image_name))
@@ -125,8 +123,7 @@ class Command(BaseCommand):
                     image.status = image_json['status']
                     image.image.save(
                         os.path.basename(image_name),
-                        File(img_temp),
-                    )
+                        File(img_temp),)
                     image.save()
 
             else:

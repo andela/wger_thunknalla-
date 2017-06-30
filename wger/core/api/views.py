@@ -20,21 +20,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 
-from wger.core.models import (
-    UserProfile,
-    Language,
-    DaysOfWeek,
-    License,
-    RepetitionUnit,
-    WeightUnit)
-from wger.core.api.serializers import (
-    UsernameSerializer,
-    LanguageSerializer,
-    DaysOfWeekSerializer,
-    LicenseSerializer,
-    RepetitionUnitSerializer,
-    WeightUnitSerializer
-)
+from wger.core.models import (UserProfile, Language, DaysOfWeek, License, RepetitionUnit,
+                              WeightUnit)
+from wger.core.api.serializers import (UsernameSerializer, LanguageSerializer, DaysOfWeekSerializer,
+                                       LicenseSerializer, RepetitionUnitSerializer,
+                                       WeightUnitSerializer)
 from wger.core.api.serializers import UserprofileSerializer
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
 
@@ -77,8 +67,7 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name')
+    filter_fields = ('full_name', 'short_name')
 
 
 class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
@@ -88,7 +77,7 @@ class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = DaysOfWeek.objects.all()
     serializer_class = DaysOfWeekSerializer
     ordering_fields = '__all__'
-    filter_fields = ('day_of_week', )
+    filter_fields = ('day_of_week',)
 
 
 class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
@@ -98,9 +87,7 @@ class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name',
-                     'url')
+    filter_fields = ('full_name', 'short_name', 'url')
 
 
 class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):
@@ -110,7 +97,7 @@ class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = RepetitionUnit.objects.all()
     serializer_class = RepetitionUnitSerializer
     ordering_fields = '__all__'
-    filter_fields = ('name', )
+    filter_fields = ('name',)
 
 
 class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
@@ -120,4 +107,4 @@ class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WeightUnit.objects.all()
     serializer_class = WeightUnitSerializer
     ordering_fields = '__all__'
-    filter_fields = ('name', )
+    filter_fields = ('name',)

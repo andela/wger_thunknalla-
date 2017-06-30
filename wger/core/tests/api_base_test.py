@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -99,6 +98,7 @@ class ApiGetTestCase(object):
     '''
     Base test case for testing GET access to the API
     '''
+
     def test_ordering(self):
         '''
         Test that ordering the resource works
@@ -299,8 +299,8 @@ class ApiPatchTestCase(object):
             # Different logged in user
             self.get_credentials(self.user_fail)
             response = self.client.patch(self.url_detail, data=self.data)
-            self.assertIn(response.status_code,
-                          (status.HTTP_403_FORBIDDEN, status.HTTP_404_NOT_FOUND))
+            self.assertIn(response.status_code, (status.HTTP_403_FORBIDDEN,
+                                                 status.HTTP_404_NOT_FOUND))
         else:
             # Anonymous user
             response = self.client.patch(self.url_detail, data=self.data)
@@ -572,14 +572,8 @@ class ApiDeleteTestCase(object):
             self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class ApiBaseResourceTestCase(BaseTestCase,
-                              ApiBaseTestCase,
-
-                              ApiGetTestCase,
-                              ApiPostTestCase,
-                              ApiDeleteTestCase,
-                              ApiPutTestCase,
-                              ApiPatchTestCase):
+class ApiBaseResourceTestCase(BaseTestCase, ApiBaseTestCase, ApiGetTestCase, ApiPostTestCase,
+                              ApiDeleteTestCase, ApiPutTestCase, ApiPatchTestCase):
     '''
     Base test case for the REST API
 

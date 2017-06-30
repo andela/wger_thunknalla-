@@ -42,8 +42,8 @@ class CopyWorkoutTestCase(WorkoutManagerTestCase):
 
         # Copy the workout
         count_before = Workout.objects.count()
-        response = self.client.post(reverse('manager:workout:copy', kwargs={'pk': '3'}),
-                                    {'comment': 'A copied workout'})
+        response = self.client.post(
+            reverse('manager:workout:copy', kwargs={'pk': '3'}), {'comment': 'A copied workout'})
         count_after = Workout.objects.count()
 
         if not owner:
@@ -68,7 +68,8 @@ class CopyWorkoutTestCase(WorkoutManagerTestCase):
             days_original = original.day_set.all()
             days_copy = copy.day_set.all()
 
-            # Test that the different attributes and objects are correctly copied over
+            # Test that the different attributes and objects are correctly
+            # copied over
             for i in range(0, original.day_set.count()):
                 self.assertEqual(days_original[i].description, days_copy[i].description)
 

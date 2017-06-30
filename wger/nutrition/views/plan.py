@@ -19,11 +19,7 @@ import logging
 import datetime
 
 from django.shortcuts import render, get_object_or_404
-from django.http import (
-    HttpResponse,
-    HttpResponseForbidden,
-    HttpResponseRedirect
-)
+from django.http import (HttpResponse, HttpResponseForbidden, HttpResponseRedirect)
 from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -32,27 +28,16 @@ from django.views.generic import DeleteView, UpdateView
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, cm
-from reportlab.platypus import (
-    Paragraph,
-    SimpleDocTemplate,
-    Table,
-    Spacer
-)
+from reportlab.platypus import (Paragraph, SimpleDocTemplate, Table, Spacer)
 
-from wger.nutrition.models import (
-    NutritionPlan,
-    MEALITEM_WEIGHT_GRAM,
-    MEALITEM_WEIGHT_UNIT
-)
+from wger.nutrition.models import (NutritionPlan, MEALITEM_WEIGHT_GRAM, MEALITEM_WEIGHT_UNIT)
 from wger import get_version
 from wger.utils.generic_views import WgerFormMixin, WgerDeleteMixin
 from wger.utils.helpers import check_token, make_token
 from wger.utils.pdf import styleSheet
 from wger.utils.language import load_language
 
-
 logger = logging.getLogger(__name__)
-
 
 # ************************
 # Plan functions
@@ -222,18 +207,18 @@ def export_pdf(request, id, uidb64=None, token=None):
     response = HttpResponse(content_type='application/pdf')
 
     # Create the PDF object, using the response object as its "file."
-    doc = SimpleDocTemplate(response,
-                            pagesize=A4,
-                            title=_('Nutrition plan'),
-                            author='wger Workout Manager',
-                            subject=_('Nutritional plan %s') % request.user.username)
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        title=_('Nutrition plan'),
+        author='wger Workout Manager',
+        subject=_('Nutritional plan %s') % request.user.username)
 
     # Background colour for header
     # Reportlab doesn't use the HTML hexadecimal format, but has a range of
     # 0 till 1, so we have to convert here.
-    header_colour = colors.Color(int('73', 16) / 255.0,
-                                 int('8a', 16) / 255.0,
-                                 int('5f', 16) / 255.0)
+    header_colour = colors.Color(
+        int('73', 16) / 255.0, int('8a', 16) / 255.0, int('5f', 16) / 255.0)
 
     # container for the 'Flowable' objects
     elements = []
@@ -251,14 +236,16 @@ def export_pdf(request, id, uidb64=None, token=None):
         meal_markers.append(len(data))
 
         if not meal.time:
-            p = Paragraph(u'<para align="center"><strong>{nr} {meal_nr}</strong></para>'
-                          .format(nr=_('Nr.'), meal_nr=i),
-                          styleSheet["Normal"])
+            p = Paragraph(
+                u'<para align="center"><strong>{nr} {meal_nr}</strong></para>'
+                .format(nr=_('Nr.'), meal_nr=i), styleSheet["Normal"])
         else:
             p = Paragraph(u'<para align="center"><strong>'
                           u'{nr} {meal_nr} - {meal_time}'
-                          u'</strong></para>'
-                          .format(nr=_('Nr.'), meal_nr=i, meal_time=meal.time.strftime("%H:%M")),
+                          u'</strong></para>'.format(
+                              nr=_('Nr.'),
+                              meal_nr=i,
+                              meal_time=meal.time.strftime("%H:%M")),
                           styleSheet["Normal"])
         data.append([p])
 
@@ -272,8 +259,8 @@ def export_pdf(request, id, uidb64=None, token=None):
             else:
                 unit_name = ' ' + item.weight_unit.unit.name
 
-            data.append([Paragraph(u"{0}{1}".format(item.amount, unit_name), styleSheet["Normal"]),
-                         p])
+            data.append(
+                [Paragraph(u"{0}{1}".format(item.amount, unit_name), styleSheet["Normal"]), p])
 
     # Set general table styles
     table_style = []
@@ -296,14 +283,14 @@ def export_pdf(request, id, uidb64=None, token=None):
 
     # There is nothing to output
     else:
-        t = Paragraph(_('<i>This is an empty plan, what did you expect on the PDF?</i>'),
-                      styleSheet["Normal"])
+        t = Paragraph(
+            _('<i>This is an empty plan, what did you expect on the PDF?</i>'),
+            styleSheet["Normal"])
 
     # Set the title (if available)
     if plan.description:
         p = Paragraph('<para align="center"><strong>%(description)s</strong></para>' %
-                      {'description': plan.description},
-                      styleSheet["Bold"])
+                      {'description': plan.description}, styleSheet["Bold"])
         elements.append(p)
 
         # Filler
@@ -315,39 +302,77 @@ def export_pdf(request, id, uidb64=None, token=None):
 
     # Create table with nutritional calculations
     data = []
-    data.append([Paragraph(u'<para align="center">{0}</para>'.format(_('Nutritional data')),
-                 styleSheet["Bold"])])
-    data.append([Paragraph(_('Macronutrients'), styleSheet["Normal"]),
-                 Paragraph(_('Total'), styleSheet["Normal"]),
-                 Paragraph(_('Percent of energy'), styleSheet["Normal"]),
-                 Paragraph(_('g per body kg'), styleSheet["Normal"])])
-    data.append([Paragraph(_('Energy'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['energy']), styleSheet["Normal"])])
-    data.append([Paragraph(_('Protein'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['protein']), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['percent']['protein']), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['per_kg']['protein']), styleSheet["Normal"])])
-    data.append([Paragraph(_('Carbohydrates'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['carbohydrates']),
-                           styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['percent']['carbohydrates']),
-                           styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['per_kg']['carbohydrates']),
-                           styleSheet["Normal"])])
-    data.append([Paragraph(_('Sugar content in carbohydrates'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['carbohydrates_sugar']),
-                           styleSheet["Normal"])])
-    data.append([Paragraph(_('Fat'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['fat']), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['percent']['fat']), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['per_kg']['fat']), styleSheet["Normal"])])
-    data.append([Paragraph(_('Saturated fat content in fats'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['fat_saturated']),
-                           styleSheet["Normal"])])
-    data.append([Paragraph(_('Fibres'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['fibres']), styleSheet["Normal"])])
-    data.append([Paragraph(_('Sodium'), styleSheet["Normal"]),
-                 Paragraph(six.text_type(plan_data['total']['sodium']), styleSheet["Normal"])])
+    data.append([
+        Paragraph(
+            u'<para align="center">{0}</para>'.format(_('Nutritional data')),
+            styleSheet["Bold"])
+    ])
+    data.append([
+        Paragraph(_('Macronutrients'), styleSheet["Normal"]),
+        Paragraph(_('Total'), styleSheet["Normal"]),
+        Paragraph(_('Percent of energy'), styleSheet["Normal"]),
+        Paragraph(_('g per body kg'), styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Energy'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['energy']), styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Protein'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['protein']),
+            styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['percent']['protein']),
+            styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['per_kg']['protein']),
+            styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Carbohydrates'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['carbohydrates']),
+            styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['percent']['carbohydrates']),
+            styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['per_kg']['carbohydrates']),
+            styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Sugar content in carbohydrates'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['carbohydrates_sugar']),
+            styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Fat'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['fat']), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['percent']['fat']), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['per_kg']['fat']), styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Saturated fat content in fats'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['fat_saturated']),
+            styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Fibres'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['fibres']), styleSheet["Normal"])
+    ])
+    data.append([
+        Paragraph(_('Sodium'), styleSheet["Normal"]),
+        Paragraph(
+            six.text_type(plan_data['total']['sodium']), styleSheet["Normal"])
+    ])
 
     table_style = []
     table_style.append(('BOX', (0, 0), (-1, -1), 1.25, colors.black))
@@ -371,12 +396,12 @@ def export_pdf(request, id, uidb64=None, token=None):
                         <a href="%(url)s">%(url)s</a> -
                         %(created)s
                         %(version)s
-                    </para>''' %
-                  {'date': _("Created on the <b>%s</b>") % created,
-                   'created': "wger Workout Manager",
-                   'version': get_version(),
-                   'url': request.build_absolute_uri(url), },
-                  styleSheet["Normal"])
+                    </para>''' % {
+        'date': _("Created on the <b>%s</b>") % created,
+        'created': "wger Workout Manager",
+        'version': get_version(),
+        'url': request.build_absolute_uri(url),
+    }, styleSheet["Normal"])
     elements.append(p)
     doc.build(elements)
 

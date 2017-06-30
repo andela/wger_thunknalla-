@@ -30,10 +30,7 @@ from wger import get_version
 from wger.manager.models import Workout, Schedule
 from wger.utils.helpers import next_weekday, check_token
 
-
 logger = logging.getLogger(__name__)
-
-
 '''
 Exports workouts and schedules as an iCal file that can be imported to a
 calendaring application.

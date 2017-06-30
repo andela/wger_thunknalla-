@@ -184,8 +184,8 @@ class WorkoutModelTestCase(WorkoutManagerTestCase):
 
         workout = Workout()
         workout.creation_date = datetime.date.today()
-        self.assertEqual('{0}'.format(workout),
-                         '{0} ({1})'.format(u'Workout', datetime.date.today()))
+        self.assertEqual('{0}'.format(workout), '{0} ({1})'.format(u'Workout',
+                                                                   datetime.date.today()))
 
         workout.comment = u'my description'
         self.assertEqual('{0}'.format(workout), u'my description')

@@ -16,9 +16,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='WeightEntry',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(
+                    verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('creation_date', models.DateField(verbose_name='Date')),
-                ('weight', models.DecimalField(verbose_name='Weight', max_digits=5, decimal_places=2, validators=[django.core.validators.MinValueValidator(30), django.core.validators.MaxValueValidator(300)])),
+                ('weight', models.DecimalField(
+                    verbose_name='Weight',
+                    max_digits=5,
+                    decimal_places=2,
+                    validators=[
+                        django.core.validators.MinValueValidator(30),
+                        django.core.validators.MaxValueValidator(300)
+                    ])),
                 ('user', models.ForeignKey(verbose_name='User', to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -26,10 +34,8 @@ class Migration(migrations.Migration):
                 'get_latest_by': 'creation_date',
                 'verbose_name': 'Weight entry',
             },
-            bases=(models.Model,),
-        ),
+            bases=(models.Model,),),
         migrations.AlterUniqueTogether(
             name='weightentry',
-            unique_together=set([('creation_date', 'user')]),
-        ),
+            unique_together=set([('creation_date', 'user')]),),
     ]

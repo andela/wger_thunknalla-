@@ -20,18 +20,10 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from django.views.generic import (
-    ListView,
-    DeleteView,
-    CreateView,
-    UpdateView
-)
+from django.views.generic import (ListView, DeleteView, CreateView, UpdateView)
 
 from wger.exercises.models import Muscle
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.language import load_item_languages
 from wger.config.models import LanguageConfig
 

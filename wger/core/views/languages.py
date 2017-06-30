@@ -21,20 +21,10 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from django.views.generic import (
-    ListView,
-    CreateView,
-    DetailView,
-    DeleteView,
-    UpdateView
-)
+from django.views.generic import (ListView, CreateView, DetailView, DeleteView, UpdateView)
 
 from wger.core.models import Language
-from wger.utils.generic_views import (
-    WgerDeleteMixin,
-    WgerFormMixin
-)
-
+from wger.utils.generic_views import (WgerDeleteMixin, WgerFormMixin)
 
 logger = logging.getLogger(__name__)
 

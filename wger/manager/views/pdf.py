@@ -29,12 +29,7 @@ from wger.utils.pdf import styleSheet
 from wger.utils.pdf import render_footer
 
 from reportlab.lib.pagesizes import A4, cm
-from reportlab.platypus import (
-    Paragraph,
-    SimpleDocTemplate,
-    Table,
-    Spacer
-)
+from reportlab.platypus import (Paragraph, SimpleDocTemplate, Table, Spacer)
 
 from reportlab.lib import colors
 
@@ -69,24 +64,25 @@ def workout_log(request, id, images=False, comments=False, uidb64=None, token=No
     response = HttpResponse(content_type='application/pdf')
 
     # Create the PDF object, using the response object as its "file."
-    doc = SimpleDocTemplate(response,
-                            pagesize=A4,
-                            # pagesize = landscape(A4),
-                            leftMargin=cm,
-                            rightMargin=cm,
-                            topMargin=0.5 * cm,
-                            bottomMargin=0.5 * cm,
-                            title=_('Workout'),
-                            author='wger Workout Manager',
-                            subject=_('Workout for %s') % request.user.username)
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        # pagesize = landscape(A4),
+        leftMargin=cm,
+        rightMargin=cm,
+        topMargin=0.5 * cm,
+        bottomMargin=0.5 * cm,
+        title=_('Workout'),
+        author='wger Workout Manager',
+        subject=_('Workout for %s') % request.user.username)
 
     # container for the 'Flowable' objects
     elements = []
 
     # Set the title
-    p = Paragraph('<para align="center"><strong>%(description)s</strong></para>' %
-                  {'description': workout},
-                  styleSheet["HeaderBold"])
+    p = Paragraph(
+        '<para align="center"><strong>%(description)s</strong></para>' % {'description': workout},
+        styleSheet["HeaderBold"])
     elements.append(p)
     elements.append(Spacer(10 * cm, 0.5 * cm))
 
@@ -112,7 +108,6 @@ def workout_view(request, id, images=False, comments=False, uidb64=None, token=N
     '''
     Generates a PDF with the contents of the workout, without table for logs
     '''
-
     '''
     Generates a PDF with the contents of the given workout
     See also
@@ -137,23 +132,24 @@ def workout_view(request, id, images=False, comments=False, uidb64=None, token=N
     response = HttpResponse(content_type='application/pdf')
 
     # Create the PDF object, using the response object as its "file."
-    doc = SimpleDocTemplate(response,
-                            pagesize=A4,
-                            leftMargin=cm,
-                            rightMargin=cm,
-                            topMargin=0.5 * cm,
-                            bottomMargin=0.5 * cm,
-                            title=_('Workout'),
-                            author='wger Workout Manager',
-                            subject=_('Workout for %s') % request.user.username)
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        leftMargin=cm,
+        rightMargin=cm,
+        topMargin=0.5 * cm,
+        bottomMargin=0.5 * cm,
+        title=_('Workout'),
+        author='wger Workout Manager',
+        subject=_('Workout for %s') % request.user.username)
 
     # container for the 'Flowable' objects
     elements = []
 
     # Set the title
-    p = Paragraph('<para align="center"><strong>%(description)s</strong></para>' %
-                  {'description': workout},
-                  styleSheet["HeaderBold"])
+    p = Paragraph(
+        '<para align="center"><strong>%(description)s</strong></para>' % {'description': workout},
+        styleSheet["HeaderBold"])
     elements.append(p)
     elements.append(Spacer(10 * cm, 0.5 * cm))
 

@@ -21,16 +21,9 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy, ugettext as _
-from django.views.generic import (
-    CreateView,
-    UpdateView,
-    DeleteView,
-    ListView)
+from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
 
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.gym.models import ContractOption, Gym
 
 logger = logging.getLogger(__name__)
@@ -77,8 +70,8 @@ class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Create
         Send some additional data to the template
         '''
         context = super(AddView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('gym:contract-option:add',
-                                         kwargs={'gym_pk': self.kwargs['gym_pk']})
+        context['form_action'] = reverse(
+            'gym:contract-option:add', kwargs={'gym_pk': self.kwargs['gym_pk']})
         return context
 
 

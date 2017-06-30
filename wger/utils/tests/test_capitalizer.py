@@ -14,7 +14,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 from wger.core.tests.base_testcase import WorkoutManagerTestCase
 from wger.utils.helpers import smart_capitalize
 

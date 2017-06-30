@@ -20,24 +20,14 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy
 from django.utils.translation import ugettext as _
 
-from django.views.generic import (
-    CreateView,
-    UpdateView,
-    DeleteView,
-    ListView
-)
+from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
 from wger.config.models import LanguageConfig
 from wger.exercises.models import Equipment
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.constants import PAGINATION_OBJECTS_PER_PAGE
 from wger.utils.language import load_item_languages
 
-
 logger = logging.getLogger(__name__)
-
 '''
 Exercise equipment
 '''
@@ -70,8 +60,7 @@ class EquipmentEditView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMix
     def get_context_data(self, **kwargs):
         context = super(EquipmentEditView, self).get_context_data(**kwargs)
         context['title'] = _('Edit {0}').format(self.object)
-        context['form_action'] = reverse('exercise:equipment:edit',
-                                         kwargs={'pk': self.object.id})
+        context['form_action'] = reverse('exercise:equipment:edit', kwargs={'pk': self.object.id})
 
         return context
 
@@ -116,8 +105,7 @@ class EquipmentDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequire
         context = super(EquipmentDeleteView, self).get_context_data(**kwargs)
 
         context['title'] = _('Delete equipment?')
-        context['form_action'] = reverse('exercise:equipment:delete',
-                                         kwargs={'pk': pk})
+        context['form_action'] = reverse('exercise:equipment:delete', kwargs={'pk': pk})
 
         return context
 

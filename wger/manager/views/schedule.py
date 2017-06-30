@@ -18,38 +18,22 @@ import logging
 import datetime
 
 from django.shortcuts import render, get_object_or_404
-from django.http import (
-    HttpResponseRedirect,
-    HttpResponseForbidden,
-    HttpResponse
-)
+from django.http import (HttpResponseRedirect, HttpResponseForbidden, HttpResponse)
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    UpdateView
-)
+from django.views.generic import (CreateView, DeleteView, UpdateView)
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer
-)
+from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer)
 
 from wger.manager.models import Schedule
 from wger.manager.helpers import render_workout_day
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import make_token, check_token
 from wger.utils.pdf import styleSheet, render_footer
-
 
 logger = logging.getLogger(__name__)
 
@@ -61,9 +45,8 @@ def overview(request):
     '''
 
     template_data = {}
-    template_data['schedules'] = (Schedule.objects
-                                  .filter(user=request.user)
-                                  .order_by('-is_active', '-start_date'))
+    template_data['schedules'] = (Schedule.objects.filter(user=request.user).order_by(
+        '-is_active', '-start_date'))
     return render(request, 'schedule/overview.html', template_data)
 
 
@@ -121,15 +104,16 @@ def export_pdf_log(request, pk, images=False, comments=False, uidb64=None, token
     # Create the HttpResponse object with the appropriate PDF headers.
     # and use it to the create the PDF using it as a file like object
     response = HttpResponse(content_type='application/pdf')
-    doc = SimpleDocTemplate(response,
-                            pagesize=A4,
-                            leftMargin=cm,
-                            rightMargin=cm,
-                            topMargin=0.5 * cm,
-                            bottomMargin=0.5 * cm,
-                            title=_('Workout'),
-                            author='wger Workout Manager',
-                            subject='Schedule for {0}'.format(request.user.username))
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        leftMargin=cm,
+        rightMargin=cm,
+        topMargin=0.5 * cm,
+        bottomMargin=0.5 * cm,
+        title=_('Workout'),
+        author='wger Workout Manager',
+        subject='Schedule for {0}'.format(request.user.username))
 
     # container for the 'Flowable' objects
     elements = []
@@ -141,8 +125,8 @@ def export_pdf_log(request, pk, images=False, comments=False, uidb64=None, token
 
     # Iterate through the Workout and render the training days
     for step in schedule.schedulestep_set.all():
-        p = Paragraph(u'<para>{0} {1}</para>'.format(step.duration, _('Weeks')),
-                      styleSheet["HeaderBold"])
+        p = Paragraph(u'<para>{0} {1}</para>'.format(
+            step.duration, _('Weeks')), styleSheet["HeaderBold"])
         elements.append(p)
         elements.append(Spacer(10 * cm, 0.5 * cm))
 
@@ -186,15 +170,16 @@ def export_pdf_table(request, pk, images=False, comments=False, uidb64=None, tok
     # Create the HttpResponse object with the appropriate PDF headers.
     # and use it to the create the PDF using it as a file like object
     response = HttpResponse(content_type='application/pdf')
-    doc = SimpleDocTemplate(response,
-                            pagesize=A4,
-                            leftMargin=cm,
-                            rightMargin=cm,
-                            topMargin=0.5 * cm,
-                            bottomMargin=0.5 * cm,
-                            title=_('Workout'),
-                            author='wger Workout Manager',
-                            subject='Schedule for {0}'.format(request.user.username))
+    doc = SimpleDocTemplate(
+        response,
+        pagesize=A4,
+        leftMargin=cm,
+        rightMargin=cm,
+        topMargin=0.5 * cm,
+        bottomMargin=0.5 * cm,
+        title=_('Workout'),
+        author='wger Workout Manager',
+        subject='Schedule for {0}'.format(request.user.username))
 
     # container for the 'Flowable' objects
     elements = []
@@ -206,15 +191,15 @@ def export_pdf_table(request, pk, images=False, comments=False, uidb64=None, tok
 
     # Iterate through the Workout and render the training days
     for step in schedule.schedulestep_set.all():
-        p = Paragraph(u'<para>{0} {1}</para>'.format(step.duration, _('Weeks')),
-                      styleSheet["HeaderBold"])
+        p = Paragraph(u'<para>{0} {1}</para>'.format(
+            step.duration, _('Weeks')), styleSheet["HeaderBold"])
         elements.append(p)
         elements.append(Spacer(10 * cm, 0.5 * cm))
 
         for day in step.workout.canonical_representation['day_list']:
             elements.append(
-                render_workout_day(day, images=images, comments=comments, nr_of_weeks=7,
-                                   only_table=True))
+                render_workout_day(
+                    day, images=images, comments=comments, nr_of_weeks=7, only_table=True))
             elements.append(Spacer(10 * cm, 0.5 * cm))
 
     # Footer, date and info

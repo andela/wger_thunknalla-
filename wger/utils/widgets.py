@@ -17,14 +17,8 @@ import uuid
 import logging
 from itertools import chain
 
-from django.forms.widgets import (
-    CheckboxSelectMultiple,
-    DateInput,
-    Select,
-    SelectMultiple,
-    TextInput,
-    ChoiceFieldRenderer,
-    CheckboxChoiceInput)
+from django.forms.widgets import (CheckboxSelectMultiple, DateInput, Select, SelectMultiple,
+                                  TextInput, ChoiceFieldRenderer, CheckboxChoiceInput)
 
 from django.forms import fields
 
@@ -33,13 +27,12 @@ from django.utils.encoding import force_text
 from django.utils.html import escape, conditional_escape
 from django.utils.safestring import mark_safe
 
-
 logger = logging.getLogger(__name__)
-
 
 #
 # Date and time related fields
 #
+
 
 class Html5DateInput(DateInput):
     '''
@@ -77,6 +70,7 @@ class Html5FormTimeField(fields.TimeField):
 #
 # Number related fields
 #
+
 
 class Html5NumberInput(TextInput):
     '''
@@ -136,9 +130,11 @@ class ExerciseAjaxSelect(SelectMultiple):
                         </a> %(value)s
                         <input type="hidden" name="exercises" value="%(id)s">
                     </div>
-            ''' % {'value': conditional_escape(force_text(option_label)),
-                   'id': escape(option_value),
-                   'div_id': uuid.uuid4()}
+            ''' % {
+                'value': conditional_escape(force_text(option_label)),
+                'id': escape(option_value),
+                'div_id': uuid.uuid4()
+            }
 
         else:
             return ''
@@ -173,10 +169,7 @@ class CheckboxChoiceInputTranslatedOriginal(CheckboxChoiceInput):
         else:
             choice = (choice[0], _(choice[1]))
 
-        super(CheckboxChoiceInputTranslatedOriginal, self).__init__(name,
-                                                                    value,
-                                                                    attrs,
-                                                                    choice,
+        super(CheckboxChoiceInputTranslatedOriginal, self).__init__(name, value, attrs, choice,
                                                                     index)
 
 
@@ -228,6 +221,5 @@ class TranslatedSelect(Select):
     '''
 
     def render_option(self, selected_choices, option_value, option_label):
-        return super(TranslatedSelect, self).render_option(selected_choices,
-                                                           option_value,
-                                                           _(option_label))
+        return super(TranslatedSelect, self).render_option(
+            selected_choices, option_value, _(option_label))

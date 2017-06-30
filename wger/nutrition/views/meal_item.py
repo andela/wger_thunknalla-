@@ -26,7 +26,6 @@ from wger.nutrition.forms import MealItemForm
 from wger.nutrition.models import Meal, MealItem
 from wger.utils.generic_views import WgerFormMixin
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -76,8 +75,8 @@ class MealItemCreateView(WgerFormMixin, CreateView):
         Send some additional data to the template
         '''
         context = super(MealItemCreateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('nutrition:meal_item:add',
-                                         kwargs={'meal_id': self.meal.id})
+        context['form_action'] = reverse(
+            'nutrition:meal_item:add', kwargs={'meal_id': self.meal.id})
         context['ingredient_searchfield'] = self.request.POST.get('ingredient_searchfield', '')
         return context
 

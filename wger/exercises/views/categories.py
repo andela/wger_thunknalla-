@@ -20,20 +20,12 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 
-from django.views.generic import (
-    DeleteView,
-    CreateView,
-    UpdateView,
-    ListView)
+from django.views.generic import (DeleteView, CreateView, UpdateView, ListView)
 
 from wger.exercises.models import ExerciseCategory
 
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.language import load_language
-
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +39,7 @@ class ExerciseCategoryListView(LoginRequiredMixin, PermissionRequiredMixin, List
     template_name = 'categories/admin-overview.html'
 
 
-class ExerciseCategoryAddView(WgerFormMixin,
-                              LoginRequiredMixin,
-                              PermissionRequiredMixin,
+class ExerciseCategoryAddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
                               CreateView):
     '''
     Generic view to add a new exercise category
@@ -67,9 +57,7 @@ class ExerciseCategoryAddView(WgerFormMixin,
         return super(ExerciseCategoryAddView, self).form_valid(form)
 
 
-class ExerciseCategoryUpdateView(WgerFormMixin,
-                                 LoginRequiredMixin,
-                                 PermissionRequiredMixin,
+class ExerciseCategoryUpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
                                  UpdateView):
     '''
     Generic view to update an existing exercise category
@@ -94,9 +82,7 @@ class ExerciseCategoryUpdateView(WgerFormMixin,
         return super(ExerciseCategoryUpdateView, self).form_valid(form)
 
 
-class ExerciseCategoryDeleteView(WgerDeleteMixin,
-                                 LoginRequiredMixin,
-                                 PermissionRequiredMixin,
+class ExerciseCategoryDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin,
                                  DeleteView):
     '''
     Generic view to delete an existing exercise category

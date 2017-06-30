@@ -60,6 +60,4 @@ class Migration(migrations.Migration):
         ('manager', '0004_auto_20150609_1603'),
     ]
 
-    operations = [
-        migrations.RunPython(create_usercache, delete_usercache)
-    ]
+    operations = [migrations.RunPython(create_usercache, delete_usercache)]

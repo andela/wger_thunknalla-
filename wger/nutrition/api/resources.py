@@ -19,14 +19,8 @@ from tastypie.authentication import ApiKeyAuthentication
 from tastypie.resources import ModelResource
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 
-from wger.nutrition.models import (
-    Ingredient,
-    WeightUnit,
-    IngredientWeightUnit,
-    NutritionPlan,
-    Meal,
-    MealItem
-)
+from wger.nutrition.models import (Ingredient, WeightUnit, IngredientWeightUnit, NutritionPlan,
+                                   Meal, MealItem)
 from wger.utils.resources import UserObjectsOnlyAuthorization
 from wger.core.api.resources import LicenseResource, LanguageResource
 
@@ -38,29 +32,31 @@ class IngredientResource(ModelResource):
 
     class Meta:
         queryset = Ingredient.objects.all()
-        filtering = {'id': ALL,
-                     'carbohydrates': ALL,
-                     'carbohydrates_sugar': ALL,
-                     'creation_date': ALL,
-                     'energy': ALL,
-                     'fat': ALL,
-                     'fat_saturated': ALL,
-                     'fibres': ALL,
-                     'name': ALL,
-                     'protein': ALL,
-                     'sodium': ALL,
-                     'status': ALL,
-                     'update_date': ALL,
-                     'language': ALL,
-                     'license': ALL,
-                     'license_author': ALL}
+        filtering = {
+            'id': ALL,
+            'carbohydrates': ALL,
+            'carbohydrates_sugar': ALL,
+            'creation_date': ALL,
+            'energy': ALL,
+            'fat': ALL,
+            'fat_saturated': ALL,
+            'fibres': ALL,
+            'name': ALL,
+            'protein': ALL,
+            'sodium': ALL,
+            'status': ALL,
+            'update_date': ALL,
+            'language': ALL,
+            'license': ALL,
+            'license_author': ALL
+        }
 
 
 class WeightUnitResource(ModelResource):
+
     class Meta:
         queryset = WeightUnit.objects.all()
-        filtering = {'id': ALL,
-                     'name': ALL}
+        filtering = {'id': ALL, 'name': ALL}
 
 
 class IngredientToWeightUnit(ModelResource):
@@ -70,11 +66,13 @@ class IngredientToWeightUnit(ModelResource):
 
     class Meta:
         queryset = IngredientWeightUnit.objects.all()
-        filtering = {'id': ALL,
-                     'amount': ALL,
-                     'gram': ALL,
-                     'ingredient': ALL_WITH_RELATIONS,
-                     'unit': ALL_WITH_RELATIONS}
+        filtering = {
+            'id': ALL,
+            'amount': ALL,
+            'gram': ALL,
+            'ingredient': ALL_WITH_RELATIONS,
+            'unit': ALL_WITH_RELATIONS
+        }
 
 
 class NutritionPlanResource(ModelResource):
@@ -101,10 +99,7 @@ class NutritionPlanResource(ModelResource):
         queryset = NutritionPlan.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {'id': ALL,
-                     'creation_date': ALL,
-                     'description': ALL,
-                     'has_goal_calories': ALL}
+        filtering = {'id': ALL, 'creation_date': ALL, 'description': ALL, 'has_goal_calories': ALL}
 
 
 class MealResource(ModelResource):
@@ -132,10 +127,7 @@ class MealResource(ModelResource):
         queryset = Meal.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {'id': ALL,
-                     'order': ALL,
-                     'plan': ALL_WITH_RELATIONS,
-                     'time': ALL}
+        filtering = {'id': ALL, 'order': ALL, 'plan': ALL_WITH_RELATIONS, 'time': ALL}
 
 
 class MealItemResource(ModelResource):
@@ -164,9 +156,11 @@ class MealItemResource(ModelResource):
         queryset = MealItem.objects.all()
         authentication = ApiKeyAuthentication()
         authorization = UserObjectsOnlyAuthorization()
-        filtering = {'id': ALL,
-                     'amount': ALL,
-                     'ingredient': ALL_WITH_RELATIONS,
-                     'meal': ALL_WITH_RELATIONS,
-                     'order': ALL,
-                     'weight_unit': ALL_WITH_RELATIONS}
+        filtering = {
+            'id': ALL,
+            'amount': ALL,
+            'ingredient': ALL_WITH_RELATIONS,
+            'meal': ALL_WITH_RELATIONS,
+            'order': ALL,
+            'weight_unit': ALL_WITH_RELATIONS
+        }

@@ -60,6 +60,7 @@ class DecimalJsonEncoder(json.JSONEncoder):
     individual weight entries in the workout log) and they need to be
     processed, json.dumps() doesn't work on them
     '''
+
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):
             return str(obj)
@@ -74,12 +75,14 @@ def disable_for_loaddata(signal_handler):
     post_connect signals. See also:
     http://stackoverflow.com/questions/3499791/how-do-i-prevent-fixtures-from-conflicting
     '''
+
     @wraps(signal_handler)
     def wrapper(*args, **kwargs):
         if kwargs['raw']:
             # print "Skipping signal for {0} {1}".format(args, kwargs)
             return
         signal_handler(*args, **kwargs)
+
     return wrapper
 
 

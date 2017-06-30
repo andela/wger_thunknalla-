@@ -32,7 +32,6 @@ from wger.manager.models import Workout, Day
 from wger.manager.forms import DayForm
 from wger.utils.generic_views import WgerFormMixin
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -109,8 +108,8 @@ class DayCreateView(DayView, CreateView):
     # Send some additional data to the template
     def get_context_data(self, **kwargs):
         context = super(DayCreateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('manager:day:add',
-                                         kwargs={'workout_pk': self.kwargs['workout_pk']})
+        context['form_action'] = reverse(
+            'manager:day:add', kwargs={'workout_pk': self.kwargs['workout_pk']})
         return context
 
 

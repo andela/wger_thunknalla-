@@ -16,13 +16,9 @@
 from wger.core.models import RepetitionUnit
 from wger.core.tests import api_base_test
 
-from wger.core.tests.base_testcase import (
-    WorkoutManagerAccessTestCase,
-    WorkoutManagerTestCase,
-    WorkoutManagerDeleteTestCase,
-    WorkoutManagerEditTestCase,
-    WorkoutManagerAddTestCase
-)
+from wger.core.tests.base_testcase import (WorkoutManagerAccessTestCase, WorkoutManagerTestCase,
+                                           WorkoutManagerDeleteTestCase, WorkoutManagerEditTestCase,
+                                           WorkoutManagerAddTestCase)
 
 
 class RepresentationTestCase(WorkoutManagerTestCase):
@@ -55,14 +51,8 @@ class AddTestCase(WorkoutManagerAddTestCase):
     url = 'core:repetition-unit:add'
     data = {'name': 'Furlongs'}
     user_success = 'admin',
-    user_fail = ('general_manager1',
-                 'general_manager2',
-                 'member1',
-                 'member2',
-                 'trainer2',
-                 'trainer3',
-                 'trainer4',
-                 'manager3')
+    user_fail = ('general_manager1', 'general_manager2', 'member1', 'member2', 'trainer2',
+                 'trainer3', 'trainer4', 'manager3')
 
 
 class DeleteTestCase(WorkoutManagerDeleteTestCase):
@@ -74,14 +64,8 @@ class DeleteTestCase(WorkoutManagerDeleteTestCase):
     object_class = RepetitionUnit
     url = 'core:repetition-unit:delete'
     user_success = 'admin',
-    user_fail = ('general_manager1',
-                 'general_manager2',
-                 'member1',
-                 'member2',
-                 'trainer2',
-                 'trainer3',
-                 'trainer4',
-                 'manager3')
+    user_fail = ('general_manager1', 'general_manager2', 'member1', 'member2', 'trainer2',
+                 'trainer3', 'trainer4', 'manager3')
 
 
 class EditTestCase(WorkoutManagerEditTestCase):
@@ -94,14 +78,8 @@ class EditTestCase(WorkoutManagerEditTestCase):
     url = 'core:repetition-unit:edit'
     data = {'name': 'Furlongs'}
     user_success = 'admin',
-    user_fail = ('general_manager1',
-                 'general_manager2',
-                 'member1',
-                 'member2',
-                 'trainer2',
-                 'trainer3',
-                 'trainer4',
-                 'manager3')
+    user_fail = ('general_manager1', 'general_manager2', 'member1', 'member2', 'trainer2',
+                 'trainer3', 'trainer4', 'manager3')
 
 
 class ApiTestCase(api_base_test.ApiBaseResourceTestCase):

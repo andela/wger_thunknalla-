@@ -22,33 +22,18 @@ from django.forms import ModelForm, ModelChoiceField
 from django.utils.translation import ugettext_lazy
 
 from wger.utils.language import load_language
-from django.views.generic import (
-    DeleteView,
-    CreateView,
-    UpdateView
-)
-from wger.nutrition.models import (
-    Ingredient,
-    IngredientWeightUnit,
-    WeightUnit
-)
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
-
+from django.views.generic import (DeleteView, CreateView, UpdateView)
+from wger.nutrition.models import (Ingredient, IngredientWeightUnit, WeightUnit)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 
 logger = logging.getLogger(__name__)
-
 
 # ************************
 # Weight units to ingredient functions
 # ************************
 
 
-class WeightUnitIngredientCreateView(WgerFormMixin,
-                                     LoginRequiredMixin,
-                                     PermissionRequiredMixin,
+class WeightUnitIngredientCreateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
                                      CreateView):
     '''
     Generic view to add a new weight unit to ingredient entry
@@ -61,8 +46,8 @@ class WeightUnitIngredientCreateView(WgerFormMixin,
     # Send some additional data to the template
     def get_context_data(self, **kwargs):
         context = super(WeightUnitIngredientCreateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('nutrition:unit_ingredient:add',
-                                         kwargs={'ingredient_pk': self.kwargs['ingredient_pk']})
+        context['form_action'] = reverse(
+            'nutrition:unit_ingredient:add', kwargs={'ingredient_pk': self.kwargs['ingredient_pk']})
         return context
 
     def get_success_url(self):
@@ -88,9 +73,7 @@ class WeightUnitIngredientCreateView(WgerFormMixin,
         return IngredientWeightUnitForm
 
 
-class WeightUnitIngredientUpdateView(WgerFormMixin,
-                                     LoginRequiredMixin,
-                                     PermissionRequiredMixin,
+class WeightUnitIngredientUpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
                                      UpdateView):
     '''
     Generic view to update an weight unit to ingredient entry
@@ -119,9 +102,7 @@ class WeightUnitIngredientUpdateView(WgerFormMixin,
         return IngredientWeightUnitForm
 
 
-class WeightUnitIngredientDeleteView(WgerDeleteMixin,
-                                     LoginRequiredMixin,
-                                     PermissionRequiredMixin,
+class WeightUnitIngredientDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin,
                                      DeleteView):
     '''
     Generic view to delete a weight unit to ingredient entry

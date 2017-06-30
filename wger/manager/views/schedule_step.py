@@ -21,22 +21,10 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.db import models
 from django.forms import ModelForm, ModelChoiceField
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    UpdateView
-)
+from django.views.generic import (CreateView, DeleteView, UpdateView)
 
-from wger.manager.models import (
-    Schedule,
-    ScheduleStep,
-    Workout
-)
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
-
+from wger.manager.models import (Schedule, ScheduleStep, Workout)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 
 logger = logging.getLogger(__name__)
 
@@ -69,8 +57,8 @@ class StepCreateView(WgerFormMixin, CreateView, PermissionRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super(StepCreateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('manager:step:add',
-                                         kwargs={'schedule_pk': self.kwargs['schedule_pk']})
+        context['form_action'] = reverse(
+            'manager:step:add', kwargs={'schedule_pk': self.kwargs['schedule_pk']})
         return context
 
     def get_success_url(self):

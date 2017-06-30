@@ -43,8 +43,7 @@ class AddWorkoutDayTestCase(WorkoutManagerAddTestCase):
     url = reverse('manager:day:add', kwargs={'workout_pk': 3})
     user_success = 'test'
     user_fail = 'admin'
-    data = {'description': 'a new day',
-            'day': [1, 4]}
+    data = {'description': 'a new day', 'day': [1, 4]}
 
 
 class DeleteWorkoutDayTestCase(WorkoutManagerTestCase):
@@ -77,7 +76,7 @@ class DeleteWorkoutDayTestCase(WorkoutManagerTestCase):
         Test deleting a day as an anonymous user
         '''
 
-        self. delete_day(fail=True)
+        self.delete_day(fail=True)
 
     def test_delete_workout_owner(self):
         '''
@@ -106,8 +105,7 @@ class EditWorkoutDayTestCase(WorkoutManagerEditTestCase):
     pk = 5
     user_success = 'test'
     user_fail = 'admin'
-    data = {'description': 'a different description',
-            'day': [1, 4]}
+    data = {'description': 'a different description', 'day': [1, 4]}
 
 
 class RenderWorkoutDayTestCase(WorkoutManagerTestCase):

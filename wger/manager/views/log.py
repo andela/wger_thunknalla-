@@ -26,32 +26,14 @@ from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext_lazy, ugettext as _
 from django.forms.models import modelformset_factory
-from django.views.generic import (
-    UpdateView,
-    DetailView,
-    DeleteView
-)
+from django.views.generic import (UpdateView, DetailView, DeleteView)
 
 from wger.manager.helpers import WorkoutCalendar
-from wger.manager.models import (
-    Workout,
-    WorkoutSession,
-    Day,
-    WorkoutLog,
-    Schedule
-)
-from wger.manager.forms import (
-    HelperDateForm,
-    HelperWorkoutSessionForm,
-    WorkoutLogForm
-)
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.manager.models import (Workout, WorkoutSession, Day, WorkoutLog, Schedule)
+from wger.manager.forms import (HelperDateForm, HelperWorkoutSessionForm, WorkoutLogForm)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import check_access
 from wger.weight.helpers import process_log_entries, group_log_entries
-
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +52,8 @@ class WorkoutLogUpdateView(WgerFormMixin, UpdateView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(WorkoutLogUpdateView, self).get_context_data(**kwargs)
         context['form_action'] = reverse('manager:log:edit', kwargs={'pk': self.object.id})
-        context['title'] = _(u'Edit log entry for %s') % self.object.exercise.name
+        context['title'] = _(
+            u'Edit log entry for %s') % self.object.exercise.name
 
         return context
 
@@ -81,12 +64,7 @@ class WorkoutLogDeleteView(WgerDeleteMixin, DeleteView, LoginRequiredMixin):
     '''
 
     model = WorkoutLog
-    fields = ('exercise',
-              'workout',
-              'repetition_unit',
-              'reps',
-              'weight',
-              'weight_unit')
+    fields = ('exercise', 'workout', 'repetition_unit', 'reps', 'weight', 'weight_unit')
     success_url = reverse_lazy('manager:workout:calendar')
     title = ugettext_lazy('Delete workout log')
     form_action_urlname = 'manager:log:delete'
@@ -123,9 +101,11 @@ def add(request, pk):
             form_id_range = range(counter_before, counter + 1)
 
             # Add to list
-            exercise_list[exercise.id] = {'obj': exercise,
-                                          'sets': int(exercise_set.sets),
-                                          'form_ids': form_id_range}
+            exercise_list[exercise.id] = {
+                'obj': exercise,
+                'sets': int(exercise_set.sets),
+                'form_ids': form_id_range
+            }
 
             counter += 1
             # Helper mapping form-ID <--> Exercise
@@ -133,10 +113,8 @@ def add(request, pk):
                 form_to_exercise[id] = exercise
 
     # Define the formset here because now we know the value to pass to 'extra'
-    WorkoutLogFormSet = modelformset_factory(WorkoutLog,
-                                             form=WorkoutLogForm,
-                                             exclude=('date', 'workout'),
-                                             extra=total_sets)
+    WorkoutLogFormSet = modelformset_factory(
+        WorkoutLog, form=WorkoutLogForm, exclude=('date', 'workout'), extra=total_sets)
     # Process the request
     if request.method == 'POST':
 
@@ -162,7 +140,8 @@ def add(request, pk):
                 session = WorkoutSession.objects.get(user=request.user, date=log_date)
                 session_form = HelperWorkoutSessionForm(data=post_copy, instance=session)
 
-            # Save the Workout Session only if there is not already one for this date
+            # Save the Workout Session only if there is not already one for
+            # this date
             instance = session_form.save(commit=False)
             if not WorkoutSession.objects.filter(user=request.user, date=log_date).exists():
                 instance.date = log_date
@@ -188,14 +167,18 @@ def add(request, pk):
         # Initialise the formset with a queryset that won't return any objects
         # (we only add new logs here and that seems to be the fastest way)
         user_weight_unit = 1 if request.user.userprofile.use_metric else 2
-        formset = WorkoutLogFormSet(queryset=WorkoutLog.objects.none(),
-                                    initial=[{'weight_unit': user_weight_unit,
-                                              'repetition_unit': 1} for x in range(0, total_sets)])
+        formset = WorkoutLogFormSet(
+            queryset=WorkoutLog.objects.none(),
+            initial=[{
+                'weight_unit': user_weight_unit,
+                'repetition_unit': 1
+            } for x in range(0, total_sets)])
 
         dateform = HelperDateForm(initial={'date': datetime.date.today()})
 
         # Depending on whether there is already a workout session for today, update
-        # the current one or create a new one (this will be the most usual case)
+        # the current one or create a new one (this will be the most usual
+        # case)
         if WorkoutSession.objects.filter(user=request.user, date=datetime.date.today()).exists():
             session = WorkoutSession.objects.get(user=request.user, date=datetime.date.today())
             session_form = HelperWorkoutSessionForm(instance=session)
@@ -256,10 +239,9 @@ class WorkoutLogDetailView(DetailView, LoginRequiredMixin):
                     #       expected. Also, adding the unit IDs to the exclude list
                     #       also has the disadvantage that if new ones are added in a
                     #       local instance, they could "slip" through.
-                    logs = exercise_list['obj'].workoutlog_set.filter(user=self.owner_user,
-                                                                      weight_unit__in=(1, 2),
-                                                                      workout=self.object) \
-                        .exclude(repetition_unit_id__in=(2, 3, 4, 5, 6, 7, 8))
+                    logs = exercise_list['obj'].workoutlog_set.filter(
+                        user=self.owner_user, weight_unit__in=(1, 2), workout=self.object).exclude(
+                            repetition_unit_id__in=(2, 3, 4, 5, 6, 7, 8))
                     entry_log, chart_data = process_log_entries(logs)
                     if entry_log:
                         exercise_log[exercise_list['obj'].id].append(entry_log)

@@ -127,6 +127,7 @@ class PlanDailyCaloriesTestCase(WorkoutManagerTestCase):
     '''
     Tests the handling of the daily calories in the plan page
     '''
+
     def test_overview_no_calories(self):
         '''
         Tests the overview page with no daily calories set
@@ -167,5 +168,4 @@ class PlanApiTestCase(api_base_test.ApiBaseResourceTestCase):
     resource = NutritionPlan
     private_resource = True
     special_endpoints = ('nutritional_values',)
-    data = {'description': 'The description',
-            'language': 1}
+    data = {'description': 'The description', 'language': 1}

@@ -22,31 +22,19 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy
 from django.utils.translation import ugettext as _
-from django.views.generic import (
-    CreateView,
-    UpdateView,
-    DeleteView
-)
+from django.views.generic import (CreateView, UpdateView, DeleteView)
 
 from wger.exercises.models import Exercise, ExerciseImage
 from wger.exercises.forms import ExerciseImageForm
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
-
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 
 logger = logging.getLogger(__name__)
-
 '''
 Exercise images
 '''
 
 
-class ExerciseImageEditView(WgerFormMixin,
-                            LoginRequiredMixin,
-                            PermissionRequiredMixin,
-                            UpdateView):
+class ExerciseImageEditView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     '''
     Generic view to update an existing exercise image
     '''
@@ -63,16 +51,12 @@ class ExerciseImageEditView(WgerFormMixin,
     def get_context_data(self, **kwargs):
         context = super(ExerciseImageEditView, self).get_context_data(**kwargs)
         context['enctype'] = 'multipart/form-data'
-        context['form_action'] = reverse('exercise:image:edit',
-                                         kwargs={'pk': self.object.id})
+        context['form_action'] = reverse('exercise:image:edit', kwargs={'pk': self.object.id})
 
         return context
 
 
-class ExerciseImageAddView(WgerFormMixin,
-                           LoginRequiredMixin,
-                           PermissionRequiredMixin,
-                           CreateView):
+class ExerciseImageAddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     '''
     Generic view to add a new exercise image
     '''
@@ -96,15 +80,13 @@ class ExerciseImageAddView(WgerFormMixin,
         '''
         context = super(ExerciseImageAddView, self).get_context_data(**kwargs)
         context['enctype'] = 'multipart/form-data'
-        context['form_action'] = reverse('exercise:image:add',
-                                         kwargs={'exercise_pk': self.kwargs['exercise_pk']})
+        context['form_action'] = reverse(
+            'exercise:image:add', kwargs={'exercise_pk': self.kwargs['exercise_pk']})
 
         return context
 
 
-class ExerciseImageDeleteView(WgerDeleteMixin,
-                              LoginRequiredMixin,
-                              PermissionRequiredMixin,
+class ExerciseImageDeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin,
                               DeleteView):
     '''
     Generic view to delete an existing exercise image
@@ -130,8 +112,9 @@ class ExerciseImageDeleteView(WgerDeleteMixin,
         context = super(ExerciseImageDeleteView, self).get_context_data(**kwargs)
 
         context['title'] = _('Delete exercise image?')
-        context['form_action'] = reverse('exercise:image:delete',
-                                         kwargs={'pk': pk, 'exercise_pk': exercise_pk})
+        context['form_action'] = reverse(
+            'exercise:image:delete', kwargs={'pk': pk,
+                                             'exercise_pk': exercise_pk})
 
         return context
 

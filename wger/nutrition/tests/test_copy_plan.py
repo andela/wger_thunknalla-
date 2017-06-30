@@ -37,8 +37,8 @@ class CopyPlanTestCase(WorkoutManagerTestCase):
 
         # Copy the plan
         count_before = NutritionPlan.objects.count()
-        response = self.client.post(reverse('nutrition:plan:copy', kwargs={'pk': 4}),
-                                    {'comment': 'A copied plan'})
+        response = self.client.post(
+            reverse('nutrition:plan:copy', kwargs={'pk': 4}), {'comment': 'A copied plan'})
         count_after = NutritionPlan.objects.count()
 
         if fail:

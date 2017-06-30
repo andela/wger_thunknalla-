@@ -21,27 +21,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 
-from wger.manager.api.serializers import (
-    WorkoutSerializer,
-    ScheduleStepSerializer,
-    WorkoutCanonicalFormSerializer,
-    DaySerializer,
-    SettingSerializer,
-    SetSerializer,
-    ScheduleSerializer,
-    WorkoutLogSerializer,
-    WorkoutSessionSerializer
-)
-from wger.manager.models import (
-    Workout,
-    Set,
-    ScheduleStep,
-    Schedule,
-    Day,
-    Setting,
-    WorkoutLog,
-    WorkoutSession
-)
+from wger.manager.api.serializers import (WorkoutSerializer, ScheduleStepSerializer,
+                                          WorkoutCanonicalFormSerializer, DaySerializer,
+                                          SettingSerializer, SetSerializer, ScheduleSerializer,
+                                          WorkoutLogSerializer, WorkoutSessionSerializer)
+from wger.manager.models import (Workout, Set, ScheduleStep, Schedule, Day, Setting, WorkoutLog,
+                                 WorkoutSession)
 from wger.utils.viewsets import WgerOwnerObjectModelViewSet
 
 
@@ -52,8 +37,7 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('comment',
-                     'creation_date')
+    filter_fields = ('comment', 'creation_date')
 
     def get_queryset(self):
         '''
@@ -86,12 +70,7 @@ class WorkoutSessionViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = WorkoutSessionSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('date',
-                     'workout',
-                     'notes',
-                     'impression',
-                     'time_start',
-                     'time_end')
+    filter_fields = ('date', 'workout', 'notes', 'impression', 'time_start', 'time_end')
 
     def get_queryset(self):
         '''
@@ -120,10 +99,7 @@ class ScheduleStepViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = ScheduleStepSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('schedule',
-                     'workout',
-                     'duration',
-                     'order')
+    filter_fields = ('schedule', 'workout', 'duration', 'order')
 
     def get_queryset(self):
         '''
@@ -135,8 +111,7 @@ class ScheduleStepViewSet(WgerOwnerObjectModelViewSet):
         '''
         Return objects to check for ownership permission
         '''
-        return [(Workout, 'workout'),
-                (Schedule, 'schedule')]
+        return [(Workout, 'workout'), (Schedule, 'schedule')]
 
 
 class ScheduleViewSet(viewsets.ModelViewSet):
@@ -146,10 +121,7 @@ class ScheduleViewSet(viewsets.ModelViewSet):
     serializer_class = ScheduleSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('is_active',
-                     'is_loop',
-                     'start_date',
-                     'name')
+    filter_fields = ('is_active', 'is_loop', 'start_date', 'name')
 
     def get_queryset(self):
         '''
@@ -171,9 +143,7 @@ class DayViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = DaySerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('description',
-                     'training',
-                     'day')
+    filter_fields = ('description', 'training', 'day')
 
     def get_queryset(self):
         '''
@@ -195,10 +165,7 @@ class SetViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = SetSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('exerciseday',
-                     'order',
-                     'sets',
-                     'exercises')
+    filter_fields = ('exerciseday', 'order', 'sets', 'exercises')
 
     def get_queryset(self):
         '''
@@ -220,12 +187,7 @@ class SettingViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = SettingSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('exercise',
-                     'order',
-                     'reps',
-                     'weight',
-                     'set',
-                     'order')
+    filter_fields = ('exercise', 'order', 'reps', 'weight', 'set', 'order')
 
     def get_queryset(self):
         '''
@@ -253,11 +215,7 @@ class WorkoutLogViewSet(WgerOwnerObjectModelViewSet):
     serializer_class = WorkoutLogSerializer
     is_private = True
     ordering_fields = '__all__'
-    filter_fields = ('date',
-                     'exercise',
-                     'reps',
-                     'weight',
-                     'workout')
+    filter_fields = ('date', 'exercise', 'reps', 'weight', 'workout')
 
     def get_queryset(self):
         '''

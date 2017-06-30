@@ -60,13 +60,7 @@ class GymMembersCsvExportTestCase(WorkoutManagerTestCase):
         Test the CSV export by unauthorized users
         '''
 
-        for username in ('manager3',
-                         'manager4',
-                         'test',
-                         'member1',
-                         'member2',
-                         'member3',
-                         'member4',
+        for username in ('manager3', 'manager4', 'test', 'member1', 'member2', 'member3', 'member4',
                          'member5'):
             self.user_login(username)
             self.export_csv(fail=True)

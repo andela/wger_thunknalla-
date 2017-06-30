@@ -62,8 +62,7 @@ class CreateLanguageTestCase(WorkoutManagerAddTestCase):
 
     object_class = Language
     url = 'core:language:add'
-    data = {'short_name': 'dk',
-            'full_name': 'Dansk'}
+    data = {'short_name': 'dk', 'full_name': 'Dansk'}
 
 
 class EditLanguageTestCase(WorkoutManagerEditTestCase):
@@ -74,8 +73,7 @@ class EditLanguageTestCase(WorkoutManagerEditTestCase):
     object_class = Language
     url = 'core:language:edit'
     pk = 1
-    data = {'short_name': 'dk',
-            'full_name': 'Dansk'}
+    data = {'short_name': 'dk', 'full_name': 'Dansk'}
 
 
 class DeleteLanguageTestCase(WorkoutManagerDeleteTestCase):

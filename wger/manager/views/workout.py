@@ -27,28 +27,11 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView
 
-from wger.core.models import (
-    RepetitionUnit,
-    WeightUnit
-)
-from wger.manager.models import (
-    Workout,
-    WorkoutSession,
-    WorkoutLog,
-    Schedule,
-    Day
-)
-from wger.manager.forms import (
-    WorkoutForm,
-    WorkoutSessionHiddenFieldsForm,
-    WorkoutCopyForm
-)
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.core.models import (RepetitionUnit, WeightUnit)
+from wger.manager.models import (Workout, WorkoutSession, WorkoutLog, Schedule, Day)
+from wger.manager.forms import (WorkoutForm, WorkoutSessionHiddenFieldsForm, WorkoutCopyForm)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 from wger.utils.helpers import make_token
-
 
 logger = logging.getLogger(__name__)
 
@@ -186,8 +169,7 @@ def copy_workout(request, pk):
                             setting_copy.set = current_set_copy
                             setting_copy.save()
 
-            return HttpResponseRedirect(reverse('manager:workout:view',
-                                                kwargs={'pk': workout.id}))
+            return HttpResponseRedirect(reverse('manager:workout:view', kwargs={'pk': workout.id}))
     else:
         workout_form = WorkoutCopyForm({'comment': workout.comment})
 
@@ -271,9 +253,8 @@ class LastWeightHelper:
         '''
         key = (self.user.pk, exercise.pk, reps, default_weight)
         if self.last_weight_list.get(key) is None:
-            last_log = WorkoutLog.objects.filter(user=self.user,
-                                                 exercise=exercise,
-                                                 reps=reps).order_by('-date')
+            last_log = WorkoutLog.objects.filter(
+                user=self.user, exercise=exercise, reps=reps).order_by('-date')
             default_weight = '' if default_weight is None else default_weight
             weight = last_log[0].weight if last_log.exists() else default_weight
             self.last_weight_list[key] = weight
@@ -303,25 +284,28 @@ def timer(request, day_pk):
                     reps = exercise_dict['reps_list'][key]
                     rep_unit = exercise_dict['repetition_units'][key]
                     weight_unit = exercise_dict['weight_units'][key]
-                    default_weight = last_log.get_last_weight(exercise,
-                                                              reps,
+                    default_weight = last_log.get_last_weight(exercise, reps,
                                                               exercise_dict['weight_list'][key])
 
-                    step_list.append({'current_step': uuid.uuid4().hex,
-                                      'step_percent': 0,
-                                      'step_nr': len(step_list) + 1,
-                                      'exercise': exercise,
-                                      'type': 'exercise',
-                                      'reps': reps,
-                                      'rep_unit': rep_unit,
-                                      'weight': default_weight,
-                                      'weight_unit': weight_unit})
+                    step_list.append({
+                        'current_step': uuid.uuid4().hex,
+                        'step_percent': 0,
+                        'step_nr': len(step_list) + 1,
+                        'exercise': exercise,
+                        'type': 'exercise',
+                        'reps': reps,
+                        'rep_unit': rep_unit,
+                        'weight': default_weight,
+                        'weight_unit': weight_unit
+                    })
                     if request.user.userprofile.timer_active:
-                        step_list.append({'current_step': uuid.uuid4().hex,
-                                          'step_percent': 0,
-                                          'step_nr': len(step_list) + 1,
-                                          'type': 'pause',
-                                          'time': request.user.userprofile.timer_pause})
+                        step_list.append({
+                            'current_step': uuid.uuid4().hex,
+                            'step_percent': 0,
+                            'step_nr': len(step_list) + 1,
+                            'type': 'pause',
+                            'time': request.user.userprofile.timer_pause
+                        })
 
         # Supersets need extra work to group the exercises and reps together
         else:
@@ -334,24 +318,35 @@ def timer(request, day_pk):
                     default_weight = exercise_dict['weight_list'][i]
                     exercise = exercise_dict['obj']
 
-                    step_list.append({'current_step': uuid.uuid4().hex,
-                                      'step_percent': 0,
-                                      'step_nr': len(step_list) + 1,
-                                      'exercise': exercise,
-                                      'type': 'exercise',
-                                      'reps': reps,
-                                      'rep_unit': rep_unit,
-                                      'weight_unit': weight_unit,
-                                      'weight': last_log.get_last_weight(exercise,
-                                                                         reps,
-                                                                         default_weight)})
+                    step_list.append({
+                        'current_step':
+                        uuid.uuid4().hex,
+                        'step_percent':
+                        0,
+                        'step_nr':
+                        len(step_list) + 1,
+                        'exercise':
+                        exercise,
+                        'type':
+                        'exercise',
+                        'reps':
+                        reps,
+                        'rep_unit':
+                        rep_unit,
+                        'weight_unit':
+                        weight_unit,
+                        'weight':
+                        last_log.get_last_weight(exercise, reps, default_weight)
+                    })
 
                 if request.user.userprofile.timer_active:
-                    step_list.append({'current_step': uuid.uuid4().hex,
-                                      'step_percent': 0,
-                                      'step_nr': len(step_list) + 1,
-                                      'type': 'pause',
-                                      'time': 90})
+                    step_list.append({
+                        'current_step': uuid.uuid4().hex,
+                        'step_percent': 0,
+                        'step_nr': len(step_list) + 1,
+                        'type': 'pause',
+                        'time': 90
+                    })
 
     # Remove the last pause step as it is not needed. If the list is empty,
     # because the user didn't add any repetitions to any exercise, do nothing
@@ -372,10 +367,14 @@ def timer(request, day_pk):
         session_form = WorkoutSessionHiddenFieldsForm(instance=session)
     else:
         today = datetime.date.today()
-        url = reverse('manager:session:add', kwargs={'workout_pk': day.training_id,
-                                                     'year': today.year,
-                                                     'month': today.month,
-                                                     'day': today.day})
+        url = reverse(
+            'manager:session:add',
+            kwargs={
+                'workout_pk': day.training_id,
+                'year': today.year,
+                'month': today.month,
+                'day': today.day
+            })
         session_form = WorkoutSessionHiddenFieldsForm()
 
     # Render template
