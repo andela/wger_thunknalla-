@@ -180,6 +180,20 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.social-button {
+    background-color: white;
+    margin-left: 25px;
+}
+.social-button:hover {
+    border-color: blue;
+    border: 1px solid;
+    border-radius: 5px;
+    
+}
+
+.social {
+    margin-left: 370px;
+}
 .btn-default {
   color: #333;
   background-color: #eeeeec;
