@@ -14,15 +14,17 @@
     {% trans 'Login' as submit_text %}
     {% render_form_fields form submit_text %}
 </form>
-  <br>
-  <p><strong>-- OR YOU CAN LOGIN WITH --</strong></p>
-  <a href="{% url 'social:begin' 'github' %}">GitHub</a> |
+<br>
 
-  <a href="{% url 'social:begin' 'twitter' %}">Twitter</a> |
+<div class="social">
+<p><strong>-- OR YOU CAN LOGIN WITH --</strong></p>
 
-  <a href="{% url 'social:begin' 'google-oauth2' %}">Google</a>
+<a href="{% url 'social:begin' 'github' %}"><img src="{% static 'images/github.png'%}" height="33" alt="GitHub" class="social-button"/></a>
 
-  <!--<a href="{% url 'social:begin' 'facebook' %}">Facebook</a>-->
+<a href="{% url 'social:begin' 'twitter' %}"><img src="{% static 'images/twitter.png'%}" height="33" alt="Twitter" class="social-button"/></a>
+
+<a href="{% url 'social:begin' 'google-oauth2' %}"><img src="{% static 'images/google.png'%}" height="33" alt="Google" class="social-button"/></a>
+</div>
   
 
   
