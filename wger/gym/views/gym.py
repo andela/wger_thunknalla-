@@ -123,13 +123,13 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, L
         Pass other info to the template
         '''
         context = super(GymUserListView, self).get_context_data(**kwargs)
-        context['gym'] = Gym.objects.get(pk=self.kwargs['pk'])
-        context['name'] = 'Active users'
-        context['admin_count'] = len(context['object_list']['admins'])
-        context['user_count'] = len(context['object_list']['members'])
-        context['user_table'] = {'keys': [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')],
+        context = {**context, 'gym': Gym.objects.get(pk=self.kwargs['pk']),
+        'name': 'Active users',
+        'admin_count': len(context['object_list']['admins']),
+        'user_count': len(context['object_list']['members']),
+        'user_table': {'keys': [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')],
                                  'users': context['object_list']['members'],
-                                 "route": "active"}
+                                 "route": "active"}}
         return context
 
 class GymInactiveUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, ListView):
@@ -177,13 +177,14 @@ class GymInactiveUserListView(LoginRequiredMixin, WgerMultiplePermissionRequired
         Pass other info to the template
         '''
         context = super(GymInactiveUserListView, self).get_context_data(**kwargs)
-        context['gym'] = Gym.objects.get(pk=self.kwargs['pk'])
-        context['name'] = 'Inactive users'
-        context['admin_count'] = len(context['object_list']['admins'])
-        context['user_count'] = len(context['object_list']['members'])
-        context['user_table'] = {'keys': [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')],
+        key_list = [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')]
+        context = {**context, 'gym': Gym.objects.get(pk=self.kwargs['pk']),
+        'name': 'inactive users',
+        'admin_count': len(context['object_list']['admins']),
+        'user_count': len(context['object_list']['members']),
+        'user_table': {'keys': key_list,
                                  'users': context['object_list']['members'],
-                                  "route": "inactive"}
+                                  "route": "inactive"}}
         return context
 
 
