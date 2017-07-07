@@ -15,21 +15,30 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from wger.core.models import (
-    UserProfile,
-    Language,
-    DaysOfWeek,
-    License,
-    RepetitionUnit,
-    WeightUnit)
+from wger.core.models import (ApiUser, DaysOfWeek, Language, License, RepetitionUnit, UserProfile,
+                              WeightUnit)
+
+
+# checkout what serializers are
+class UserCreationSerializer(serializers.ModelSerializer):
+    '''
+    user creation serializers
+    '''
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+        extra_kwargs = {"password": {"write_only": True}}
 
 
 class UserprofileSerializer(serializers.ModelSerializer):
     '''
     Workout session serializer
     '''
+
     class Meta:
         model = UserProfile
 
@@ -45,6 +54,7 @@ class LanguageSerializer(serializers.ModelSerializer):
     '''
     Language serializer
     '''
+
     class Meta:
         model = Language
 
@@ -53,6 +63,7 @@ class DaysOfWeekSerializer(serializers.ModelSerializer):
     '''
     DaysOfWeek serializer
     '''
+
     class Meta:
         model = DaysOfWeek
 
@@ -61,6 +72,7 @@ class LicenseSerializer(serializers.ModelSerializer):
     '''
     License serializer
     '''
+
     class Meta:
         model = License
 
@@ -69,6 +81,7 @@ class RepetitionUnitSerializer(serializers.ModelSerializer):
     '''
     Repetition unit serializer
     '''
+
     class Meta:
         model = RepetitionUnit
 
@@ -77,5 +90,6 @@ class WeightUnitSerializer(serializers.ModelSerializer):
     '''
     Weight unit serializer
     '''
+
     class Meta:
         model = WeightUnit
