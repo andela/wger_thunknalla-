@@ -157,7 +157,6 @@ class GymInactiveUserListView(LoginRequiredMixin, WgerMultiplePermissionRequired
         '''
         out = {'admins': [],
                'members': []}
-
         for u in Gym.objects.get_members(self.kwargs['pk']).select_related('usercache'):
             out['members'].append({'obj': u,
                                    'last_log': u.usercache.last_activity})
@@ -345,12 +344,12 @@ def gym_permissions_user_edit(request, user_pk):
         form = GymUserPermisssionForm(initial={'role': initial_data},
                                       available_roles=form_group_permission)
 
-    context = {}
-    context['title'] = member.get_full_name()
-    context['form'] = form
-    context['form_action'] = reverse('gym:gym:edit-user-permission', kwargs={'user_pk': member.pk})
-    context['extend_template'] = 'base_empty.html' if request.is_ajax() else 'base.html'
-    context['submit_text'] = 'Save'
+    context = {**context, 'title': member.get_full_name(),
+    'form': form,
+    'form_action': reverse('gym:gym:edit-user-permission', kwargs={'user_pk': member.pk}),
+    'extend_template': 'base_empty.html' if request.is_ajax() else 'base.html',
+    'submit_text': 'Save'
+    }
 
     return render(request, 'form.html', context)
 
