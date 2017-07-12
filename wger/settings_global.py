@@ -89,8 +89,7 @@ INSTALLED_APPS = (
     # django-bower for installing bower packages
     'djangobower',
 
-    # Fitbit app
-    'fitapp',
+
 )
 
 # added list of external libraries to be installed by bower
