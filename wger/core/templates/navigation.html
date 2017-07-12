@@ -151,6 +151,19 @@
                             </ul>
                         </li>
 
+                        {#            #}
+                        {# Fitbit tab #}
+                        {#            #}
+                        {% if user.is_authenticated and not user.userprofile.is_temporary %}
+                        <li {% if active_tab == 'fitbit' %}class="active"{% endif %}>
+                            <a href="{% url 'core:fitbit' %}">
+ 
+                                {% trans "Fitbit" %}
+
+                            </a>
+                        </li>
+                        {% endif %}
+
                         {#                     #}
                         {# Options and contact #}
                         {#                     #}
@@ -211,7 +224,7 @@
                                     {% endif %}
 
                                     {#               #}
-                                    {# Adminstration #}
+                                    {# Administration #}
                                     {#               #}
                                     {% if perms.exercises or perms.gym.manage_gyms or perms.gym.manage_gym or perms.gym.gym_trainer %}
                                         <li class="divider"></li>
