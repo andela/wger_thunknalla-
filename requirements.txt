@@ -1,7 +1,10 @@
 alabaster==0.7.10
+amqp==2.1.4
 Babel==2.4.0
 backports.ssl-match-hostname==3.5.0.1
+billiard==3.5.0.2
 bleach==2.0.0
+celery==4.0.2
 certifi==2017.4.17
 chardet==3.0.4
 coverage==4.4.1
@@ -13,6 +16,7 @@ django-compressor==2.1.1
 django-cors-headers==2.1.0
 django-debug-toolbar==1.8
 django-filter==1.0.4
+django-fitbit==0.3.0
 django-formtools==1.0
 django-mobile==0.7.0
 django-recaptcha==1.3.0
@@ -23,7 +27,9 @@ docker==2.3.0
 docker-pycreds==0.2.1
 docutils==0.13.1
 easy-thumbnails==2.4.1
+fitbit==0.3.0
 future==0.16.0
+gulp==0.1.0
 html5lib==0.999999999
 icalendar==3.11.4
 idna==2.5
@@ -31,6 +37,7 @@ imagesize==0.7.1
 invoke==0.18.1
 ipaddress==1.0.18
 Jinja2==2.9.6
+kombu==4.0.2
 MarkupSafe==1.0
 nose==1.3.7
 oauthlib==2.0.2
@@ -52,6 +59,7 @@ reportlab==3.4.0
 requests==2.18.1
 requests-oauthlib==0.8.0
 rjsmin==1.0.12
+simplejson==3.11.1
 six==1.10.0
 snowballstemmer==1.2.1
 social-auth-app-django==1.2.0
@@ -61,6 +69,7 @@ sphinxcontrib-websupport==1.0.1
 sqlparse==0.2.3
 typing==3.6.1
 urllib3==1.21.1
+vine==1.1.3
 webencodings==0.5.1
 websocket-client==0.42.1
--e git+git@github.com:andela/wger_thunknalla-.git@aeb0e7f700b1d3c82fb008b1ee09394a3660a77f#egg=wger
+-e git+git@github.com:andela/wger_thunknalla-.git@808b12ea20549dfe9503bb4f4fc689883541d61f#egg=wger
