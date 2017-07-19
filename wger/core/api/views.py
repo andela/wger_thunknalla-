@@ -16,27 +16,48 @@
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.contrib.auth.models import User
-from rest_framework import viewsets
-from rest_framework.response import Response
+from rest_framework import status, viewsets
 from rest_framework.decorators import detail_route
+from rest_framework.response import Response
 
-from wger.core.models import (
-    UserProfile,
-    Language,
-    DaysOfWeek,
-    License,
-    RepetitionUnit,
-    WeightUnit)
-from wger.core.api.serializers import (
-    UsernameSerializer,
-    LanguageSerializer,
-    DaysOfWeekSerializer,
-    LicenseSerializer,
-    RepetitionUnitSerializer,
-    WeightUnitSerializer
-)
-from wger.core.api.serializers import UserprofileSerializer
+from wger.core.api.serializers import (DaysOfWeekSerializer, LanguageSerializer, LicenseSerializer,
+                                       RepetitionUnitSerializer, UserCreationSerializer,
+                                       UsernameSerializer, UserprofileSerializer,
+                                       WeightUnitSerializer)
+from wger.core.models import (ApiUser, DaysOfWeek, Language, License, RepetitionUnit, UserProfile,
+                              WeightUnit)
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
+
+
+# endpoint for api
+class UserCreationViewSet(viewsets.ModelViewSet):
+    '''
+    API endpoint for user creation
+    '''
+    is_private = True
+    serializer_class = UserCreationSerializer
+
+    def create(self, request):
+        '''
+        create user api endpoint
+        '''
+        serializer = UserCreationSerializer(data=request.data)
+        if serializer.is_valid():
+            new_user = serializer.save()
+            new_api_user = ApiUser(user=new_user, created_by=self.request.user)
+            new_api_user.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_queryset(self):
+        '''
+        get users created by the logged in user
+        '''
+
+        return [
+            apiuser.user
+            for apiuser in ApiUser.objects.filter(created_by=self.request.user)
+        ]
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -77,8 +98,7 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name')
+    filter_fields = ('full_name', 'short_name')
 
 
 class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
@@ -98,9 +118,7 @@ class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name',
-                     'url')
+    filter_fields = ('full_name', 'short_name', 'url')
 
 
 class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):
