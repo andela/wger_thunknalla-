@@ -1,4 +1,10 @@
 language: python
+# Python versions to test
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+
 
 # Cache the pip files
 cache:
@@ -11,12 +17,6 @@ cache:
 # Use container infrastructure
 # http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
 sudo: false
-
-# Python versions to test
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
 
 # Manually define here the combinations environment variables to test
 # https://github.com/travis-ci/travis-ci/issues/1519
@@ -34,13 +34,11 @@ install:
   # repository and the directory is not empty.
   - curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.4/install.sh | METHOD=script bash
   - . $HOME/.nvm/nvm.sh
-  - nvm install $TRAVIS_NODE_VERSION
-  - nvm use $TRAVIS_NODE_VERSION
-
   # Install requirements
   - pip install -r requirements_devel.txt
   - npm install
   - if [[ "$DB" = "postgresql" ]]; then pip install psycopg2; fi
+  - pip install coveralls
 
   # Setup application
   - if [[ "$DB" = "sqlite" ]]; then invoke create_settings; fi
@@ -56,12 +54,12 @@ script:
   # Formatting
   - pep8 wger
 
-  # Javascript linting
-  - gulp lint
-
   # Regular application
   - coverage run --source='.' ./manage.py test
 
 
   # Code coverage
   - coverage report
+after_script: coveralls
+notifications:
+    slack: andela:tNN9TfbH9k5VnXi7uyrSenux
