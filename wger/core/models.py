@@ -682,3 +682,10 @@ class WeightUnit(models.Model):
 class ApiUser(models.Model):
     user = models.OneToOneField(User)
     created_by = models.ForeignKey(User, related_name="created_by")
+
+    def __str__(self):
+        '''
+        String representation for ApiUser
+        '''
+        return "User: {}, created by: {}".format(self.user.__str__(),
+                                                 self.created_by)
