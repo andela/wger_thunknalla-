@@ -143,7 +143,7 @@
 
                     <h2 class="section-heading" style=" color:white; font-family: Open Sans Light, Arial, Helvetica, sans-serif">{% trans "Features" %}</h2>
                      <span class="strike" ></span>
-                    <h3 class="section-subheading text-muted" style="color: white">{% trans "Among many others" %}</h3>
+                    <h3 class="section-subheading text-muted" style="color: white; ">{% trans "Among many others" %}</h3>
                 </div>
             </div>
 
@@ -151,7 +151,6 @@
    <p><span style="font-family:'Helvetica';font-weight:400;">W E I G H T &nbsp; <span class="titlelight">T R A C K E R</span></span></p>
                     <span class="liner"></span><br/>
 
-                <h4>{% trans "Weight tracker" %}</h4>
 
                 <p class="text-muted" style="color: white">
                     {% blocktrans trimmed %}
@@ -162,6 +161,7 @@
                 </p>
  </div>
   <div class=" col-md-4 ">
+
    <p><span style="font-family:'Helvetica';font-weight:400;"> <span class="titlelight"> C A L E N D A R</span></span></p>
                     <span class="liner"></span><br/>
 
@@ -187,7 +187,7 @@
                 </p>
          </div>
 
-        <div class=" col-md-4 ">
+        <div class=" col-md-4 " style="margin-top: 78px;">
         <p><span style="font-family:'Helvetica';font-weight:400;">G Y M&nbsp; <span class="titlelight"> M A N A G E M E N T</span></span></p>
                     <span class="liner"></span><br/>
 
@@ -200,9 +200,14 @@
                     {% endblocktrans %}
                 </p>
         </div>
-<div class=" col-md-4 ">
-  <p><span style="font-family:'Helvetica';font-weight:400;">100% F R E E&nbsp; <span class="titlelight">A N D  O P E N  S O U R C E</span></span></p>
-                    <span class="liner"></span><br/>
+<div  class=" col-md-4 " style="margin-top: 82px;">
+    <img id='api' class=' col-sm-2 col-sm-push-8'src={% static 'images/api.png' %}>
+<div id="free">
+     <p class="col-sm-10" style="margin-top: -75px;"><span style="font-family:'Helvetica';font-weight:400;">100% F R E E&nbsp; <span class="titlelight">A N D &nbsp O P E N <br> S O U R C E</span></span></p>
+
+
+</div>
+                   <span class="liner"></span><br/>
 
 
 
@@ -220,7 +225,8 @@
     <script>
         var velocity = 0.5;
 
-        function update() {
+
+        function updapte() {
             var pos = $(window).scrollTop();
             $(".header").each(function () {
                 var $element = $(this);

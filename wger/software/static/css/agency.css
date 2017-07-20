@@ -893,7 +893,7 @@ span .titlelight{
 
 .liner{
     display:block;
-    width:335px;
+    width:346px;
     margin:10px 0 0 0;
     padding: 0;
     border-bottom: 1.5px solid #999;
@@ -981,5 +981,12 @@ span .titlelight{
 #about .strike{
     width: 8em;
     bottom: 2.3em;
+}
+#api {
+    margin-top: -63px;
+    width: 35%;
+}
+#free{
+    margin-top: 33px;
 }
 
