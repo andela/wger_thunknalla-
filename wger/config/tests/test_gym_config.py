@@ -41,8 +41,8 @@ class GymConfigTestCase(WorkoutManagerTestCase):
 
         # Register
         registration_data = {'username': 'myusername',
-                             'password1': 'secret',
-                             'password2': 'secret',
+                             'password1': 'secretchanging',
+                             'password2': 'secretchanging',
                              'email': 'my.email@example.com',
                              'g-recaptcha-response': 'PASSED', }
         self.client.post(reverse('core:user:registration'), registration_data)
@@ -62,15 +62,16 @@ class GymConfigTestCase(WorkoutManagerTestCase):
 
         # Register
         registration_data = {'username': 'myusername',
-                             'password1': 'secret',
-                             'password2': 'secret',
+                             'password1': 'secretchanging3',
+                             'password2': 'secretchanging3',
                              'email': 'my.email@example.com',
                              'g-recaptcha-response': 'PASSED', }
         self.client.post(reverse('core:user:registration'), registration_data)
 
         new_user = User.objects.all().last()
         self.assertEqual(new_user.userprofile.gym_id, None)
-        self.assertRaises(GymUserConfig.DoesNotExist, GymUserConfig.objects.get, user=new_user)
+        self.assertRaises(GymUserConfig.DoesNotExist,
+                          GymUserConfig.objects.get, user=new_user)
 
     def test_update_userprofile(self):
         '''
