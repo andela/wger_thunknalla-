@@ -19,7 +19,6 @@
 import os
 import re
 import sys
-
 import dj_database_url
 '''
 This file contains the global settings that don't usually need to be changed.
@@ -87,13 +86,25 @@ INSTALLED_APPS = (
     'corsheaders',
 
     # django-bower for installing bower packages
-    'djangobower', )
+    'djangobower',
+)
 
 # added list of external libraries to be installed by bower
-BOWER_INSTALLED_APPS = ('bootstrap', 'components-font-awesome', 'd3',
-                        'DataTables', 'devbridge-autocomplete#1.2.x',
-                        'jquery#2.1.x', 'metrics-graphics', 'shariff',
-                        'sortablejs#1.4.x', 'tinymce', 'tinymce-dist', )
+BOWER_INSTALLED_APPS = (
+    'bootstrap',
+    'components-font-awesome',
+    'd3',
+    'DataTables',
+    'devbridge-autocomplete#1.2.x',
+    'jquery#2.1.x',
+    'metrics-graphics',
+    'shariff',
+    'sortablejs#1.4.x',
+    'tinymce',
+    'tinymce-dist',
+)
+
+
 
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
@@ -109,16 +120,21 @@ MIDDLEWARE_CLASSES = (
 
     # Send an appropriate Header so search engines don't index pages
     'wger.utils.middleware.RobotsExclusionMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 
     # Django mobile
     'django_mobile.middleware.MobileDetectionMiddleware',
-    'django_mobile.middleware.SetFlavourMiddleware', )
+    'django_mobile.middleware.SetFlavourMiddleware',
+)
 
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
-                           'wger.utils.helpers.EmailAuthBackend')
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'wger.utils.helpers.EmailAuthBackend'
+)
+
 
 TEMPLATES = [
     {
@@ -146,11 +162,12 @@ TEMPLATES = [
             'loaders': [
                 # Django mobile
                 'django_mobile.loader.Loader',
+
+
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
-            'debug':
-            False
+            'debug': False
         },
     },
 ]
@@ -170,13 +187,17 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
 
     # Django compressor
-    'compressor.finders.CompressorFinder', )
+
+    'compressor.finders.CompressorFinder',
+)
+
 
 #
 # Email
 #
 EMAIL_SUBJECT_PREFIX = '[wger] '
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 #
 # Login
@@ -201,18 +222,34 @@ USE_L10N = True
 TIME_ZONE = None
 
 # Restrict the available languages
-LANGUAGES = (('en', 'English'), ('de', 'German'), ('bg', 'Bulgarian'),
-             ('es', 'Spanish'), ('ru', 'Russian'), ('nl', 'Dutch'),
-             ('pt', 'Portuguese'), ('el', 'Greek'), ('cs', 'Czech'),
-             ('sv', 'Swedish'), ('no', 'Norwegian'), ('fr', 'French'), )
+
+LANGUAGES = (
+            ('en', 'English'),
+            ('de', 'German'),
+            ('bg', 'Bulgarian'),
+            ('es', 'Spanish'),
+            ('ru', 'Russian'),
+            ('nl', 'Dutch'),
+            ('pt', 'Portuguese'),
+            ('el', 'Greek'),
+            ('cs', 'Czech'),
+            ('sv', 'Swedish'),
+            ('no', 'Norwegian'),
+            ('fr', 'French'),
+)
+
 
 # Default language code for this installation.
 LANGUAGE_CODE = 'en'
 
 # All translation files are in one place
-LOCALE_PATHS = (os.path.join(SITE_ROOT, 'locale'), )
+
+LOCALE_PATHS = (
+    os.path.join(SITE_ROOT, 'locale'),
+)
 
 FLAVOURS_STORAGE_BACKEND = 'session'
+
 
 #
 # Logging
@@ -241,10 +278,12 @@ LOGGING = {
     }
 }
 
+
 #
 # ReCaptcha
 #
 RECAPTCHA_USE_SSL = True
+
 
 #
 # Cache
@@ -256,6 +295,7 @@ CACHES = {
         'TIMEOUT': 30 * 24 * 60 * 60,  # Cache for a month
     }
 }
+
 
 #
 # Easy thumbnails
@@ -302,6 +342,7 @@ THUMBNAIL_ALIASES = {
     },
 }
 
+
 #
 # Django compressor
 #
@@ -310,35 +351,37 @@ STATIC_URL = '/static/'
 
 # The default is not DEBUG, override if needed
 # COMPRESS_ENABLED = True
-COMPRESS_CSS_FILTERS = ('compressor.filters.css_default.CssAbsoluteFilter',
-                        'compressor.filters.cssmin.rCSSMinFilter')
+
+COMPRESS_CSS_FILTERS = (
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.rCSSMinFilter'
+)
 COMPRESS_ROOT = STATIC_ROOT
 
 # BOWER binary
 if sys.platform.startswith('win32'):
-    BOWER_PATH = os.path.abspath(
-        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
+
+    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
 else:
-    BOWER_PATH = os.path.abspath(
-        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
+    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
 
 #
 # Django Rest Framework
 #
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('wger.utils.permissions.WgerPermission', ),
-    'PAGINATE_BY':
-    20,
-    'PAGINATE_BY_PARAM':
-    'limit',  # Allow client to override, using `?limit=xxx`.
-    'TEST_REQUEST_DEFAULT_FORMAT':
-    'json',
-    'DEFAULT_AUTHENTICATION_CLASSES':
-    ('rest_framework.authentication.SessionAuthentication',
-     'rest_framework.authentication.TokenAuthentication', ),
+
+    'DEFAULT_PERMISSION_CLASSES': ('wger.utils.permissions.WgerPermission',),
+    'PAGINATE_BY': 20,
+    'PAGINATE_BY_PARAM': 'limit',  # Allow client to override, using `?limit=xxx`.
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
-                                'rest_framework.filters.OrderingFilter', )
+                                'rest_framework.filters.OrderingFilter',)
 }
+
 
 #
 # CORS headers: allow all hosts to access the API
@@ -351,25 +394,23 @@ CORS_URLS_REGEX = r'^/api/.*$'
 #
 IGNORABLE_404_URLS = (re.compile(r'^/favicon\.ico$'), )
 
+
 #
 # Password rules
 #
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -390,3 +431,4 @@ WGER_SETTINGS = {
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
+
