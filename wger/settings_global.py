@@ -19,7 +19,6 @@
 import os
 import re
 import sys
-
 import dj_database_url
 '''
 This file contains the global settings that don't usually need to be changed.
@@ -201,6 +200,7 @@ USE_L10N = True
 TIME_ZONE = None
 
 # Restrict the available languages
+
 LANGUAGES = (('en', 'English'), ('de', 'German'), ('bg', 'Bulgarian'),
              ('es', 'Spanish'), ('ru', 'Russian'), ('nl', 'Dutch'),
              ('pt', 'Portuguese'), ('el', 'Greek'), ('cs', 'Czech'),
@@ -210,6 +210,7 @@ LANGUAGES = (('en', 'English'), ('de', 'German'), ('bg', 'Bulgarian'),
 LANGUAGE_CODE = 'en'
 
 # All translation files are in one place
+
 LOCALE_PATHS = (os.path.join(SITE_ROOT, 'locale'), )
 
 FLAVOURS_STORAGE_BACKEND = 'session'
@@ -310,12 +311,14 @@ STATIC_URL = '/static/'
 
 # The default is not DEBUG, override if needed
 # COMPRESS_ENABLED = True
+
 COMPRESS_CSS_FILTERS = ('compressor.filters.css_default.CssAbsoluteFilter',
                         'compressor.filters.cssmin.rCSSMinFilter')
 COMPRESS_ROOT = STATIC_ROOT
 
 # BOWER binary
 if sys.platform.startswith('win32'):
+
     BOWER_PATH = os.path.abspath(
         os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
 else:
