@@ -177,7 +177,6 @@ STATICFILES_FINDERS = (
 #
 EMAIL_SUBJECT_PREFIX = '[wger] '
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 #
 # Login
 #
@@ -213,7 +212,6 @@ LANGUAGE_CODE = 'en'
 LOCALE_PATHS = (os.path.join(SITE_ROOT, 'locale'), )
 
 FLAVOURS_STORAGE_BACKEND = 'session'
-
 #
 # Logging
 # See http://docs.python.org/library/logging.config.html
@@ -240,12 +238,10 @@ LOGGING = {
         }
     }
 }
-
 #
 # ReCaptcha
 #
 RECAPTCHA_USE_SSL = True
-
 #
 # Cache
 #
@@ -256,7 +252,6 @@ CACHES = {
         'TIMEOUT': 30 * 24 * 60 * 60,  # Cache for a month
     }
 }
-
 #
 # Easy thumbnails
 #
@@ -339,7 +334,6 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
                                 'rest_framework.filters.OrderingFilter', )
 }
-
 #
 # CORS headers: allow all hosts to access the API
 #
@@ -386,7 +380,6 @@ WGER_SETTINGS = {
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False
 }
-
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
