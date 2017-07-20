@@ -698,3 +698,7 @@ $(document).ready(function () {
     window.location.href = targetUrl;
   });
 });
+
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
