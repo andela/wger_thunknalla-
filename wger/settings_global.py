@@ -21,6 +21,7 @@ import re
 import sys
 
 import dj_database_url
+
 '''
 This file contains the global settings that don't usually need to be changed.
 For a full list of options, visit:
@@ -94,7 +95,6 @@ BOWER_INSTALLED_APPS = ('bootstrap', 'components-font-awesome', 'd3',
                         'DataTables', 'devbridge-autocomplete#1.2.x',
                         'jquery#2.1.x', 'metrics-graphics', 'shariff',
                         'sortablejs#1.4.x', 'tinymce', 'tinymce-dist', )
-
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -182,8 +182,6 @@ EMAIL_SUBJECT_PREFIX = '[wger] '
 #
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
-
-#
 # Internationalization
 #
 USE_TZ = True
@@ -296,7 +294,6 @@ THUMBNAIL_ALIASES = {
         },
     },
 }
-
 #
 # Django compressor
 #
@@ -334,6 +331,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
                                 'rest_framework.filters.OrderingFilter', )
 }
+
 #
 # CORS headers: allow all hosts to access the API
 #
@@ -380,6 +378,7 @@ WGER_SETTINGS = {
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False
 }
+
 DATABASES = {
     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
