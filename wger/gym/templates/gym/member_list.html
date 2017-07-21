@@ -43,9 +43,6 @@
                  <a href="{% url 'core:user:overview' current_user.obj.pk %}">{{current_user.obj}}</a>
              {% elif perms.gym.manage_gym and current_user.perms.gym_trainer %}
                  <a href="{% url 'core:user:overview' current_user.obj.pk %}">{{current_user.obj}}</a>
-            {% elif perms.gym.manage_gyms %}
-                {{current_user.obj}}
-            {% endif %}
              {% else %}
                  {{current_user.obj}}
              {% endif %}
@@ -63,7 +60,7 @@
              {{current_user.obj.get_full_name}}
          </td>
          <td>
-            {% if current_user.is_active %}
+            {% if current_user.obj.is_active %}
                 {% trans "Active" %}
             {% else %}
                 {% trans "Inactive" %}
