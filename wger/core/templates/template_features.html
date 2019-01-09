@@ -18,111 +18,221 @@
 
 
 {% load i18n staticfiles compress wger_extras %}
-<html lang="{{language.short_name}}">
+<html lang="{{ language.short_name }}">
 {% spaceless_config %}
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8">
-    <meta name="author" content="Roland Geider">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="utf-8">
+        <meta name="author" content="Roland Geider">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <!-- OpenGraph -->
-    {% block opengraph %}
-        <meta property="og:url" content="{{ request_absolute_path }}">
-        <meta property="og:type" content="website">
-    {% endblock %}
-    {% block opengraphimages %}
-        <meta property="og:image" content="{{ image_absolute_path }}">
-    {% endblock %}
+        <!-- OpenGraph -->
+        {% block opengraph %}
+            <meta property="og:url" content="{{ request_absolute_path }}">
+            <meta property="og:type" content="website">
+        {% endblock %}
+        {% block opengraphimages %}
+            <meta property="og:image" content="{{ image_absolute_path }}">
+        {% endblock %}
 
-    <!-- twitter cards -->
-    {% block twittercard %}
-    {% if twitter %}
-        <meta content="summary" name="twitter:card">
-        <meta content="@{{ twitter }}" name="twitter:site">
-    {% endif %}
-    {% endblock %}
+        <!-- twitter cards -->
+        {% block twittercard %}
+            {% if twitter %}
+                <meta content="summary" name="twitter:card">
+                <meta content="@{{ twitter }}" name="twitter:site">
+            {% endif %}
+        {% endblock %}
 
 
-    {% compress css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/components-font-awesome/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/agency.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'bower_components/shariff/build/shariff.min.css' %}">
-    {% endcompress %}
+        {% compress css %}
+            <link rel="stylesheet" type="text/css"
+                  href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" type="text/css"
+                  href="{% static 'bower_components/components-font-awesome/css/font-awesome.min.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'css/agency.css' %}">
+            <link rel="stylesheet" type="text/css" href="{% static 'bower_components/shariff/build/shariff.min.css' %}">
+        {% endcompress %}
 
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
 
-    {% compress js %}
-    <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
-    <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    {% endcompress %}
+        {% compress js %}
+            <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+            <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        {% endcompress %}
 
-    <title>wger Workout Manager - {% trans "Features" %}</title>
-</head>
+        <title>wger Workout Manager - {% trans "Features" %}</title>
+    </head>
 
-<body id="page-top" class="index">
 
-{% if user.is_authenticated %}
-{% include 'navigation.html' %}
-{% endif  %}
+
+    <body id="page-top" class="index">
+
+    <!-- Fixed navbar -->
+    <nav id="header" class="navbar navbar-fixed-top">
+        <div id="header-container" class="container-fluid navbar-container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="brand" class="navbar-brand" style=" position: absolute;
+                   top: initial;" href="#">WGER</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse pull-right">
+
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="{% url 'core:user:registration' %}">R E G I S T ER</a></li>
+
+                    <li><a href="{% url 'core:user:login' %}">L O G I N</a></li>
+
+                </ul>
+            </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+
+
 
     {% block template %}{% endblock %}
-    <div id="current-url" data-current-url="{{request_full_path}}"></div>
-    <div id="current-language" data-current-language="{{language.short_name}}"></div>
+    <div id="current-url" data-current-url="{{ request_full_path }}"></div>
+    <div id="current-language" data-current-language="{{ language.short_name }}"></div>
 
 
+    <footer class="bg-darkest-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="{% url 'software:contribute' %}">{% trans "Contribute!" %}</a></li>
+                        <li><a href="{% url 'core:contact' %}">{% trans "Get in touch" %}</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li>
+                            <a href="https://github.com/wger-project/wger" title="Github">
+                                <span class="{% fa_class 'github' %}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/wger_de" title="Twitter">
+                                <span class="{% fa_class 'twitter' %}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.transifex.com/rge/wger-workout-manager/"
+                               title="{% trans 'Translate' %}">
+                                <span class="{% fa_class 'globe' %}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            {% if show_shariff %}
+                                {% include 'misc/fragments/shariff_modal.html' %}
+                                <a data-toggle="modal" href="#shariffModal" title="Share">
+                                    <span class="{% fa_class 'share-alt' %}"></span>
+                                </a>
+                                <div class="clearfix"></div>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="{% url 'core:about' %}">{% trans "About" %}</a></li>
 
-<footer class="bg-darkest-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <ul class="list-inline quicklinks">
-                    <li><a href="{% url 'software:contribute' %}">{% trans "Contribute!" %}</a></li>
-                    <li><a href="{% url 'core:contact' %}">{% trans "Get in touch" %}</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <ul class="list-inline social-buttons">
-                    <li>
-                        <a href="https://github.com/wger-project/wger" title="Github">
-                            <span class="{% fa_class 'github' %}"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/wger_de" title="Twitter">
-                         <span class="{% fa_class 'twitter' %}"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.transifex.com/rge/wger-workout-manager/" title="{% trans 'Translate' %}">
-                            <span class="{% fa_class 'globe' %}"></span>
-                        </a>
-                    </li>
-                    <li>
-                      {% if show_shariff %}
-                        {% include 'misc/fragments/shariff_modal.html' %}
-                        <a data-toggle="modal" href="#shariffModal" title="Share">
-                          <span class="{% fa_class 'share-alt' %}"></span>
-                        </a>
-                        <div class="clearfix"></div>
-                      {% endif %}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <ul class="list-inline quicklinks">
-                    <li><a href="{% url 'core:about' %}">{% trans "About" %}</a></li>
-
-                    <li><a href="{% url 'software:tos' %}">{% trans "Terms of service" %}</a></li>
-                </ul>
+                        <li><a href="{% url 'software:tos' %}">{% trans "Terms of service" %}</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<script src="{% static 'bower_components/shariff/build/shariff.min.js' %}"></script>
-</body>
+    <script src="{% static 'bower_components/shariff/build/shariff.min.js' %}"></script>
+    </body>
 {% endspaceless_config %}
 </html>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        /**
+         * This object controls the nav bar. Implement the add and remove
+         * action over the elements of the nav bar that we want to change.
+         *
+         {# * @type {{flagAdd: boolean, elements: string[], add: Function, remove: Function}}#}
+         */
+        var myNavBar = {
+
+            flagAdd: true,
+
+            elements: [],
+
+            init: function (elements) {
+                this.elements = elements;
+            },
+
+            add: function () {
+                if (this.flagAdd) {
+                    for (var i = 0; i < this.elements.length; i++) {
+                        document.getElementById(this.elements[i]).className += " fixed-theme";
+                    }
+                    this.flagAdd = false;
+                }
+            },
+
+            remove: function () {
+                for (var i = 0; i < this.elements.length; i++) {
+                    document.getElementById(this.elements[i]).className =
+                        document.getElementById(this.elements[i]).className.replace(/(?:^|\s)fixed-theme(?!\S)/g, '');
+                }
+                this.flagAdd = true;
+            }
+
+        };
+
+        /**
+         * Init the object. Pass the object the array of elements
+         * that we want to change when the scroll goes down
+         */
+        myNavBar.init([
+            "header",
+            "header-container",
+            "brand"
+        ]);
+
+        /**
+         * Function that manage the direction
+         * of the scroll
+         */
+        function offSetManager() {
+
+            var yOffset = 0;
+            var currYOffSet = window.pageYOffset;
+
+            if (yOffset < currYOffSet) {
+                myNavBar.add();
+            }
+            else if (currYOffSet == yOffset) {
+                myNavBar.remove();
+            }
+
+        }
+
+        /**
+         * bind to the document scroll detection
+         */
+        window.onscroll = function (e) {
+            offSetManager();
+        }
+
+        /**
+         * We have to do a first detectation of offset because the page
+         * could be load with scroll down set.
+         */
+        offSetManager();
+    });
+</script>
