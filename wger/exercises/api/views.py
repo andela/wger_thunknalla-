@@ -207,3 +207,22 @@ class MuscleViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = '__all__'
     filter_fields = ('name',
                      'is_front')
+
+
+class AllExercisesViewSet(viewsets.ReadOnlyModelViewSet):
+    """A read-only API endpoint for exercises."""
+
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer
+    ordering_fields = '__all__'
+    filter_fields = ('category',
+                     'creation_date',
+                     'description',
+                     'language',
+                     'muscles',
+                     'muscles_secondary',
+                     'status',
+                     'name',
+                     'equipment',
+                     'license',
+                     'license_author')
