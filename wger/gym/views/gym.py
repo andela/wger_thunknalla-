@@ -123,11 +123,69 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, L
         Pass other info to the template
         '''
         context = super(GymUserListView, self).get_context_data(**kwargs)
-        context['gym'] = Gym.objects.get(pk=self.kwargs['pk'])
-        context['admin_count'] = len(context['object_list']['admins'])
-        context['user_count'] = len(context['object_list']['members'])
-        context['user_table'] = {'keys': [_('ID'), _('Username'), _('Name'), _('Last activity')],
-                                 'users': context['object_list']['members']}
+        context = {**context, 'gym': Gym.objects.get(pk=self.kwargs['pk']),
+        'name': 'Active users',
+        'admin_count': len(context['object_list']['admins']),
+        'user_count': len(context['object_list']['members']),
+        'user_table': {'keys': [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')],
+                                 'users': context['object_list']['members'],
+                                 "route": "active"}}
+        return context
+
+class GymInactiveUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin, ListView):
+    '''
+    Overview of all inactive users for a specific gym
+    '''
+    model = User
+    permission_required = ('gym.manage_gym', 'gym.gym_trainer', 'gym.manage_gyms')
+    template_name = 'gym/inactive_gym_users_list.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        '''
+        Only managers and trainers for this gym can access the members
+        '''
+        if request.user.has_perm('gym.manage_gyms') \
+            or ((request.user.has_perm('gym.manage_gym')
+                or request.user.has_perm('gym.gym_trainer'))
+                and request.user.userprofile.gym_id == int(self.kwargs['pk'])):
+            return super(GymInactiveUserListView, self).dispatch(request, *args, **kwargs)
+        return HttpResponseForbidden()
+
+    def get_queryset(self):
+        '''
+        Return a list with the users, not really a queryset.
+        '''
+        out = {'admins': [],
+               'members': []}
+        # Retrieve active users list.
+        members = [user for user in Gym.objects.get_members(
+            self.kwargs['pk']).select_related('usercache')]
+        for user in members:
+            out['members'].append({'obj': user, 'last_log': user.usercache.last_activity})
+
+        # Retrieve admins list
+        admins = [user for user in Gym.objects.get_admins(self.kwargs['pk'])]
+        for user in admins:
+            permissions = {'manage_gym': user.has_perm('gym.manage_gym'),
+                                             'manage_gyms': user.has_perm('gym.manage_gyms'),
+                                             'gym_trainer': user.has_perm('gym.gym_trainer'),
+                                             'any_admin': is_any_gym_admin(user)}
+            out['admins'].append({'obj': user, 'perms': permissions})
+        return out
+
+    def get_context_data(self, **kwargs):
+        '''
+        Pass other info to the template
+        '''
+        context = super(GymInactiveUserListView, self).get_context_data(**kwargs)
+        key_list = [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')]
+        context = {**context, 'gym': Gym.objects.get(pk=self.kwargs['pk']),
+        'name': 'inactive users',
+        'admin_count': len(context['object_list']['admins']),
+        'user_count': len(context['object_list']['members']),
+        'user_table': {'keys': key_list,
+                                 'users': context['object_list']['members'],
+                                  "route": "inactive"}}
         return context
 
 
@@ -288,12 +346,12 @@ def gym_permissions_user_edit(request, user_pk):
         form = GymUserPermisssionForm(initial={'role': initial_data},
                                       available_roles=form_group_permission)
 
-    context = {}
-    context['title'] = member.get_full_name()
-    context['form'] = form
-    context['form_action'] = reverse('gym:gym:edit-user-permission', kwargs={'user_pk': member.pk})
-    context['extend_template'] = 'base_empty.html' if request.is_ajax() else 'base.html'
-    context['submit_text'] = 'Save'
+    context = {**context, 'title': member.get_full_name(),
+    'form': form,
+    'form_action': reverse('gym:gym:edit-user-permission', kwargs={'user_pk': member.pk}),
+    'extend_template': 'base_empty.html' if request.is_ajax() else 'base.html',
+    'submit_text': 'Save'
+    }
 
     return render(request, 'form.html', context)
 

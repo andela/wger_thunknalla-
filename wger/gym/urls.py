@@ -33,7 +33,6 @@ from wger.gym.views import (
     export
 )
 
-
 # 'sub patterns' for gyms
 patterns_gym = [
     url(r'^list$',
@@ -48,6 +47,9 @@ patterns_gym = [
     url(r'^(?P<pk>\d+)/members$',
         gym.GymUserListView.as_view(),
         name='user-list'),
+    url(r'^(?P<pk>\d+)/inactive-users$',
+        gym.GymInactiveUserListView.as_view(),
+        name='inactive-user-list'),
     url(r'^(?P<gym_pk>\d+)/add-member$',
         gym.GymAddUserView.as_view(),
         name='add-user'),
