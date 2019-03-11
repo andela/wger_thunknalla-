@@ -39,12 +39,10 @@ class Language(models.Model):
     '''
 
     # e.g. 'de'
-    short_name = models.CharField(
-        max_length=2, verbose_name=_('Language short name'))
+    short_name = models.CharField(max_length=2, verbose_name=_('Language short name'))
 
     # e.g. 'Deutsch'
-    full_name = models.CharField(
-        max_length=30, verbose_name=_('Language full name'))
+    full_name = models.CharField(max_length=30, verbose_name=_('Language full name'))
 
     class Meta:
         '''
@@ -88,13 +86,12 @@ class UserProfile(models.Model):
     INTENSITY_LOW = '1'
     INTENSITY_MEDIUM = '2'
     INTENSITY_HIGH = '3'
-    INTENSITY = ((INTENSITY_LOW, _('Low')), (INTENSITY_MEDIUM, _('Medium')),
-                 (INTENSITY_HIGH, _('High')), )
+    INTENSITY = ((INTENSITY_LOW, _('Low')), (INTENSITY_MEDIUM, _('Medium')), (INTENSITY_HIGH,
+                                                                              _('High')), )
 
     UNITS_KG = 'kg'
     UNITS_LB = 'lb'
-    UNITS = ((UNITS_KG, _('Metric (kilogram)')), (UNITS_LB,
-                                                  _('Imperial (pound)')))
+    UNITS = ((UNITS_KG, _('Metric (kilogram)')), (UNITS_LB, _('Imperial (pound)')))
 
     user = models.OneToOneField(User, editable=False)
     '''
@@ -149,18 +146,15 @@ by the US Department of Agriculture. It is extremely complete, with around
         help_text=_('The number of days you want to be reminded '
                     'before a workout expires.'),
         default=14,
-        validators=[MinValueValidator(1),
-                    MaxValueValidator(30)])
+        validators=[MinValueValidator(1), MaxValueValidator(30)])
     workout_duration = IntegerField(
         verbose_name=_('Default duration of workouts'),
         help_text=_('Default duration in weeks of workouts not '
                     'in a schedule. Used for email workout '
                     'reminders.'),
         default=12,
-        validators=[MinValueValidator(1),
-                    MaxValueValidator(30)])
-    last_workout_notification = models.DateField(
-        editable=False, blank=False, null=True)
+        validators=[MinValueValidator(1), MaxValueValidator(30)])
+    last_workout_notification = models.DateField(editable=False, blank=False, null=True)
     '''
     The last time the user got a workout reminder email
 
@@ -191,8 +185,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         help_text=_('Default duration in seconds of pauses used by '
                     'the timer in the gym mode.'),
         default=90,
-        validators=[MinValueValidator(10),
-                    MaxValueValidator(400)])
+        validators=[MinValueValidator(10), MaxValueValidator(400)])
     '''
     Default duration of workout pauses in the gym view
     '''
@@ -204,24 +197,18 @@ by the US Department of Agriculture. It is extremely complete, with around
         verbose_name=_('Age'),
         blank=False,
         null=True,
-        validators=[MinValueValidator(10),
-                    MaxValueValidator(100)])
+        validators=[MinValueValidator(10), MaxValueValidator(100)])
     '''The user's age'''
 
     height = IntegerField(
         verbose_name=_('Height (cm)'),
         blank=False,
-        validators=[MinValueValidator(140),
-                    MaxValueValidator(230)],
+        validators=[MinValueValidator(140), MaxValueValidator(230)],
         null=True)
     '''The user's height'''
 
     gender = models.CharField(
-        max_length=1,
-        choices=GENDER,
-        default=GENDER_MALE,
-        blank=False,
-        null=True)
+        max_length=1, choices=GENDER, default=GENDER_MALE, blank=False, null=True)
     '''Gender'''
 
     sleep_hours = IntegerField(
@@ -230,8 +217,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         default=7,
         blank=False,
         null=True,
-        validators=[MinValueValidator(4),
-                    MaxValueValidator(10)])
+        validators=[MinValueValidator(4), MaxValueValidator(10)])
     '''The average hours of sleep per day'''
 
     work_hours = IntegerField(
@@ -240,8 +226,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         default=8,
         blank=False,
         null=True,
-        validators=[MinValueValidator(1),
-                    MaxValueValidator(15)])
+        validators=[MinValueValidator(1), MaxValueValidator(15)])
     '''The average hours at work per day'''
 
     work_intensity = models.CharField(
@@ -260,8 +245,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         default=3,
         blank=False,
         null=True,
-        validators=[MinValueValidator(1),
-                    MaxValueValidator(30)])
+        validators=[MinValueValidator(1), MaxValueValidator(30)])
     '''The average hours performing sports per week'''
 
     sport_intensity = models.CharField(
@@ -280,8 +264,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         default=8,
         blank=False,
         null=True,
-        validators=[MinValueValidator(1),
-                    MaxValueValidator(15)])
+        validators=[MinValueValidator(1), MaxValueValidator(15)])
     '''The average hours of free time per day'''
 
     freetime_intensity = models.CharField(
@@ -300,18 +283,14 @@ by the US Department of Agriculture. It is extremely complete, with around
         default=2500,
         blank=False,
         null=True,
-        validators=[MinValueValidator(1500),
-                    MaxValueValidator(5000)])
+        validators=[MinValueValidator(1500), MaxValueValidator(5000)])
     '''Basic caloric intake based on physical activity'''
 
     #
     # Others
     #
     weight_unit = models.CharField(
-        verbose_name=_('Weight unit'),
-        max_length=2,
-        choices=UNITS,
-        default=UNITS_KG)
+        verbose_name=_('Weight unit'), max_length=2, choices=UNITS, default=UNITS_KG)
     '''Preferred weight unit'''
 
     ro_access = models.BooleanField(
@@ -328,8 +307,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         help_text=_('Number of days after the last '
                     'weight entry (enter 0 to '
                     'deactivate)'),
-        validators=[MinValueValidator(0),
-                    MaxValueValidator(30)],
+        validators=[MinValueValidator(0), MaxValueValidator(30)],
         default=0)
     '''Number of Days for email weight reminder'''
 
@@ -396,10 +374,8 @@ by the US Department of Agriculture. It is extremely complete, with around
         if not self.weight or not self.height:
             return 0
 
-        weight = self.weight if self.use_metric else AbstractWeight(
-            self.weight, 'lb').kg
-        return weight / (self.height / decimal.Decimal(100) * self.height /
-                         decimal.Decimal(100.0))
+        weight = self.weight if self.use_metric else AbstractWeight(self.weight, 'lb').kg
+        return weight / (self.height / decimal.Decimal(100) * self.height / decimal.Decimal(100.0))
 
     def calculate_basal_metabolic_rate(self, formula=1):
         '''
@@ -408,8 +384,7 @@ by the US Department of Agriculture. It is extremely complete, with around
         Currently only the Mifflin-St.Jeor formula is supported
         '''
         factor = 5 if self.gender == self.GENDER_MALE else -161
-        weight = self.weight if self.use_metric else AbstractWeight(
-            self.weight, 'lb').kg
+        weight = self.weight if self.use_metric else AbstractWeight(self.weight, 'lb').kg
 
         try:
             rate = ((10 * weight)  # in kg
@@ -469,8 +444,8 @@ by the US Department of Agriculture. It is extremely complete, with around
         Create a new weight entry as needed
         '''
         if (not WeightEntry.objects.filter(user=self.user).exists() or
-            (datetime.date.today() - WeightEntry.objects.filter(
-                user=self.user).latest().date > datetime.timedelta(days=3))):
+            (datetime.date.today() - WeightEntry.objects.filter(user=self.user).latest().date >
+             datetime.timedelta(days=3))):
             entry = WeightEntry()
             entry.weight = weight
             entry.user = self.user
@@ -526,8 +501,7 @@ class DaysOfWeek(models.Model):
     selected
     '''
 
-    day_of_week = models.CharField(
-        max_length=9, verbose_name=_('Day of the week'))
+    day_of_week = models.CharField(max_length=9, verbose_name=_('Day of the week'))
 
     class Meta:
         '''
@@ -558,8 +532,7 @@ class License(models.Model):
                     'them as separate entries here.'))
     '''Full name'''
 
-    short_name = models.CharField(
-        max_length=15, verbose_name=_('Short name, e.g. CC-BY-SA 3'))
+    short_name = models.CharField(max_length=15, verbose_name=_('Short name, e.g. CC-BY-SA 3'))
     '''Short name, e.g. CC-BY-SA 3'''
 
     url = models.URLField(
@@ -682,3 +655,9 @@ class WeightUnit(models.Model):
 class ApiUser(models.Model):
     user = models.OneToOneField(User)
     created_by = models.ForeignKey(User, related_name="created_by")
+
+    def __str__(self):
+        '''
+        String representation for ApiUser
+        '''
+        return u"User: {}, created by: {}".format(self.user.__str__(), self.created_by)
